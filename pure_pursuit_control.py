@@ -8,24 +8,28 @@ from nav_msgs.msg import Odometry
 class PurePursuit(object):
     def __init__(self):
         self.path = path_points('linear')
-
+        path = self.path
         # Subscribe to the topics
         self.car_pose_sub = rospy.Subscriber("carname/odom", Odemetry, self.car_pose_cb)
 
         # init Publisher
         self.car_control_pub = rospy.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
-
+        goal = self.path[0]
         lli_msg = lli_ctrl_request()
-        lli_msg.steering = self.controller()
-        rate = rospy.Rate(10)
-        while not rospy.is_shutdown():
-            self.car_control_pub.pub(lli_msg)
-            rate.sleep()
+        while self.path != []:
+            rate = rospy.Rate(10)
+            while not rospy.is_shutdown() and not self.reach_goal(goal):
+                lli_msg.steering = self.controller(goal)
+                self.car_control_pub.pub(lli_msg)
+                rate.sleep()
+            self.path.remove(goal)
+            goal = self.path[0]
 
-    def controller(self):
+    def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         heading = self.car_pose.twist.twist.angular.z
-        xg, yg = 1, 1  # self.path
+
+        xg, yg = goal[0],goal[1]  # self.path
         L = 0.42
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((xg - xr), (yg - yr))
@@ -41,8 +45,21 @@ class PurePursuit(object):
             phi = des_phi
         return phi
 
+    def reach_goal(self, goal):
+        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        tol = 0.1
+        if dist((xr,yr), goal) <= tol:
+            return True
+        else:
+            return False
+
+
     def car_pose_cb(self, car_pose_msg):
         self.car_pose = car_pose_msg
+
+
+def dist(p1, p2):
+    return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 
 if __name__ == "__main__":
