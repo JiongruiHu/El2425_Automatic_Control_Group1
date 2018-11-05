@@ -2,7 +2,7 @@ import rospy as rp
 import numpy as np
 from path_points.py import path_points
 from low_level_interface/msgs import lli_ctrl_request
-from Odometry import Odometry               #NEEDS PACKAGE!!
+from nav_msgs/msg import Odometry
 
 ## Arguments of data need adjustment based on Mocap
 def controller(data):
@@ -17,7 +17,6 @@ def controller(data):
             control.publish(0,0,0,0,0,0)
             exit()
         curr_point = allPoints[pointIndex]
-        data_point = (data.pose.pose.position.x, data.pose.pose.position.y)
 
     nextPoint = curr_point
     xdiff = nextPoint[0] - data.pose.pose.position.x
