@@ -1,18 +1,30 @@
 import rospy as rp
 import numpy as np
 from path_points.py import path_points
-from low_level_interface/msgs import lli_ctrl_request 
+from low_level_interface/msgs import lli_ctrl_request
+from Odometry import Odometry               #NEEDS PACKAGE!!
 
 ## Arguments of data need adjustment based on Mocap
-def controller(data, nextPoint):
+def controller(data):
     
     kP = 1*100/(pi/4)
-    
-    xdiff = nextPoint[0] - data.x
-    ydiff = nextPoint[1] - data.y
+
+    curr_point = allPoints[pointIndex]
+    data_point = (data.pose.pose.position.x, data.pose.pose.position.y)
+    while distance(data_point, curr_point) < toleranceLimit:
+        pointIndex += 1
+        if pointIndex >= allPoints.size():
+            control.publish(0,0,0,0,0,0)
+            exit()
+        curr_point = allPoints[pointIndex]
+        data_point = (data.pose.pose.position.x, data.pose.pose.position.y)
+
+    nextPoint = curr_point
+    xdiff = nextPoint[0] - data.pose.pose.position.x
+    ydiff = nextPoint[1] - data.pose.pose.position.y
     desHeading = np.arctan(ydiff/xdiff)
-    currentHeading = data[3]
-    steering = int(-kP*(desHeading-currentHeading))
+    currentHeading = data.twist.twist.angular.z
+    steering = int(-kP*(desHeading - currentHeading))
     return steering
 
 def distance(point1, point2):
@@ -20,24 +32,19 @@ def distance(point1, point2):
     return np.sqrt(sqr_sum)
 
 def callback(data):
-    curr_point = allPoints[pointIndex]
-    while distance((data.x, data.y), curr_point) < toleranceLimit:
-        pointIndex += 1
-        if pointIndex > allPoints.size():
-            control.publish(0,0,0,0,0,0)
-            exit()
-        curr_point = allPoints[pointIndex]
-    steering = controller(data, curr_point)
+    
+    steering = controller(data)
     control.publish(speed, steering, 0,0,0,0)
 
 def listener():
     rp.init_node("carrot_control", anonymous = True)
-    rp.Subscriber(???, ???, callback)
+    rp.Subscriber(Odometry, "CARNAME/odom", callback)         #Needs CARNAME
     rp.spin()
 
 
 if __name__ == "__main__":
-    allPoints = path_points("linear")
+    allPoints = tuple(path_points("linear"))
+    assert(allPoints.size == 36)
     pointIndex = 0
     toleranceLimit = 0.2
     speed = 10
