@@ -32,7 +32,7 @@ class PurePursuit(object):
         heading = self.car_pose.twist.twist.angular.z
 
         xg, yg = goal[0],goal[1]  # self.path
-        L = 0.42
+        L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr),(xg - xr))
         phi = des_heading - heading
