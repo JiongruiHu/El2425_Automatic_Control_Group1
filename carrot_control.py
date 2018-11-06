@@ -1,7 +1,7 @@
 import rospy as rp
 import numpy as np
 from path_points.py import path_points
-from low_level_interface/msgs import lli_ctrl_request
+from low_level_interface/msg import lli_ctrl_request
 from nav_msgs/msg import Odometry
 
 ## Arguments of data need adjustment based on Mocap
@@ -21,7 +21,7 @@ def controller(data):
     nextPoint = curr_point
     xdiff = nextPoint[0] - data.pose.pose.position.x
     ydiff = nextPoint[1] - data.pose.pose.position.y
-    desHeading = np.arctan(ydiff/xdiff)
+    desHeading = np.arctan2(ydiff,xdiff)
     currentHeading = data.twist.twist.angular.z
     steering = int(-kP*(desHeading - currentHeading))
     return steering
@@ -33,11 +33,15 @@ def distance(point1, point2):
 def callback(data):
     
     steering = controller(data)
-    control.publish(speed, steering, 0,0,0,0)
+    steering = np.max(-100, np.min(100, steering))
+    lli_msg = lli_ctrl_request()
+    lli_msg.velocity = speed
+    lli_msg.steering = steering
+    control.publish(lli_msg)
 
 def listener():
     rp.init_node("carrot_control", anonymous = True)
-    rp.Subscriber(Odometry, "CARNAME/odom", callback)         #Needs CARNAME
+    rp.Subscriber("SVEA1/odom", Odometry, callback)         #Needs CARNAME
     rp.spin()
 
 
