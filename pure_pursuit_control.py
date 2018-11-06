@@ -10,14 +10,16 @@ class PurePursuit(object):
         self.path = path_points('linear')
         path = self.path
         # Subscribe to the topics
-        self.car_pose_sub = rospy.Subscriber("carname/odom", Odemetry, self.car_pose_cb)
+        self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odemetry, self.car_pose_cb)
 
         # init Publisher
         self.car_control_pub = rospy.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
+        rate = rospy.Rate(10)
         goal = self.path[0]
         lli_msg = lli_ctrl_request()
+        lli_msg.velocity = speed
         while self.path != []:
-            rate = rospy.Rate(10)
+            
             while not rospy.is_shutdown() and not self.reach_goal(goal):
                 lli_msg.steering = self.controller(goal)
                 self.car_control_pub.pub(lli_msg)
@@ -43,7 +45,7 @@ class PurePursuit(object):
             phi = -pi/4
         else:
             phi = des_phi
-        return phi
+        return int(100/(pi/4)*phi)
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
@@ -65,6 +67,7 @@ def dist(p1, p2):
 if __name__ == "__main__":
 
     rospy.init_node('path_follow')
+    speed = 10
     try:
         PurePursuit()
     except rospy.ROSInterruptException:
