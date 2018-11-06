@@ -34,7 +34,7 @@ class PurePursuit(object):
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.42
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
-        des_heading = arctan2((xg - xr), (yg - yr))
+        des_heading = arctan2((yg - yr),(xg - xr))
         phi = des_heading - heading
         curv = 2 * sin(phi) / ld
         des_phi = arctan(L * curv)
