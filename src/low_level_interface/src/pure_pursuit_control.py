@@ -49,9 +49,9 @@ class PurePursuit(object):
         des_phi = arctan(L * curv)
         print('des_phi',des_phi)
 
-        if des_phi > pi/4:  # or 100
+        if phi > pi/2 or des_phi > pi/4:  # or 100
             phi = pi/4
-        elif des_phi < -pi/4:  # or -100
+        elif phi < -pi/2 or des_phi < -pi/4:  # or -100
             phi = -pi/4
         else:
             phi = des_phi
