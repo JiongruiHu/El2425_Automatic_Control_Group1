@@ -29,7 +29,7 @@ def controller(data):
     xdiff = nextPoint[0] - data.pose.pose.position.x
     ydiff = nextPoint[1] - data.pose.pose.position.y
     desHeading = np.arctan2(ydiff,xdiff)
-    currentHeading = data.pose.pose.orientation.z
+    currentHeading = np.pi * data.pose.pose.orientation.z
     #print("desHeading", desHeading)
     print("currentHeading",currentHeading)
     headErr = desHeading - currentHeading
