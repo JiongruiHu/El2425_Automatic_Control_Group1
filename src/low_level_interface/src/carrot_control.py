@@ -30,16 +30,16 @@ def controller(data):
     ydiff = nextPoint[1] - data.pose.pose.position.y
     desHeading = np.arctan2(ydiff,xdiff)
     currentHeading = data.pose.pose.orientation.z
-    print("desHeading", desHeading)
+    #print("desHeading", desHeading)
     print("currentHeading",currentHeading)
     headErr = desHeading - currentHeading
-    print("headErrOriginal", headErr)
+    #print("headErrOriginal", headErr)
     if headErr > np.pi:
         headErr = -2*np.pi + headErr
     if headErr < -1*np.pi:
         headErr = 2*np.pi + headErr
 
-    print("headErr",headErr)
+    #print("headErr",headErr)
     steering = int(-kP*(headErr))
     print("Steering",steering)
     return steering
