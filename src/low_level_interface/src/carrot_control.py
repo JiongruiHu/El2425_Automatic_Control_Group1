@@ -32,7 +32,7 @@ def controller(data):
     desHeading = np.arctan2(ydiff,xdiff)
     xo, yo, zo, w = data.pose.pose.orientation.x, data.pose.pose.orientation.y, data.pose.pose.orientation.z, data.pose.pose.orientation.w
     quat_arr = np.array([xo, yo, zo, w])
-    currentHeading = tr.euler_from_quaternion(quat_arr, 'xyzs')[2]
+    currentHeading = tr.euler_from_quaternion(quat_arr)[2]
     #print("desHeading", desHeading)
     print("currentHeading",currentHeading)
     print("w",w)
