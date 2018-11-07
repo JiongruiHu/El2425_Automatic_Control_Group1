@@ -21,7 +21,7 @@ def controller(data):
     data_point = (data.pose.pose.position.x, data.pose.pose.position.y)
     while distance(data_point, curr_point) < toleranceLimit:
         pointIndex += 1
-        if pointIndex >= allPoints.size():
+        if pointIndex >= len(allPoints):
             control.publish(0,0,0,0,0,0)
             exit()
         curr_point = allPoints[pointIndex]
