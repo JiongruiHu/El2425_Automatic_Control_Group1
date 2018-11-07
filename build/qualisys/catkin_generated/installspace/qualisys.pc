@@ -1,0 +1,8 @@
+prefix=/home/nvidia/catkin_ws/install
+
+Name: qualisys
+Description: Description of qualisys
+Version: 0.0.1
+Cflags: -I/home/nvidia/catkin_ws/install/include -I/usr/include -I/usr/include/eigen3
+Libs: -L/home/nvidia/catkin_ws/install/lib -lyaml-cpp
+Requires: message_runtime geometry_msgs tf
