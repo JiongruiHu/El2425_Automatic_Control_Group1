@@ -32,10 +32,12 @@ def controller(data):
     currentHeading = data.pose.pose.orientation.z
 
     headErr = desHeading - currentHeading
+    print("headErrOriginal", headErr)
     if headErr > np.pi:
         headErr = 2*np.pi - headErr
     if headErr < -1*np.pi:
         headErr = -2*np.pi - headErr
+
     print("headErr",headErr)
     steering = int(-kP*(headErr))
     print("Steering",steering)
