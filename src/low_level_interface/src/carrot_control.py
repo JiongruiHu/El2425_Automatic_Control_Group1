@@ -34,9 +34,9 @@ def controller(data):
     headErr = desHeading - currentHeading
     print("headErrOriginal", headErr)
     if headErr > np.pi:
-        headErr = 2*np.pi - headErr
+        headErr = -2*np.pi + headErr
     if headErr < -1*np.pi:
-        headErr = -2*np.pi - headErr
+        headErr = 2*np.pi + headErr
 
     print("headErr",headErr)
     steering = int(-kP*(headErr))
