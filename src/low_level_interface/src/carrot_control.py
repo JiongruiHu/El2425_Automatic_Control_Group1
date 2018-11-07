@@ -36,7 +36,9 @@ def controller(data):
         headErr = 2*np.pi - headErr
     if headErr < -1*np.pi:
         headErr = -2*np.pi - headErr
+    print("headErr",headErr)
     steering = int(-kP*(headErr))
+    print("Steering",steering)
     return steering
 
 def distance(point1, point2):
