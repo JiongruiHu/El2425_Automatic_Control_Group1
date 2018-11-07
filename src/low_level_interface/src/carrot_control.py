@@ -73,7 +73,7 @@ def listener():
 if __name__ == "__main__":
     allPoints = tuple(path_points("circle"))
     assert(len(allPoints) == 36)
-    toleranceLimit = 0.2
+    toleranceLimit = 0.1
     speed = 10
     control = rp.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size = 10)
     listener()
