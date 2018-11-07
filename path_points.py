@@ -6,7 +6,7 @@ def path_points(type_path):
     path = []
     nPoint = 36
     if type_path == 'circle':
-        r = 3  # the radius of the circle path
+        r = 1  # the radius of the circle path
         alpha = linspace(-pi,pi,nPoint)
         for a in alpha:
             x = r * cos(a)
@@ -14,15 +14,15 @@ def path_points(type_path):
             path.append([x,y])
 
     elif type_path == 'linear':
-        x0, y0 = 0, 0  # initial point
-        xg, yg = 2, 3  # goal point
+        x0, y0 = -1, -1  # initial point
+        xg, yg = 1, 1  # goal point
         xrange = linspace(x0, xg, nPoint)
         yrange = linspace(y0, yg, nPoint)
         for i in arange(nPoint):
             path.append(([xrange[i], yrange[i]]))
 
     elif type_path == 'ellipse':
-        a, b = 3, 2
+        a, b = 1, 0.5
         alpha = linspace(-pi, pi, nPoint)
         for a in alpha:
             x = a * cos(a)

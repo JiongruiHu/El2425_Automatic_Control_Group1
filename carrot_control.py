@@ -1,17 +1,19 @@
 import rospy as rp
 import numpy as np
-from path_points.py import path_points
-from low_level_interface/msg import lli_ctrl_request
-from nav_msgs/msg import Odometry
+from path_points import path_points
+from low_level_interface.msg import lli_ctrl_request
+from nav_msgs.msg import Odometry
 
 ## Arguments of data need adjustment based on Mocap
 def controller(data):
     
-    kP = 1*100/(pi/4)
-
+    kP = 1*100/(np.pi/4)
+    global pointIndex
+    global allPoints
     curr_point = allPoints[pointIndex]
     data_point = (data.pose.pose.position.x, data.pose.pose.position.y)
     while distance(data_point, curr_point) < toleranceLimit:
+
         pointIndex += 1
         if pointIndex >= allPoints.size():
             control.publish(0,0,0,0,0,0)
@@ -22,8 +24,13 @@ def controller(data):
     xdiff = nextPoint[0] - data.pose.pose.position.x
     ydiff = nextPoint[1] - data.pose.pose.position.y
     desHeading = np.arctan2(ydiff,xdiff)
-    currentHeading = data.twist.twist.angular.z
-    steering = int(-kP*(desHeading - currentHeading))
+    currentHeading = data.pose.pose.orientation.z
+    headErr = desHeading - currentHeading
+    if headErr > np.pi:
+        headErr = 2*np.pi - headErr
+    if headErr < -1*np.pi:
+        headErr = -2*np.pi - headErr
+    steering = int(-kP*(headErr))
     return steering
 
 def distance(point1, point2):
@@ -31,7 +38,7 @@ def distance(point1, point2):
     return np.sqrt(sqr_sum)
 
 def callback(data):
-    
+    global speed
     steering = controller(data)
     steering = np.max(-100, np.min(100, steering))
     lli_msg = lli_ctrl_request()
@@ -41,7 +48,7 @@ def callback(data):
 
 def listener():
     rp.init_node("carrot_control", anonymous = True)
-    rp.Subscriber("SVEA1/odom", Odometry, callback)         #Needs CARNAME
+    rp.Subscriber("SVEA1/odom", Odometry, callback)
     rp.spin()
 
 
