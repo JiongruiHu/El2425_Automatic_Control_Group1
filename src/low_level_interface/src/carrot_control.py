@@ -12,7 +12,7 @@ pointIndex = 0
 ## Arguments of data need adjustment based on Mocap
 def controller(data):
     
-    kP = 1*100/(np.pi/4)
+    kP = 5*100/(np.pi/4)
     global allPoints
     global pointIndex
     global toleranceLimit
