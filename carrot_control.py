@@ -1,8 +1,8 @@
 import rospy as rp
 import numpy as np
 from path_points.py import path_points
-from low_level_interface/msg import lli_ctrl_request
-from nav_msgs/msg import Odometry
+from low_level_interface.msg import lli_ctrl_request
+from nav_msgs.msg import Odometry
 
 ## Arguments of data need adjustment based on Mocap
 def controller(data):
