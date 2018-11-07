@@ -8,7 +8,7 @@ from nav_msgs.msg import Odometry
 
 class PurePursuit(object):
     def __init__(self):
-        self.path = path_points('linear')
+        self.path = path_points('circle')
         # self.path = [[-1.439,-1.3683],[0.245,-1.88676]]
         # path = self.path
         # Subscribe to the topics
@@ -42,7 +42,7 @@ class PurePursuit(object):
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
         print('des_head',des_heading)
-        phi = -(des_heading - heading)
+        phi = (des_heading - heading)
         print('phi',phi)
         # print('difference_phi',phi*180/pi)
         curv = 2 * sin(phi) / ld
