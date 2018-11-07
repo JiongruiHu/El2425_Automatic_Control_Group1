@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import rospy as rp
 import numpy as np
+import tf.transformations as tr
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
@@ -30,7 +31,8 @@ def controller(data):
     ydiff = nextPoint[1] - data.pose.pose.position.y
     desHeading = np.arctan2(ydiff,xdiff)
     xo, yo, zo, w = data.pose.pose.orientation.x, data.pose.pose.orientation.y, data.pose.pose.orientation.z, data.pose.pose.orientation.w
-    currentHeading = 2 * np.arctan2(np.sqrt(xo**2+yo**2+zo**2), w)
+    quat_arr = np.array([xo, yo, zo, w])
+    currentHeading = tr.euler_from_quaternion(quat_arr, 'xyzs')[2]
     #print("desHeading", desHeading)
     print("currentHeading",currentHeading)
     print("w",w)
