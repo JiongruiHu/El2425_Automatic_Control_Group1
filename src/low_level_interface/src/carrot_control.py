@@ -33,6 +33,7 @@ def controller(data):
     currentHeading = 2 * np.arctan2(np.sqrt(xo**2+yo**2+zo**2), w)
     #print("desHeading", desHeading)
     print("currentHeading",currentHeading)
+    print("w",w)
     headErr = desHeading - currentHeading
     #print("headErrOriginal", headErr)
     if headErr > np.pi:
