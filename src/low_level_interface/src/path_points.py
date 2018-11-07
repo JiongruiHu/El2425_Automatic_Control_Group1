@@ -15,7 +15,7 @@ def path_points(type_path):
 
     elif type_path == 'linear':
         x0, y0 = -1, -1  # initial point
-        xg, yg = 1, 1  # goal point
+        xg, yg = 1, -1  # goal point
         xrange = linspace(x0, xg, nPoint)
         yrange = linspace(y0, yg, nPoint)
         for i in arange(nPoint):

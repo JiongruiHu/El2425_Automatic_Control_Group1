@@ -57,7 +57,7 @@ def callback(data):
 
 def listener():
     rp.init_node("carrot_control", anonymous = True)
-    rp.Subscriber("SVEA1/odom", Odometry, callback)        
+    rp.Subscriber("SVEA1/odom", Odometry, callback)
     rp.spin()
 
 
