@@ -12,7 +12,7 @@ pointIndex = 0
 ## Arguments of data need adjustment based on Mocap
 def controller(data):
     
-    kP = 5*100/(np.pi/4)
+    kP = 3*100/(np.pi/4)
     global allPoints
     global pointIndex
     global toleranceLimit
@@ -68,7 +68,7 @@ def listener():
 if __name__ == "__main__":
     allPoints = tuple(path_points("circle"))
     assert(len(allPoints) == 36)
-    toleranceLimit = 0.2
+    toleranceLimit = 0.3
     speed = 10
     control = rp.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size = 10)
     listener()
