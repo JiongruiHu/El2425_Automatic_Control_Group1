@@ -30,7 +30,8 @@ def controller(data):
     ydiff = nextPoint[1] - data.pose.pose.position.y
     desHeading = np.arctan2(ydiff,xdiff)
     currentHeading = data.pose.pose.orientation.z
-
+    print("desHeading", desHeading)
+    print("currentHeading",currentHeading)
     headErr = desHeading - currentHeading
     print("headErrOriginal", headErr)
     if headErr > np.pi:
