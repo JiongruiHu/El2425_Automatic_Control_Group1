@@ -22,7 +22,7 @@ class PurePursuit(object):
         # goal = self.path[0]
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
-        self.ld = 0.2
+        self.ld = 0.4
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
@@ -68,7 +68,7 @@ class PurePursuit(object):
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        tol = 0.4
+        tol = 0.2
         if dist((xr,yr), goal) <= tol:
             return True
         else:
