@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from tr.transformations import euler_from_quaternion
+from tf.transformations import euler_from_quaternion
 from numpy import *
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
@@ -39,36 +39,38 @@ class PurePursuit(object):
         # heading = self.car_pose.twist.twist.angular.z
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
-        heading = euler_from_quaternion([xo, yo, zo, w])[2]
+        current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xg, yg = goal[0],goal[1]  # self.path
+        print('goal',goal)
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head',des_heading)
-        headErr = desHeading - currentHeading
+        print('des_head',des_heading*180/pi)
+        headErr = des_heading - current_heading
         # print("headErrOriginal", headErr)
-        if headErr > np.pi:
-            headErr = -2 * np.pi + headErr
-        if headErr < -1 * np.pi:
-            headErr = 2 * np.pi + headErr
-        print('phi',headErr)
+        if headErr > pi:
+            headErr = -2 * pi + headErr
+        if headErr < -1 * pi:
+            headErr = 2 * pi + headErr
+        #print('phi',headErr)
         # print('difference_phi',phi*180/pi)
         curv = 2 * sin(headErr) / ld
         des_phi = arctan(L * curv)
-        print('des_phi',des_phi)
+        #print('des_phi',des_phi)
 
-        if phi > pi/2 or des_phi > pi/4:  # or 100
-            phi = pi/4
-        elif phi < -pi/2 or des_phi < -pi/4:  # or -100
-            phi = -pi/4
+        if headErr > pi/2 or des_phi > pi/4:  # or 100
+            steering = pi/4
+        elif headErr < -pi/2 or des_phi < -pi/4:  # or -100
+            steering = -pi/4
         else:
-            phi = des_phi
-        # print('real phi',(phi*180/pi))
-        return int(100/(pi/4)*phi)
+            steering = des_phi
+        print('real steering',(steering*180/pi))
+        print('\n')
+        return int(100/(pi/4)*steering)
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        tol = 0.4
+        tol = 0.05
         if dist((xr,yr), goal) <= tol:
             return True
         else:
@@ -86,7 +88,7 @@ def dist(p1, p2):
 if __name__ == "__main__":
 
     rospy.init_node('path_follow')
-    speed = 10
+    speed = 15
     try:
         PurePursuit()
     except rospy.ROSInterruptException:
