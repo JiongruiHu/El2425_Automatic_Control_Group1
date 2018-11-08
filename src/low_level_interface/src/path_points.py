@@ -6,7 +6,7 @@ def path_points(type_path):
     path = []
     nPoint = 36
     if type_path == 'circle':
-        r = 2  # the radius of the circle path
+        r = 1  # the radius of the circle path
         alpha = linspace(-pi,pi,nPoint)
         for a in alpha:
             x = r * cos(a)
