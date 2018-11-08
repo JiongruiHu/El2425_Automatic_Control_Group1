@@ -71,7 +71,7 @@ def listener():
 
 
 if __name__ == "__main__":
-    allPoints = tuple(path_points("circle"))
+    allPoints = tuple(path_points("ellipse"))
     assert(len(allPoints) == 36)
     toleranceLimit = 0.1
     speed = 15
