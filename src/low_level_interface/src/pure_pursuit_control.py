@@ -65,6 +65,7 @@ class PurePursuit(object):
         else:
             steering = des_phi
         print('real steering',(steering*180/pi))
+        print('\n')
         return int(100/(pi/4)*steering)
 
     def reach_goal(self, goal):
