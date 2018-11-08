@@ -68,7 +68,7 @@ class PurePursuit(object):
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        tol = 0.4
+        tol = 0.2
         if dist((xr,yr), goal) <= tol:
             return True
         else:
@@ -86,7 +86,7 @@ def dist(p1, p2):
 if __name__ == "__main__":
 
     rospy.init_node('path_follow')
-    speed = 10
+    speed = 15
     try:
         PurePursuit()
     except rospy.ROSInterruptException:
