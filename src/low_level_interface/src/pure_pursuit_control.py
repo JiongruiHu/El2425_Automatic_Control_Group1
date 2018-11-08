@@ -70,7 +70,7 @@ class PurePursuit(object):
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        tol = 0.2
+        tol = 0.05
         if dist((xr,yr), goal) <= tol:
             return True
         else:
