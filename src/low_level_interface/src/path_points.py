@@ -22,7 +22,7 @@ def path_points(type_path):
             path.append([xrange[i], yrange[i]])
 
     elif type_path == 'ellipse':
-        a, b = 0.5, 1.2
+        a, b = 0.8, 1.6
         alpha = linspace(-pi, pi, nPoint)
         for al in alpha:
             x = a * cos(al)
