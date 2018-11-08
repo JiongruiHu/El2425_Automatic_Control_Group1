@@ -10,7 +10,7 @@ from nav_msgs.msg import Odometry
 
 class PurePursuit(object):
     def __init__(self):
-        self.path = path_points('ellipse')
+        self.path = path_points('circle')
         # self.path = [[-1.439,-1.3683],[0.245,-1.88676]]
         # path = self.path
         # Subscribe to the topics
@@ -105,7 +105,7 @@ def dist(p1, p2):
 if __name__ == "__main__":
 
     rospy.init_node('path_follow')
-    speed = 15
+    speed = 20
     try:
         PurePursuit()
     except rospy.ROSInterruptException:
