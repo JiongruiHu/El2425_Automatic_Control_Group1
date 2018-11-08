@@ -47,10 +47,10 @@ class PurePursuit(object):
         print('des_head',des_heading)
         headErr = des_heading - current_heading
         # print("headErrOriginal", headErr)
-        if headErr > np.pi:
-            headErr = -2 * np.pi + headErr
-        if headErr < -1 * np.pi:
-            headErr = 2 * np.pi + headErr
+        if headErr > pi:
+            headErr = -2 * pi + headErr
+        if headErr < -1 * pi:
+            headErr = 2 * pi + headErr
         print('phi',headErr)
         # print('difference_phi',phi*180/pi)
         curv = 2 * sin(headErr) / ld
