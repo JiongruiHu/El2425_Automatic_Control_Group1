@@ -57,6 +57,7 @@ if __name__ == "__main__":
     assert(allPoints.size == 36)
     pointIndex = 0
     toleranceLimit = 0.2
-    speed = 10
+    speed = 20 
+
     control = rp.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size = 10)
     listener()
