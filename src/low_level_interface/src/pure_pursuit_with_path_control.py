@@ -23,7 +23,7 @@ class PurePursuit(object):
         # goal = self.path[0]
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
-        self.ld = 0.4
+        self.ld = 0.5
         self.xs = []
         self.ys = []
         while len(self.path) > 0:
