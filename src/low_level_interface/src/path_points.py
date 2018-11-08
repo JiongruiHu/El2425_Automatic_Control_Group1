@@ -24,9 +24,9 @@ def path_points(type_path):
     elif type_path == 'ellipse':
         a, b = 0.5, 1.2
         alpha = linspace(-pi, pi, nPoint)
-        for a in alpha:
-            x = a * cos(a)
-            y = b * sin(a)
+        for al in alpha:
+            x = a * cos(al)
+            y = b * sin(al)
             path.append([x,y])
     else:
         print("I do NOT generate this kind of path")
