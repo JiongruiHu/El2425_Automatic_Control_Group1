@@ -23,13 +23,13 @@ class PurePursuit(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
         self.ld = 0.2
-
-        if hasattr(self, 'car_pose'):
-            while not (rospy.is_shutdown() or len(self.path) == 0):
-                goal = self.choose_point()
-                lli_msg.steering = -self.controller(goal)
-                self.car_control_pub.publish(lli_msg)
-                rate.sleep()
+        while len(self.path) > 0:
+            if hasattr(self, 'car_pose'):
+                while not (rospy.is_shutdown() or len(self.path) == 0):
+                    goal = self.choose_point()
+                    lli_msg.steering = -self.controller(goal)
+                    self.car_control_pub.publish(lli_msg)
+                    rate.sleep()
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
