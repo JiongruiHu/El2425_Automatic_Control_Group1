@@ -2,6 +2,7 @@
 import rospy
 from tf.transformations import euler_from_quaternion
 from numpy import *
+import matplotlib as mp
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
@@ -23,6 +24,8 @@ class PurePursuit(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
         self.ld = 0.4
+        self.xs = []
+        self.ys = []
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
@@ -33,10 +36,14 @@ class PurePursuit(object):
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
+        pose_arr = array([self.xs, self.ys])
+        savetxt("real_path.csv", pose_arr, delimiter=",")
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         # heading = self.car_pose.twist.twist.angular.z
+        self.xs.append(xr)
+        self.ys.append(yr)
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
         current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
