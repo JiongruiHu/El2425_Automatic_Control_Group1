@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+from tr.transformations import euler_from_quaternion
 from numpy import *
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
@@ -36,7 +37,9 @@ class PurePursuit(object):
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         # heading = self.car_pose.twist.twist.angular.z
-        heading = self.car_pose.pose.pose.orientation.z
+        xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
+        zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
+        heading = euler_from_quaternion([xo, yo, zo, w])
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
