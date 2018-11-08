@@ -39,13 +39,13 @@ class PurePursuit(object):
         # heading = self.car_pose.twist.twist.angular.z
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
-        heading = euler_from_quaternion([xo, yo, zo, w])[2]
+        current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
         print('des_head',des_heading)
-        headErr = desHeading - currentHeading
+        headErr = des_heading - current_heading
         # print("headErrOriginal", headErr)
         if headErr > np.pi:
             headErr = -2 * np.pi + headErr
@@ -58,13 +58,13 @@ class PurePursuit(object):
         print('des_phi',des_phi)
 
         if phi > pi/2 or des_phi > pi/4:  # or 100
-            phi = pi/4
+            steering = pi/4
         elif phi < -pi/2 or des_phi < -pi/4:  # or -100
-            phi = -pi/4
+            steering = -pi/4
         else:
-            phi = des_phi
+            steering = des_phi
         # print('real phi',(phi*180/pi))
-        return int(100/(pi/4)*phi)
+        return int(100/(pi/4)*steering)
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
