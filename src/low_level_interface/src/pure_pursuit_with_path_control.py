@@ -105,7 +105,7 @@ def dist(p1, p2):
 if __name__ == "__main__":
 
     rospy.init_node('path_follow')
-    speed = 20
+    speed = 15
     try:
         PurePursuit()
     except rospy.ROSInterruptException:
