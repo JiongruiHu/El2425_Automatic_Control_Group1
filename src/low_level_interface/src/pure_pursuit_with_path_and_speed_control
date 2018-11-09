@@ -70,14 +70,14 @@ class PurePursuit(object):
             phi = -pi/4
         else:
             phi = des_phi
-        v = speed_control(phi)
+        v = self.speed_control(phi)
         # print('real phi',(phi*180/pi))
         return v, -int(100/(pi/4)*phi)
 
-    def speed_control(phi)
-        if abs(phi) < pi/12
+    def speed_control(phi):
+        if abs(phi) < pi/12:
             speed = 20
-        else
+        else:
             speed = 15
         return speed
 
