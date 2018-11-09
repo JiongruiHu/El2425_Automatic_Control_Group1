@@ -1,2 +1,2 @@
-low_level_interface:qualisys:ros_tutorial:rplidar_ros:teleop_tools/joy_teleop:teleop_tools/key_teleop:teleop_tools/mouse_teleop:teleop_tools/teleop_tools:teleop_tools/teleop_tools_msgs
--DCATKIN_DEVEL_PREFIX=/home/nvidia/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/nvidia/catkin_ws/install -G Unix Makefiles
+low_level_interface:qualisys:ros_tutorial:rplidar_ros
+-DCATKIN_DEVEL_PREFIX=/home/aldoteran/john_ws/devel -DCMAKE_INSTALL_PREFIX=/home/aldoteran/john_ws/install -G Unix Makefiles
