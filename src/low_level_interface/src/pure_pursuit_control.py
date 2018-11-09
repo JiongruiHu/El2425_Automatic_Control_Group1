@@ -40,10 +40,19 @@ class PurePursuit(object):
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
         current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
-        xg, yg = goal[0],goal[1]  # self.path
         print('goal',goal)
         L = 0.32
-        ld = sqrt((xg - xr)**2 + (yg - yr)**2)
+        d = dist((xr,yr), goal)
+        for g in self.path:
+            distance = dist((xr,yr), g)
+            if distance < d:
+                d = distance
+                goal = g
+                self.path.remove(g)
+                break
+        xg, yg = goal[0], goal[1]
+        # ld = sqrt((xg - xr)**2 + (yg - yr)**2)
+        ld = d
         des_heading = arctan2((yg - yr), (xg - xr))
         print('des_head',des_heading*180/pi)
         headErr = des_heading - current_heading
@@ -70,7 +79,7 @@ class PurePursuit(object):
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        tol = 0.05
+        tol = 0.2
         if dist((xr,yr), goal) <= tol:
             return True
         else:
