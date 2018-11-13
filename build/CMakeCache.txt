@@ -277,8 +277,17 @@ actionlib_DIR:PATH=/opt/ros/kinetic/share/actionlib/cmake
 //The directory containing a CMake configuration file for actionlib_msgs.
 actionlib_msgs_DIR:PATH=/opt/ros/kinetic/share/actionlib_msgs/cmake
 
+//The directory containing a CMake configuration file for bond.
+bond_DIR:PATH=/opt/ros/kinetic/share/bond/cmake
+
+//The directory containing a CMake configuration file for bondcpp.
+bondcpp_DIR:PATH=/opt/ros/kinetic/share/bondcpp/cmake
+
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/kinetic/share/catkin/cmake
+
+//The directory containing a CMake configuration file for class_loader.
+class_loader_DIR:PATH=/opt/ros/kinetic/share/class_loader/cmake
 
 //The directory containing a CMake configuration file for control_msgs.
 control_msgs_DIR:PATH=/opt/ros/kinetic/share/control_msgs/cmake
@@ -306,6 +315,12 @@ genpy_DIR:PATH=/opt/ros/kinetic/share/genpy/cmake
 
 //The directory containing a CMake configuration file for geometry_msgs.
 geometry_msgs_DIR:PATH=/opt/ros/kinetic/share/geometry_msgs/cmake
+
+//Value Computed by CMake
+gmapping_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/slam_gmapping/gmapping
+
+//Value Computed by CMake
+gmapping_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/slam_gmapping/gmapping
 
 //Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/gtest
@@ -383,6 +398,18 @@ mouse_teleop_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/teleop_tools/mouse_t
 //Value Computed by CMake
 mouse_teleop_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/teleop_tools/mouse_teleop
 
+//The directory containing a CMake configuration file for nav_msgs.
+nav_msgs_DIR:PATH=/opt/ros/kinetic/share/nav_msgs/cmake
+
+//The directory containing a CMake configuration file for nodelet.
+nodelet_DIR:PATH=/opt/ros/kinetic/share/nodelet/cmake
+
+//The directory containing a CMake configuration file for openslam_gmapping.
+openslam_gmapping_DIR:PATH=openslam_gmapping_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for pluginlib.
+pluginlib_DIR:PATH=/opt/ros/kinetic/share/pluginlib/cmake
+
 //Value Computed by CMake
 qualisys_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/qualisys
 
@@ -419,6 +446,12 @@ rosgraph_DIR:PATH=/opt/ros/kinetic/share/rosgraph/cmake
 //The directory containing a CMake configuration file for rosgraph_msgs.
 rosgraph_msgs_DIR:PATH=/opt/ros/kinetic/share/rosgraph_msgs/cmake
 
+//The directory containing a CMake configuration file for roslib.
+roslib_DIR:PATH=/opt/ros/kinetic/share/roslib/cmake
+
+//The directory containing a CMake configuration file for rospack.
+rospack_DIR:PATH=/opt/ros/kinetic/share/rospack/cmake
+
 //The directory containing a CMake configuration file for rospy.
 rospy_DIR:PATH=/opt/ros/kinetic/share/rospy/cmake
 
@@ -433,6 +466,15 @@ rplidar_ros_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/rplidar_ros
 
 //The directory containing a CMake configuration file for sensor_msgs.
 sensor_msgs_DIR:PATH=/opt/ros/kinetic/share/sensor_msgs/cmake
+
+//Value Computed by CMake
+slam_gmapping_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/slam_gmapping/slam_gmapping
+
+//Value Computed by CMake
+slam_gmapping_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/slam_gmapping/slam_gmapping
+
+//The directory containing a CMake configuration file for smclib.
+smclib_DIR:PATH=/opt/ros/kinetic/share/smclib/cmake
 
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/kinetic/share/std_msgs/cmake
