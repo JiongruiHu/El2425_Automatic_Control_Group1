@@ -4,10 +4,10 @@ from numpy import *
 def path_points(type_path):
     # the area is 4 X 4 meter^2
     path = []
-    nPoint = 36
+    nPoint = 108
     if type_path == 'circle':
         r = 1  # the radius of the circle path
-        alpha = linspace(-pi,pi,nPoint)
+        alpha = linspace(-pi,5*pi,nPoint)
         for a in alpha:
             x = r * cos(a)
             y = r * sin(a)

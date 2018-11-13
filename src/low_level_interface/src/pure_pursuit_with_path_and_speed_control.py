@@ -10,8 +10,8 @@ from nav_msgs.msg import Odometry
 
 
 class PurePursuit(object):
-    def __init__(self,speed):
-        self.path = path_points('linear')
+    def __init__(self):
+        self.path = path_points('circle')
         self.Estop = 0
         # self.path = [[-1.439,-1.3683],[0.245,-1.88676]]
         # path = self.path
@@ -25,7 +25,7 @@ class PurePursuit(object):
         rate = rospy.Rate(10)
         # goal = self.path[0]
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = self.speed
+        lli_msg.velocity = speed
         self.ld = 0.5
         self.xs = []
         self.ys = []
@@ -78,7 +78,7 @@ class PurePursuit(object):
         return v, -int(100/(pi/4)*phi)
 
     def speed_control(self, phi):
-        if self.Estop = 0:
+        if self.Estop == 0:
             if abs(phi) < pi/12:
                 speed = 20
             else:
@@ -112,7 +112,6 @@ class PurePursuit(object):
         self.path.remove(goal_point)
         return goal_point
 
-    Lidar_sub = rospy.Subscriber("/scan", LaserScan, lidar_cb)
     
     def lidar_cb(self,data):
         #msg = lli_ctrl_request()
@@ -123,7 +122,7 @@ class PurePursuit(object):
         threshold_dist = 1
         Estop = 0
         for i in range(len(angles)):
-            if abs(angles[i]) > pi-pi/4:
+            if abs(angles[i]) > pi-pi/6:
                if ranges[i] < threshold_dist:
                    Estop = 1
         self.Estop = Estop
