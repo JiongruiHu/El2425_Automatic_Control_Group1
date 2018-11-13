@@ -3,18 +3,21 @@ import rospy
 from tf.transformations import euler_from_quaternion
 from numpy import *
 import matplotlib as mp
+from sensor_msgs.msg import LaserScan
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
 
 
 class PurePursuit(object):
-    def __init__(self):
-        self.path = path_points('figure-8')
+    def __init__(self,speed):
+        self.path = path_points('linear')
+        self.Estop = 0
         # self.path = [[-1.439,-1.3683],[0.245,-1.88676]]
         # path = self.path
         # Subscribe to the topics
         self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odometry, self.car_pose_cb)
+        self.Lidar_sub = rospy.Subscriber("/scan", LaserScan, self.lidar_cb)
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -22,7 +25,7 @@ class PurePursuit(object):
         rate = rospy.Rate(10)
         # goal = self.path[0]
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = speed
+        lli_msg.velocity = self.speed
         self.ld = 0.5
         self.xs = []
         self.ys = []
@@ -75,10 +78,14 @@ class PurePursuit(object):
         return v, -int(100/(pi/4)*phi)
 
     def speed_control(self, phi):
-        if abs(phi) < pi/12:
-            speed = 20
+        if self.Estop = 0:
+            if abs(phi) < pi/12:
+                speed = 20
+            else:
+                speed = 15
         else:
-            speed = 15
+            speed = -10
+        #speed = E_stop(speed)
         return speed
 
     def reach_goal(self, goal):
@@ -104,6 +111,26 @@ class PurePursuit(object):
         goal_point = self.path[0]
         self.path.remove(goal_point)
         return goal_point
+
+    Lidar_sub = rospy.Subscriber("/scan", LaserScan, lidar_cb)
+    
+    def lidar_cb(self,data):
+        #msg = lli_ctrl_request()
+        #msg.velocity = speed
+        angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
+        #print(angles)     
+        ranges = data.ranges
+        threshold_dist = 1
+        Estop = 0
+        for i in range(len(angles)):
+            if abs(angles[i]) > pi-pi/4:
+               if ranges[i] < threshold_dist:
+                   Estop = 1
+        self.Estop = Estop
+        #msg.velocity = speed
+        #car_speed.publish(msg)
+
+ 
 
 
 def dist(p1, p2):
