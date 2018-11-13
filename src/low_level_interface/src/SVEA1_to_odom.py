@@ -7,8 +7,10 @@ from nav_msgs.msg import Odometry
 
 def transform_to_odom(msg):
     br = tf.TransformBroadcaster()
-    br.sendTransform(msg.pose.pose.position,
-                     msg.pose.pose.orientation,
+    pos = msg.pose.pose.position
+    ori = msg.pose.pose.orientation
+    br.sendTransform((pos.x,pos.y,pos.z),
+                     (ori.x,ori.y,ori.z,ori.w),
                      rospy.Time.now(),
                      "odom",
                      "SVEA1")
