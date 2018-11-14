@@ -10,7 +10,7 @@ def transform_to_odom(msg):
     pos = msg.pose.pose.position
     ori = msg.pose.pose.orientation
     br.sendTransform((-1*pos.x,-1*pos.y,-1*pos.z),
-                     -1*(ori.x,ori.y,ori.z,ori.w),
+                     (-1*ori.x,-1*ori.y,-1*ori.z,-1*ori.w),
                      rospy.Time.now(),
                      "odom",
                      "SVEA1")
