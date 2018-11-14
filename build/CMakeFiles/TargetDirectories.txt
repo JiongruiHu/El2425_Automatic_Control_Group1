@@ -50,6 +50,13 @@
 /home/nvidia/catkin_ws/build/teleop_tools/mouse_teleop/CMakeFiles/install/local.dir
 /home/nvidia/catkin_ws/build/teleop_tools/mouse_teleop/CMakeFiles/test.dir
 /home/nvidia/catkin_ws/build/teleop_tools/mouse_teleop/CMakeFiles/edit_cache.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/list_install_components.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/install.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/rebuild_cache.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/install/strip.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/install/local.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/test.dir
+/home/nvidia/catkin_ws/build/navigation/CMakeFiles/edit_cache.dir
 /home/nvidia/catkin_ws/build/low_level_interface/CMakeFiles/install.dir
 /home/nvidia/catkin_ws/build/low_level_interface/CMakeFiles/rebuild_cache.dir
 /home/nvidia/catkin_ws/build/low_level_interface/CMakeFiles/low_level_interface_gencpp.dir

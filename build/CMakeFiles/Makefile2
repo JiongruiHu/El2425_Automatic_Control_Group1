@@ -473,6 +473,24 @@ teleop_tools/mouse_teleop/preinstall:
 .PHONY : teleop_tools/mouse_teleop/preinstall
 
 #=============================================================================
+# Directory level rules for directory navigation
+
+# Convenience name for "all" pass in the directory.
+navigation/all:
+
+.PHONY : navigation/all
+
+# Convenience name for "clean" pass in the directory.
+navigation/clean:
+
+.PHONY : navigation/clean
+
+# Convenience name for "preinstall" pass in the directory.
+navigation/preinstall:
+
+.PHONY : navigation/preinstall
+
+#=============================================================================
 # Directory level rules for directory low_level_interface
 
 # Convenience name for "all" pass in the directory.

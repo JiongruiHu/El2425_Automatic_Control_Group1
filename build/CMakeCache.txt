@@ -17,11 +17,44 @@
 //Build shared libraries (DLLs).
 BUILD_SHARED_LIBS:BOOL=ON
 
+//Path to a library.
+BULLET_COLLISION_LIBRARY:FILEPATH=BULLET_COLLISION_LIBRARY-NOTFOUND
+
+//Path to a library.
+BULLET_COLLISION_LIBRARY_DEBUG:FILEPATH=BULLET_COLLISION_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+BULLET_DYNAMICS_LIBRARY:FILEPATH=BULLET_DYNAMICS_LIBRARY-NOTFOUND
+
+//Path to a library.
+BULLET_DYNAMICS_LIBRARY_DEBUG:FILEPATH=BULLET_DYNAMICS_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a file.
+BULLET_INCLUDE_DIR:PATH=BULLET_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+BULLET_MATH_LIBRARY:FILEPATH=BULLET_MATH_LIBRARY-NOTFOUND
+
+//Path to a library.
+BULLET_MATH_LIBRARY_DEBUG:FILEPATH=BULLET_MATH_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+BULLET_SOFTBODY_LIBRARY:FILEPATH=BULLET_SOFTBODY_LIBRARY-NOTFOUND
+
+//Path to a library.
+BULLET_SOFTBODY_LIBRARY_DEBUG:FILEPATH=BULLET_SOFTBODY_LIBRARY_DEBUG-NOTFOUND
+
 //The directory containing a CMake configuration file for Boost.
 Boost_DIR:PATH=Boost_DIR-NOTFOUND
 
 //Path to a file.
 Boost_INCLUDE_DIR:PATH=/usr/include
+
+//Value Computed by CMake
+Bullet_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/navigation/Bullet
+
+//Value Computed by CMake
+Bullet_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/navigation/Bullet
 
 //List of ';' separated packages to exclude
 CATKIN_BLACKLIST_PACKAGES:STRING=
@@ -383,6 +416,12 @@ low_level_interface_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/low_level_int
 //Value Computed by CMake
 low_level_interface_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/low_level_interface
 
+//Value Computed by CMake
+map_server_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/navigation/map_server
+
+//Value Computed by CMake
+map_server_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/navigation/map_server
+
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/kinetic/share/message_filters/cmake
 
@@ -400,6 +439,12 @@ mouse_teleop_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/teleop_tools/mouse_tel
 
 //The directory containing a CMake configuration file for nav_msgs.
 nav_msgs_DIR:PATH=/opt/ros/kinetic/share/nav_msgs/cmake
+
+//Value Computed by CMake
+navigation_BINARY_DIR:STATIC=/home/nvidia/catkin_ws/build/navigation/navigation
+
+//Value Computed by CMake
+navigation_SOURCE_DIR:STATIC=/home/nvidia/catkin_ws/src/navigation/navigation
 
 //The directory containing a CMake configuration file for nodelet.
 nodelet_DIR:PATH=/opt/ros/kinetic/share/nodelet/cmake
@@ -517,6 +562,22 @@ xmlrpcpp_DIR:PATH=/opt/ros/kinetic/share/xmlrpcpp/cmake
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: BULLET_COLLISION_LIBRARY
+BULLET_COLLISION_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_COLLISION_LIBRARY_DEBUG
+BULLET_COLLISION_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_DYNAMICS_LIBRARY
+BULLET_DYNAMICS_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_DYNAMICS_LIBRARY_DEBUG
+BULLET_DYNAMICS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_MATH_LIBRARY
+BULLET_MATH_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_MATH_LIBRARY_DEBUG
+BULLET_MATH_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_SOFTBODY_LIBRARY
+BULLET_SOFTBODY_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BULLET_SOFTBODY_LIBRARY_DEBUG
+BULLET_SOFTBODY_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_DIR
 Boost_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_INCLUDE_DIR
@@ -618,7 +679,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=13
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
