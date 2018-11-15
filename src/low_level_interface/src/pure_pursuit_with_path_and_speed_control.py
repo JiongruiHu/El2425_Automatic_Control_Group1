@@ -11,7 +11,7 @@ from nav_msgs.msg import Odometry
 
 class PurePursuit(object):
     def __init__(self):
-        self.path = path_points('circle')
+        self.path = path_points('linear')
         self.Estop = 0
         # self.path = [[-1.439,-1.3683],[0.245,-1.88676]]
         # path = self.path
