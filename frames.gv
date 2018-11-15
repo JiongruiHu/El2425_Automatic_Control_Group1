@@ -1,10 +1,5 @@
 digraph G {
-"qualisys" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 80.194 Hz\nMost recent transform: 1542278938.305 ( 0.002 sec old)\nBuffer length: 4.963 sec\n"];
-"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.186 Hz\nMost recent transform: 1542278938.314 ( -0.006 sec old)\nBuffer length: 4.810 sec\n"];
-"qualisys" -> "SVEA4"[label="Broadcaster: /qualisys\nAverage rate: 80.195 Hz\nMost recent transform: 1542278938.305 ( 0.002 sec old)\nBuffer length: 4.963 sec\n"];
-"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 80.194 Hz\nMost recent transform: 1542278938.305 ( 0.002 sec old)\nBuffer length: 4.963 sec\n"];
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542278938.307"[ shape=plaintext ] ;
- }->"world";
+"qualisys" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 79.963 Hz\nMost recent transform: 1542282048.935 \nBuffer length: 4.940 sec\n"];
+"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.184 Hz\nMost recent transform: 1542282048.988 \nBuffer length: 4.811 sec\n"];
+"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 79.963 Hz\nMost recent transform: 1542282048.935 \nBuffer length: 4.940 sec\n"];
 }
