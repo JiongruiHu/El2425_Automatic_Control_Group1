@@ -1,18 +1,9 @@
 digraph G {
-"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 30.091 Hz\nMost recent transform: 1542290025.218 ( -0.064 sec old)\nBuffer length: 4.952 sec\n"];
-"laser" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 88.009 Hz\nMost recent transform: 1542290025.236 ( -0.082 sec old)\nBuffer length: 5.022 sec\n"];
-"qualisys" -> "SVEA2"[label="Broadcaster: /qualisys\nAverage rate: 79.358 Hz\nMost recent transform: 1542290025.154 ( 0.001 sec old)\nBuffer length: 4.940 sec\n"];
-"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 79.359 Hz\nMost recent transform: 1542290025.154 ( 0.001 sec old)\nBuffer length: 4.940 sec\n"];
+"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.181 Hz\nMost recent transform: 1542291242.872 ( -0.065 sec old)\nBuffer length: 4.911 sec\n"];
+"qualisys" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 80.021 Hz\nMost recent transform: 1542291242.800 ( 0.007 sec old)\nBuffer length: 4.936 sec\n"];
+"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 80.021 Hz\nMost recent transform: 1542291242.800 ( 0.007 sec old)\nBuffer length: 4.936 sec\n"];
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542290025.155"[ shape=plaintext ] ;
+"Recorded at time: 1542291242.807"[ shape=plaintext ] ;
  }->"world";
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542290025.155"[ shape=plaintext ] ;
- }->"map";
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542290025.155"[ shape=plaintext ] ;
- }->"laser";
 }
