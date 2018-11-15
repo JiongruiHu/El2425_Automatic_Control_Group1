@@ -1,5 +1,5 @@
 <launch>
-    <param name="use_sim_time" value="true">
+    <param name="use_sim_time" value="true" />
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
     <node pkg="low_level_interface" name="odom_inv_transformer" type="SVEA1_to_odom.py" output="screen">
     </node>
