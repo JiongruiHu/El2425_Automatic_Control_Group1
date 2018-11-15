@@ -1,19 +1,18 @@
 digraph G {
-"laser" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 89.661 Hz\nMost recent transform: 1542277441.961 ( -0.004 sec old)\nBuffer length: 4.952 sec\n"];
-"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.180 Hz\nMost recent transform: 1542277441.962 ( -0.006 sec old)\nBuffer length: 4.813 sec\n"];
-"map" -> "odom"[label="Broadcaster: /slam_gmapping\nAverage rate: 20.204 Hz\nMost recent transform: 1542277441.959 ( -0.003 sec old)\nBuffer length: 4.900 sec\n"];
-"qualisys" -> "SVEA4"[label="Broadcaster: /qualisys\nAverage rate: 79.994 Hz\nMost recent transform: 1542277441.947 ( 0.010 sec old)\nBuffer length: 4.938 sec\n"];
-"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 79.995 Hz\nMost recent transform: 1542277441.947 ( 0.010 sec old)\nBuffer length: 4.938 sec\n"];
+"laser" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 88.448 Hz\nMost recent transform: 1542278102.893 ( -0.089 sec old)\nBuffer length: 5.009 sec\n"];
+"map" -> "qualisys"[label="Broadcaster: /slam_gmapping\nAverage rate: 30.204 Hz\nMost recent transform: 1542278102.850 ( -0.046 sec old)\nBuffer length: 4.900 sec\n"];
+"qualisys" -> "SVEA4"[label="Broadcaster: /qualisys\nAverage rate: 80.048 Hz\nMost recent transform: 1542278102.795 ( 0.010 sec old)\nBuffer length: 4.910 sec\n"];
+"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 80.047 Hz\nMost recent transform: 1542278102.795 ( 0.009 sec old)\nBuffer length: 4.910 sec\n"];
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542277441.957"[ shape=plaintext ] ;
- }->"map";
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542277441.957"[ shape=plaintext ] ;
+"Recorded at time: 1542278102.804"[ shape=plaintext ] ;
  }->"laser";
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542277441.957"[ shape=plaintext ] ;
+"Recorded at time: 1542278102.804"[ shape=plaintext ] ;
+ }->"map";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1542278102.804"[ shape=plaintext ] ;
  }->"world";
 }
