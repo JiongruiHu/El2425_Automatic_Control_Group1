@@ -25,6 +25,7 @@ if __name__ == '__main__':
     br = tf.TransformBroadcaster()
 
     rate = rospy.Rate(0.1)
+    print("So far so good")
     while not rospy.is_shutdown():
         try:
             (trans,rot) = listener.lookupTransform('SVEA1', 'qualisys', rospy.Time(0))
