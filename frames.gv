@@ -1,5 +1,5 @@
 digraph G {
-"qualisys" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 66.682 Hz\nMost recent transform: 1542281828.645 \nBuffer length: 4.949 sec\n"];
-"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.179 Hz\nMost recent transform: 1542281828.700 \nBuffer length: 4.814 sec\n"];
-"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 66.680 Hz\nMost recent transform: 1542281828.646 \nBuffer length: 4.949 sec\n"];
+"qualisys" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 79.963 Hz\nMost recent transform: 1542282048.935 \nBuffer length: 4.940 sec\n"];
+"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.184 Hz\nMost recent transform: 1542282048.988 \nBuffer length: 4.811 sec\n"];
+"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 79.963 Hz\nMost recent transform: 1542282048.935 \nBuffer length: 4.940 sec\n"];
 }
