@@ -27,10 +27,8 @@ if __name__ == '__main__':
     print("So far so good")
     while not rospy.is_shutdown():
         try:
-            print("Looking up")
             (trans,rot) = listener.lookupTransform('SVEA1', 'qualisys', rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-            print("Translation Error")
             continue
         transform = t.concatenate_matrices(t.translation_matrix(trans), t.quaternion_matrix(rot))
         inversed_transform = t.inverse_matrix(transform)
@@ -38,5 +36,5 @@ if __name__ == '__main__':
         quaternion = t.quaternion_from_matrix(inversed_transform)
         br.sendTransform(translation, quaternion, rospy.Time.now(), "qualisys", "SVEA1")
         print("Sleeping")
-        rospy.sleep(0.1)
+        rate.sleep()
         print("Slept")
