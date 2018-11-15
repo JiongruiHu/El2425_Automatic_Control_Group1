@@ -30,15 +30,12 @@ if __name__ == '__main__':
         try:
             (trans,rot) = listener.lookupTransform('SVEA1', 'qualisys', rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-            print("Error")
+            print("Translation Error")
             continue
-        print("Good")
         transform = t.concatenate_matrices(t.translation_matrix(trans), t.quaternion_matrix(rot))
         inversed_transform = t.inverse_matrix(transform)
         translation = t.translation_from_matrix(inversed_transform)
         quaternion = t.quaternion_from_matrix(inversed_transform)
-        print("Sending")
         br.sendTransform(translation, quaternion, rospy.Time.now(), "qualisys", "SVEA1")
-        print("Sent")
 
         #rate.sleep()
