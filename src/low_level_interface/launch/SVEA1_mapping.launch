@@ -1,9 +1,7 @@
 <launch>
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
-    <!--
-<node pkg="low_level_interface" name="odom_pose_transformer" type="SVEA1_to_odom.py" output="screen">
+    <node pkg="low_level_interface" name="odom_pose_transformer" type="SVEA1_to_odom.py" output="screen">
     </node>
-    -->
     <node pkg="tf" name="static_transformer_A" type="static_transform_publisher" output="screen" args="0.1 0 0 0 0 0 laser SVEA1 100">
       
     </node>
