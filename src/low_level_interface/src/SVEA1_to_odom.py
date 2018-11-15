@@ -28,8 +28,14 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         try:
             (trans,rot) = listener.lookupTransform('SVEA1', 'qualisys', rospy.Time(0))
-        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+        except (tf.LookupException):
+            print("Lookup")
             continue
+        except (tf.ConnectivityException):
+            print("Connectivity")
+            continue
+        except (tf.ExtrapolationException ):
+            print("Extrapolation")
         transform = t.concatenate_matrices(t.translation_matrix(trans), t.quaternion_matrix(rot))
         inversed_transform = t.inverse_matrix(transform)
         translation = t.translation_from_matrix(inversed_transform)
