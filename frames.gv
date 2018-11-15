@@ -1,17 +1,19 @@
 digraph G {
-"laser" -> "SVEA1"[label="Broadcaster: /static_transformer_A\nAverage rate: 10.181 Hz\nMost recent transform: 1542277114.056 ( -0.083 sec old)\nBuffer length: 4.911 sec\n"];
-"map" -> "odom"[label="Broadcaster: /slam_gmapping\nAverage rate: 20.206 Hz\nMost recent transform: 1542277113.981 ( -0.008 sec old)\nBuffer length: 4.850 sec\n"];
-"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.185 Hz\nMost recent transform: 1542277114.043 ( -0.070 sec old)\nBuffer length: 4.811 sec\n"];
+"laser" -> "SVEA1"[label="Broadcaster: /qualisys\nAverage rate: 89.661 Hz\nMost recent transform: 1542277441.961 ( -0.004 sec old)\nBuffer length: 4.952 sec\n"];
+"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.180 Hz\nMost recent transform: 1542277441.962 ( -0.006 sec old)\nBuffer length: 4.813 sec\n"];
+"map" -> "odom"[label="Broadcaster: /slam_gmapping\nAverage rate: 20.204 Hz\nMost recent transform: 1542277441.959 ( -0.003 sec old)\nBuffer length: 4.900 sec\n"];
+"qualisys" -> "SVEA4"[label="Broadcaster: /qualisys\nAverage rate: 79.994 Hz\nMost recent transform: 1542277441.947 ( 0.010 sec old)\nBuffer length: 4.938 sec\n"];
+"qualisys" -> "SVEA5"[label="Broadcaster: /qualisys\nAverage rate: 79.995 Hz\nMost recent transform: 1542277441.947 ( 0.010 sec old)\nBuffer length: 4.938 sec\n"];
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542277113.973"[ shape=plaintext ] ;
- }->"laser";
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542277113.973"[ shape=plaintext ] ;
+"Recorded at time: 1542277441.957"[ shape=plaintext ] ;
  }->"map";
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542277113.973"[ shape=plaintext ] ;
+"Recorded at time: 1542277441.957"[ shape=plaintext ] ;
+ }->"laser";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1542277441.957"[ shape=plaintext ] ;
  }->"world";
 }
