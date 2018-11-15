@@ -41,4 +41,4 @@ if __name__ == '__main__':
         br.sendTransform(translation, quaternion, rospy.Time.now(), "qualisys", "SVEA1")
         print("Sent")
 
-        rate.sleep()
+        #rate.sleep()
