@@ -9,7 +9,7 @@
     output="screen">
     <param name="server_address" value="11.0.0.10"/>
     <param name="base_port" value="22222"/>
-    <param name="publish_tf" value="false"/>
+    <param name="publish_tf" value="true"/>
     <param name="max_accel" value="$(arg max_accel)"/>
     <param name="qualisys_fps" value="$(arg qualisys_fps)"/>
   </node>
