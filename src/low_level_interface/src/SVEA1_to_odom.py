@@ -38,4 +38,4 @@ if __name__ == '__main__':
         quaternion = t.quaternion_from_matrix(inversed_transform)
         br.sendTransform(translation, quaternion, rospy.Time.now(), "qualisys", "SVEA1")
 
-        #rate.sleep()
+        rate.sleep()
