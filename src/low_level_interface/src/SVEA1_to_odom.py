@@ -32,6 +32,7 @@ if __name__ == '__main__':
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             print("Error")
             continue
+        print("Good")
         transform = t.concatenate_matrices(t.translation_matrix(trans), t.quaternion_matrix(rot))
         inversed_transform = t.inverse_matrix(transform)
         translation = t.translation_from_matrix(inversed_transform)
