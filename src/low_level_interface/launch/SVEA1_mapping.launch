@@ -9,5 +9,6 @@
     </node>
     <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
       <param name="base_frame" value="SVEA1" />
+      <param name="odom_frame" value="qualisys" />
     </node>
 </launch>

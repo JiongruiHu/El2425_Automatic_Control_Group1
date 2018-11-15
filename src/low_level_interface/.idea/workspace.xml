@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../qualisys/launch/qualisys.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../qualisys/launch/qualisys.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/launch/SVEA1_mapping.launch" beforeDir="false" afterPath="$PROJECT_DIR$/launch/SVEA1_mapping.launch" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
