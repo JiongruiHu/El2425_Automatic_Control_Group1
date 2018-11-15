@@ -27,6 +27,8 @@ if __name__ == '__main__':
     print("So far so good")
     while not rospy.is_shutdown():
         try:
+            now = rospy.Time.now()
+            listener.waitForTransform("SVEA1", "/qualisys", now, rospy.Duration(4.0))
             (trans,rot) = listener.lookupTransform('SVEA1', 'qualisys', rospy.Time(0))
         except (tf.LookupException):
             print("Lookup")
