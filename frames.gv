@@ -1,13 +1,17 @@
 digraph G {
-"SVEA1" -> "odom"[label="Broadcaster: /odom_pose_transformer\nAverage rate: 79.868 Hz\nMost recent transform: 1542121755.502 ( 0.022 sec old)\nBuffer length: 4.871 sec\n"];
-"LaserFrame" -> "SVEA1"[label="Broadcaster: /static_transform_publisher_1542118569054870811\nAverage rate: 10.184 Hz\nMost recent transform: 1542121755.562 ( -0.037 sec old)\nBuffer length: 4.811 sec\n"];
-"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.183 Hz\nMost recent transform: 1542121755.559 ( -0.034 sec old)\nBuffer length: 4.812 sec\n"];
+"laser" -> "SVEA1"[label="Broadcaster: /static_transformer_A\nAverage rate: 10.181 Hz\nMost recent transform: 1542277114.056 ( -0.083 sec old)\nBuffer length: 4.911 sec\n"];
+"map" -> "odom"[label="Broadcaster: /slam_gmapping\nAverage rate: 20.206 Hz\nMost recent transform: 1542277113.981 ( -0.008 sec old)\nBuffer length: 4.850 sec\n"];
+"world" -> "qualisys"[label="Broadcaster: /world_to_qualisys_tf\nAverage rate: 10.185 Hz\nMost recent transform: 1542277114.043 ( -0.070 sec old)\nBuffer length: 4.811 sec\n"];
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542121755.524"[ shape=plaintext ] ;
+"Recorded at time: 1542277113.973"[ shape=plaintext ] ;
+ }->"laser";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1542277113.973"[ shape=plaintext ] ;
+ }->"map";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1542277113.973"[ shape=plaintext ] ;
  }->"world";
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1542121755.524"[ shape=plaintext ] ;
- }->"LaserFrame";
 }
