@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     rate = rospy.Rate(10.0)
     print("So far so good")
-    listener.waitForTransform("SVEA1", "/qualisys", rospy.Time(), rospy.Duration(4.0))
+    listener.waitForTransform("/qualisys", "SVEA1", rospy.Time(), rospy.Duration(4.0))
     while not rospy.is_shutdown():
         try:
             now = rospy.Time.now()
