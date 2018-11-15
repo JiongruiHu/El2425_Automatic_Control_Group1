@@ -21,10 +21,9 @@ if __name__ == '__main__':
 
     listener = tf.TransformListener()
 
-
     br = tf.TransformBroadcaster()
 
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(10.0)
     print("So far so good")
     while not rospy.is_shutdown():
         try:
