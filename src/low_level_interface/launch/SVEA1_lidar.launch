@@ -12,6 +12,7 @@
     <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
         <param name="odom_frame" value="qualisys" />
         <param name="base_frame" value="SVEA1" />
+        <param name="scan" value="laser" />
     </node>
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
