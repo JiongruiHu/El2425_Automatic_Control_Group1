@@ -117,20 +117,20 @@ class PurePursuit(object):
         #msg = lli_ctrl_request()
         #msg.velocity = speed
         if not hasattr(self, 'car_pose'):
-            return
-        vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
-        self.car_heading = arctan2(vy, vx)
-        beta = self.car_heading - self.current_heading
-        angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
+            #return
+            vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
+            self.car_heading = arctan2(vy, vx)
+            beta = self.car_heading - self.current_heading
+            angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
         #print(angles)     
-        ranges = data.ranges
-        threshold_dist = 1
-        Estop = 0
-        for i in range(len(angles)):
-            if abs(angles[i] - beta) > pi-pi/6:
-               if ranges[i] < threshold_dist:
-                   Estop = 1
-        self.Estop = Estop
+            ranges = data.ranges
+            threshold_dist = 1
+            Estop = 0
+            for i in range(len(angles)):
+                if abs(angles[i] - beta) > pi-pi/6:
+                    if ranges[i] < threshold_dist:
+                        Estop = 1
+            self.Estop = Estop
         #msg.velocity = speed
         #car_speed.publish(msg)
 
