@@ -116,6 +116,8 @@ class PurePursuit(object):
     def lidar_cb(self,data):
         #msg = lli_ctrl_request()
         #msg.velocity = speed
+        if not hasattr(self, 'car_pose'):
+            return
         vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
         self.car_heading = arctan2(vy, vx)
         beta = self.car_heading - self.current_heading
