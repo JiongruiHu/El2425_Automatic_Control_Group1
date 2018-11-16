@@ -7,7 +7,7 @@
       <param name="port" value="/dev/ttyACM0" />
       <param name="baud" value="115200" />
     </node>
-    <node pkg="tf" name="static_transformer_A" type="static_transform_publisher" output="screen" args="0.1 0 0 0 0 0 laser base_link 100">
+    <node pkg="tf" name="static_transformer_A" type="static_transform_publisher" output="screen" args="0.1 0 0 0 0 0 laser SVEA1 100">
 
     </node>
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
