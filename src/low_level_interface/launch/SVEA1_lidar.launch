@@ -10,6 +10,7 @@
     <node pkg="tf" name="static_transformer_A" type="static_transform_publisher" output="screen" args="0.1 0 0 0 0 0 SVEA1 laser 100">
     </node>
     <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
+        <param name="odom_frame" value="SVEA1/odom" />
     </node>
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
