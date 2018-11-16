@@ -120,7 +120,7 @@ class PurePursuit(object):
             #return
             vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
             self.car_heading = arctan2(vy, vx)
-            if vx**2+vy**2 < 10**-3
+            if vx**2+vy**2 < 10**(-3):
                 return
             beta = self.car_heading - self.current_heading
             angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
