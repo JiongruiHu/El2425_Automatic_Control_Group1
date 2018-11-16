@@ -13,8 +13,7 @@ class PurePursuit(object):
     def __init__(self):
         self.path = path_points('circle')
         self.Estop = 0
-        # self.path = [[-1.439,-1.3683],[0.245,-1.88676]]
-        # path = self.path
+        self.car_heading = 0
         # Subscribe to the topics
         self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odometry, self.car_pose_cb)
         self.Lidar_sub = rospy.Subscriber("/scan", LaserScan, self.lidar_cb)
@@ -44,18 +43,19 @@ class PurePursuit(object):
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        # heading = self.car_pose.twist.twist.angular.z
+        #self.car_heading = self.car_pose.twist.twist.angular.z
         self.xs.append(xr)
         self.ys.append(yr)
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
-        current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
+
+        self.current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
         print('des_head',des_heading)
-        headErr = des_heading - current_heading
+        headErr = des_heading - self.current_heading
         # print("headErrOriginal", headErr)
         if headErr > pi:
             headErr = -2 * pi + headErr
@@ -116,13 +116,16 @@ class PurePursuit(object):
     def lidar_cb(self,data):
         #msg = lli_ctrl_request()
         #msg.velocity = speed
+        vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
+        self.car_heading = arctan2(vy, vx)
+        beta = self.car_heading - self.current_heading
         angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
         #print(angles)     
         ranges = data.ranges
         threshold_dist = 1
         Estop = 0
         for i in range(len(angles)):
-            if abs(angles[i]) > pi-pi/6:
+            if abs(angles[i] - beta) > pi-pi/6:
                if ranges[i] < threshold_dist:
                    Estop = 1
         self.Estop = Estop
