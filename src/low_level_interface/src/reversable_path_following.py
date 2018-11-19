@@ -70,7 +70,7 @@ class PurePursuit(object):
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = -10
+        lli_msg.velocity = 10
         self.car_control_pub.publish(lli_msg)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
