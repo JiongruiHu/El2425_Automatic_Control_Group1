@@ -11,7 +11,7 @@ from nav_msgs.msg import Odometry
 
 class PurePursuit(object):
     def __init__(self):
-        self.path = path_points('circle')
+        self.path = path_points('figure-8')
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
@@ -141,7 +141,7 @@ class PurePursuit(object):
         else:
             speed = -10
         #speed = E_stop(speed)
-        return speed if not self.reversed else -20
+        return speed if not self.reversed else -17
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
