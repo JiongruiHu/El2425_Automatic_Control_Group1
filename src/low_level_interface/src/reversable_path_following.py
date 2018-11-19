@@ -94,7 +94,7 @@ class PurePursuit(object):
             phi = des_phi
         v = self.speed_control(phi)
         # print('real phi',(phi*180/pi))
-        return v, -int(100/(pi/4)*phi)      ##MAY NEED TO REMOVE MINUS SIGN
+        return v, int(100/(pi/4)*phi)      ##MAY NEED TO ADD MINUS SIGN
 
     def forward_controller(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
