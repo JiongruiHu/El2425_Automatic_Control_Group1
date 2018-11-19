@@ -139,9 +139,9 @@ class PurePursuit(object):
             else:
                 speed = 15
         else:
-            speed = -15
+            speed = -10
         #speed = E_stop(speed)
-        return speed if not self.reversed else -10
+        return speed if not self.reversed else -15
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
