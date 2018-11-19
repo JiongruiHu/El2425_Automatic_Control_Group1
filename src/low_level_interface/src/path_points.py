@@ -7,8 +7,16 @@ def path_points(type_path):
     nPoint = 108
     if type_path == 'circle':
         r = 1  # the radius of the circle path
-        alpha = linspace(-pi,5*pi,nPoint)
+        alpha = linspace(-pi,pi,nPoint)
         for a in alpha:
+            x = r * cos(a)
+            y = r * sin(a)
+            path.append([x,y])
+
+    elif type_path == 'reversed_circle':
+        r = 1  # the radius of the circle path
+        alpha = linspace(-1.5*pi,pi,nPoint)
+        for a in reversed(alpha):
             x = r * cos(a)
             y = r * sin(a)
             path.append([x,y])
