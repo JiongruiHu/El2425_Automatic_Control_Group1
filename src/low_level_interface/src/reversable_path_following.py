@@ -31,7 +31,6 @@ class PurePursuit(object):
 
     def __pure_pursuit(self):
         rate = rospy.Rate(10)
-        lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
@@ -58,6 +57,18 @@ class PurePursuit(object):
             return self.reversed_lidar_cb(data)
         else:
             return self.forward_lidar_cb(data)
+
+    def change_to_reversed(self):
+        lli_msg = lli_ctrl_request()
+        lli_msg.velocity = -10
+        self.car_control_pub.publish(lli_msg)
+        lli_msg.velocity = 0
+        self.car_control_pub.publish(lli_msg)
+        self.reversed = True
+
+    def change_to_forward(self):
+        self.reversed = False
+
 
     def reversed_controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
@@ -92,7 +103,7 @@ class PurePursuit(object):
             phi = -pi/4
         else:
             phi = des_phi
-        v = self.speed_control(phi)
+        v = self.reversed_speed_control(phi)
         # print('real phi',(phi*180/pi))
         return v, int(100/(pi/4)*phi)      ##MAY NEED TO ADD MINUS SIGN
 
@@ -141,7 +152,18 @@ class PurePursuit(object):
         else:
             speed = -10
         #speed = E_stop(speed)
-        return speed if not self.reversed else -17
+        return speed
+
+    def reversed_speed_control(self, phi):
+        if self.Estop == 0:
+            if abs(phi) < pi/12:
+                speed = -25
+            else:
+                speed = -20
+        else:
+            speed = 0
+        #speed = E_stop(speed)
+        return speed
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
