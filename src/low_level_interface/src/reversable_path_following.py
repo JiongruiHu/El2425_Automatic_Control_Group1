@@ -31,6 +31,7 @@ class PurePursuit(object):
 
     def __pure_pursuit(self):
         rate = rospy.Rate(10)
+        lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
