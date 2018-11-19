@@ -139,7 +139,7 @@ class PurePursuit(object):
             else:
                 speed = 15
         else:
-            speed = -10
+            speed = -15
         #speed = E_stop(speed)
         return speed if not self.reversed else -10
 
