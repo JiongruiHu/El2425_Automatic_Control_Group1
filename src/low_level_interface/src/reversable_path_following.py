@@ -46,7 +46,7 @@ class PurePursuit(object):
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
-                    lli_msg.velocity,lli_msg.steering = self.reversed_controller(goal)
+                    lli_msg.velocity,lli_msg.steering = self.controller(goal)
                     self.car_control_pub.publish(lli_msg)
                     rate.sleep()
                 # goal = self.path[0]
