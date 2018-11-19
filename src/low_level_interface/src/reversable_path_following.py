@@ -21,7 +21,7 @@ class PurePursuit(object):
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
         self.car_control_pub = rospy.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
-        rate = rospy.Rate(10)
+
         # goal = self.path[0]
 
         self.ld = 0.5
@@ -30,6 +30,7 @@ class PurePursuit(object):
         self.__pure_pursuit()
 
     def __pure_pursuit(self):
+        rate = rospy.Rate(10)
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
         while len(self.path) > 0:
