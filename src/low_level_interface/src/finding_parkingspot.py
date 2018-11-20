@@ -125,11 +125,11 @@ class PurePursuit(object):
             if abs(angles[i]) > pi-pi/6:
                 if ranges[i] < e_stop_threshold_dist:
                     Estop = 1
-            elif angles[i] < pi/2 + pi/50 and angles[i] > pi/2 - pi/50
-                if ranges[i] > parking_threshold and self.parking == 0 
+            elif angles[i] < pi/2 + pi/50 and angles[i] > pi/2 - pi/50:
+                if ranges[i] > parking_threshold and self.parking == 0: 
                     parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     parking=1
-                elif ranges[i] < parking_threshold and self.parking == 1
+                elif ranges[i] < parking_threshold and self.parking == 1:
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
 		    self.parking_lot_dist = sqrt((parking_lot_end[0]-parking_lot_start[0])^2+(parking_lot_end[1]-parking_lot_start[1])^2)
                     print(self.parking_lot_dist)
