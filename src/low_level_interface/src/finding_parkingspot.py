@@ -9,10 +9,12 @@ from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
 
 
-class ParkingControl(object):
+class PurePursuit(object):
     def __init__(self):
-        self.path = path_points('circle')
+        self.path = path_points('linear')
         self.Estop = 0
+        self.parking = 0
+        self.parking_lot_dist = 0
         self.car_heading = 0
         # Subscribe to the topics
         self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odometry, self.car_pose_cb)
@@ -21,24 +23,20 @@ class ParkingControl(object):
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
         self.car_control_pub = rospy.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
-        self.rate = rospy.Rate(10)
+        rate = rospy.Rate(10)
         # goal = self.path[0]
-
+        lli_msg = lli_ctrl_request()
+        lli_msg.velocity = speed
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__pure_pursuit()
-
-    def __pure_pursuit(self):
-        lli_msg = lli_ctrl_request()
-        lli_msg.velocity = speed
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity,lli_msg.steering = self.controller(goal)
                     self.car_control_pub.publish(lli_msg)
-                    self.rate.sleep()
+                    rate.sleep()
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -118,28 +116,29 @@ class ParkingControl(object):
 
     
     def lidar_cb(self,data):
-        #msg = lli_ctrl_request()
-        #msg.velocity = speed
-        #if not hasattr(self, 'car_pose'):
-        #return
-        #vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
-        #self.car_heading = arctan2(vy, vx)
-        #if vx**2+vy**2 < 10**(-3):
-        #    return
-        #beta = self.car_heading - self.current_heading
         angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
-        #print(angles)     
         ranges = data.ranges
-        threshold_dist = 1
+        e_stop_threshold_dist = 1
+        parking_threshold = 0.5
         Estop = 0
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
-                if ranges[i] < threshold_dist:
+                if ranges[i] < e_stop_threshold_dist:
                     Estop = 1
+            elif angles[i] < pi/2 + pi/50 and angles[i] > pi/2 - pi/50:
+                if ranges[i] > parking_threshold and self.parking == 0: 
+                    parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
+                    parking=1
+                elif ranges[i] < parking_threshold and self.parking == 1:
+                    parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
+		    self.parking_lot_dist = sqrt((parking_lot_end[0]-parking_lot_start[0])^2+(parking_lot_end[1]-parking_lot_start[1])^2)
+                    print(self.parking_lot_dist)
+                    parking = 0                 				
         self.Estop = Estop
-        #msg.velocity = speed
-        #car_speed.publish(msg)
-
+        self.parking = parking
+        #Printa detta på något sätt och testkör?? När det funkar, sätt nödvändig parkeringsplatslängd och lämplig hastighet. 
+ 
+ 
  
 
 
@@ -152,7 +151,7 @@ if __name__ == "__main__":
     rospy.init_node('path_follow')
     speed = 10
     try:
-        ParkingControl()
+        PurePursuit()
     except rospy.ROSInterruptException:
         pass
     
