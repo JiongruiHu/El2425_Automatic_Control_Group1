@@ -102,7 +102,7 @@ class Path:
         return xn, yn, headingn
 
     def bicycle_forward(self, x, y, heading, steering):
-        dt = 0.1  # the car should reach the goal in 10 second
+        dt = 0.01  # the car should reach the goal in 10 second
         lr = 0.32 / 2
         beta = arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
         dx = self.car_speed * cos(heading + beta)
