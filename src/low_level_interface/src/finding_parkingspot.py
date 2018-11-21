@@ -7,7 +7,7 @@ from sensor_msgs.msg import LaserScan
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
-
+import pdb
 
 class PurePursuit(object):
     def __init__(self):
@@ -50,7 +50,6 @@ class PurePursuit(object):
         self.ys.append(yr)
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
-
         self.current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
@@ -88,7 +87,7 @@ class PurePursuit(object):
         else:
             speed = -10
         #speed = E_stop(speed)
-        return speed
+        return 0 #speed
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
@@ -121,22 +120,23 @@ class PurePursuit(object):
         e_stop_threshold_dist = 1
         parking_threshold = 0.5
         Estop = 0
+        parking = 0
+        #parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y] 
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
                 if ranges[i] < e_stop_threshold_dist:
                     Estop = 1
-            elif angles[i] < pi/2 + pi/50 and angles[i] > pi/2 - pi/50:
+            elif angles[i] < pi/2 + pi/100 and angles[i] > pi/2 - pi/100:
                 if ranges[i] > parking_threshold and self.parking == 0: 
                     parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
-                    parking=1
+                    self.parking = 1
                 elif ranges[i] < parking_threshold and self.parking == 1:
+                    pdb.set_trace()
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
-		    self.parking_lot_dist = sqrt((parking_lot_end[0]-parking_lot_start[0])^2+(parking_lot_end[1]-parking_lot_start[1])^2)
-                    print(self.parking_lot_dist)
-                    parking = 0                 				
+		    self.parking_lot_dist = sqrt((parking_lot_end[0]-parking_lot_start[0])**2+(parking_lot_end[1]-parking_lot_start[1])**2)
+                    self.parking = 0                 				
         self.Estop = Estop
-        self.parking = parking
-        #Printa detta på något sätt och testkör?? När det funkar, sätt nödvändig parkeringsplatslängd och lämplig hastighet. 
+         
  
  
  
@@ -154,4 +154,4 @@ if __name__ == "__main__":
         PurePursuit()
     except rospy.ROSInterruptException:
         pass
-    
+
