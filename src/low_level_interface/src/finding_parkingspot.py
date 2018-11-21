@@ -19,6 +19,7 @@ class PurePursuit(object):
         # Subscribe to the topics
         self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odometry, self.car_pose_cb)
         self.Lidar_sub = rospy.Subscriber("/scan", LaserScan, self.lidar_cb)
+        self.has_parking_spot = False
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -33,9 +34,14 @@ class PurePursuit(object):
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
-                    goal = self.choose_point()
-                    lli_msg.velocity,lli_msg.steering = self.controller(goal)
-                    self.car_control_pub.publish(lli_msg)
+                    if not self.has_parking_spot:
+                        goal = self.choose_point()
+                        lli_msg.velocity,lli_msg.steering = self.controller(goal)
+                        self.car_control_pub.publish(lli_msg)
+                    else:
+                        lli_msg.velocity, lli_msg.steering = self.parallell_parking_start()
+                        self.car_control_pub.publish(lli_msg)
+                        break
                     rate.sleep()
                 # goal = self.path[0]
         lli_msg.velocity = 0
@@ -74,7 +80,8 @@ class PurePursuit(object):
             phi = -pi/4
         else:
             phi = des_phi
-        v = self.speed_control(phi)
+        #v = self.speed_control(phi)
+        v = 10
         # print('real phi',(phi*180/pi))
         return v, -int(100/(pi/4)*phi)
 
@@ -87,7 +94,7 @@ class PurePursuit(object):
         else:
             speed = -10
         #speed = E_stop(speed)
-        return 0 #speed
+        return speed
 
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
@@ -113,6 +120,9 @@ class PurePursuit(object):
         self.path.remove(goal_point)
         return goal_point
 
+    def parallell_parking_start(self):
+        return 0, 0
+
     def e_stop(self,data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
@@ -128,6 +138,7 @@ class PurePursuit(object):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
         parking_threshold = 0.5
+        pp_len_threshold = 0.7          #Length of gap, subject to change
         for i in range(len(angles)):
             if angles[i] < pi / 2 + pi / 50 and angles[i] > pi / 2 - pi / 50:
                 if self.parking == 0:
@@ -141,7 +152,10 @@ class PurePursuit(object):
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     self.parking_lot_dist = sqrt((parking_lot_end[0] - self.parking_lot_start[0]) ** 2 + (parking_lot_end[1] - self.parking_lot_start[1]) ** 2)
                     print("Dist"+str(self.parking_lot_dist))
-                    self.parking = 0
+                    if self.parking_lot_dist > pp_len_threshold:
+                        self.parallell_parking_start()
+                    else:
+                        self.parking = 0
 
 
 
