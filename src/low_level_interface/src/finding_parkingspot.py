@@ -128,12 +128,14 @@ class PurePursuit(object):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
         parking_threshold = 0.5
-        self.parking = 0
         for i in range(len(angles)):
             if angles[i] < pi / 2 + pi / 100 and angles[i] > pi / 2 - pi / 100:
-                if ranges[i] > parking_threshold and self.parking == 0:
-                    self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
-                    self.parking = 1
+                if self.parking == 0:
+                    if ranges[i] < parking_threshold:
+                        return
+                    elif angles[i+1] > pi / 2 + pi / 100 or angles[i+1] < pi / 2 - pi / 100:    ##All relevant angles passed test
+                        self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
+                        self.parking = 1
                 elif ranges[i] < parking_threshold and self.parking == 1:
                     pdb.set_trace()
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]

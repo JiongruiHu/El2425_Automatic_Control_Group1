@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,12 +23,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="pure_pursuit_with_path_and_speed_control" value="8" />
-          <entry key="py" value="3230" />
+          <entry key="py" value="3377" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3238" />
+          <entry key="Python" value="3385" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -103,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/finding_parkingspot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
+            <state relative-caret-position="462">
+              <caret line="135" column="129" selection-start-line="135" selection-start-column="129" selection-end-line="135" selection-end-column="129" />
               <folding>
                 <element signature="e#22#34#0" expanded="true" />
               </folding>
@@ -353,8 +351,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/finding_parkingspot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
+        <state relative-caret-position="462">
+          <caret line="135" column="129" selection-start-line="135" selection-start-column="129" selection-end-line="135" selection-end-column="129" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
           </folding>
