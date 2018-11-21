@@ -113,29 +113,49 @@ class PurePursuit(object):
         self.path.remove(goal_point)
         return goal_point
 
-    
-    def lidar_cb(self,data):
-        angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
+    def e_stop(self,data):
+        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
         e_stop_threshold_dist = 1
-        parking_threshold = 0.5
         Estop = 0
-        parking = 0
-        #parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y] 
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
                 if ranges[i] < e_stop_threshold_dist:
                     Estop = 1
-            elif angles[i] < pi/2 + pi/100 and angles[i] > pi/2 - pi/100:
-                if ranges[i] > parking_threshold and self.parking == 0: 
-                    parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
+        self.Estop = Estop
+
+    def parking_stop(self,data):
+        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
+        ranges = data.ranges
+        parking_threshold = 0.5
+        self.parking = 0
+        for i in range(len(angles)):
+            if angles[i] < pi / 2 + pi / 100 and angles[i] > pi / 2 - pi / 100:
+                if ranges[i] > parking_threshold and self.parking == 0:
+                    self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     self.parking = 1
                 elif ranges[i] < parking_threshold and self.parking == 1:
                     pdb.set_trace()
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
-		    self.parking_lot_dist = sqrt((parking_lot_end[0]-parking_lot_start[0])**2+(parking_lot_end[1]-parking_lot_start[1])**2)
-                    self.parking = 0                 				
-        self.Estop = Estop
+                    self.parking_lot_dist = sqrt(
+                        (parking_lot_end[0] - self.parking_lot_start[0]) ** 2 + (parking_lot_end[1] - self.parking_lot_start[1]) ** 2)
+                self.parking = 0
+
+
+
+def lidar_cb(self,data):
+        self.e_stop(data)
+        self.parking_stop(data)
+
+
+
+
+
+        #parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y] 
+
+
+
+
          
  
  
