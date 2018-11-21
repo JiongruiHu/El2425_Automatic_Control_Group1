@@ -153,7 +153,7 @@ class PurePursuit(object):
                     self.parking_lot_dist = sqrt((parking_lot_end[0] - self.parking_lot_start[0]) ** 2 + (parking_lot_end[1] - self.parking_lot_start[1]) ** 2)
                     print("Dist"+str(self.parking_lot_dist))
                     if self.parking_lot_dist > pp_len_threshold:
-                        self.parallell_parking_start()
+                        self.has_parking_spot = True
                     else:
                         self.parking = 0
 
