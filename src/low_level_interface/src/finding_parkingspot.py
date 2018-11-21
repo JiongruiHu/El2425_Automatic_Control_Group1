@@ -129,23 +129,23 @@ class PurePursuit(object):
         ranges = data.ranges
         parking_threshold = 0.5
         for i in range(len(angles)):
-            if angles[i] < pi / 2 + pi / 100 and angles[i] > pi / 2 - pi / 100:
+            if angles[i] < pi / 2 + pi / 50 and angles[i] > pi / 2 - pi / 50:
                 if self.parking == 0:
                     if ranges[i] < parking_threshold:
                         return
-                    elif angles[i+1] > pi / 2 + pi / 100 or angles[i+1] < pi / 2 - pi / 100:    ##All relevant angles passed test
+                    elif angles[i+1] > pi / 2 + pi / 50 or angles[i+1] < pi / 2 - pi / 50:    ##All relevant angles passed test
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                         self.parking = 1
+                        print("START:"+str(self.parking_lot_start))
                 elif ranges[i] < parking_threshold and self.parking == 1:
-                    pdb.set_trace()
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
-                    self.parking_lot_dist = sqrt(
-                        (parking_lot_end[0] - self.parking_lot_start[0]) ** 2 + (parking_lot_end[1] - self.parking_lot_start[1]) ** 2)
-                self.parking = 0
+                    self.parking_lot_dist = sqrt((parking_lot_end[0] - self.parking_lot_start[0]) ** 2 + (parking_lot_end[1] - self.parking_lot_start[1]) ** 2)
+                    print("Dist"+str(self.parking_lot_dist))
+                    self.parking = 0
 
 
 
-def lidar_cb(self,data):
+    def lidar_cb(self,data):
         self.e_stop(data)
         self.parking_stop(data)
 
