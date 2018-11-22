@@ -34,8 +34,7 @@ class Path:
         self.car_heading = current_heading
 
     def parking_path(self):
-        path = []
-        open_list, close_list = [], []
+        open_list, close_list, current_list = [], [], []
         steering = linspace(-pi/4, pi/4, 5)
         initNode = AstarNode(self.car_p, self.goal, self.car_heading)
         initNode.add_gcost(0)
@@ -48,28 +47,50 @@ class Path:
                     if reach_goal(node.p, self.goal):
                         return node
             open_list.remove(node)
+            #current_list.append(node)
             open_list, close_list = self.update_neighbour(open_list, close_list, node)
+        return None
 
-        return path
+    def build_path(self):
+        path, controls, time = [], [], [0]
+        route = self.parking_path()
+        while route.np is not None:
+            x, y = route.p[0], route.p[1]
+            plt.plot(x, y, 'g*', markersize=1)
+            plt.show()
+            path.append(route)
+            route = route.np
+        path.reverse()
+        for nod in path:
+            controls.append(nod.steer)
+            time.append(nod.t)
+        return controls, time
 
     def update_neighbour(self, openL, closeL, n):
-        for delta in linspace(-pi/4, pi/4, 5):    # steering range
+        for delta in linspace(-pi/4, pi/4, 7):    # steering range
             ns = self.find_new_node(n, delta)
             nn = []
             if ns not in closeL:
+                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.01)]
                 if ns.G == 1000 or (checkcollision(ns.p, self.obs) is not True):
                     closeL.append(ns)
+                elif nn:
+                    if ns.G < nn[0].G:
+                        openL[openL.index(nn[0])] = ns
+                else:
+                    openL.append(ns)
+
         return openL, closeL
 
     def find_new_node(self, node, delta):
-        xl, yl, headingl =[node.p[0]], [node.p[1]], [node.heading]
+        xl, yl, headingl = [node.p[0]], [node.p[1]], [node.heading]
         state = True
         t = 0
         g = 0
-        while t < 2 and state is True:
+        while t < 1 and state is True:
             xn, yn, headingn = self.bicycle_backward(xl[-1], yl[-1], headingl[-1], delta)
-            g = g + 0.01
-            if checkcollision((xn,yn), self.obs):
+            g = g + dist((xn,yn),(xl[-1], yl[-1]))
+            if checkcollision((xn, yn), self.obs):  # if no collision
                 xl.append(xn)
                 yl.append(yn)
                 headingl.append(headingn)
@@ -90,27 +111,27 @@ class Path:
     # we assume the car is running in a constant speed.
     def bicycle_backward(self, x, y, heading, steering):
         dt = 0.01  # the car should reach the goal in 10 second
-        lr = 0.32/2
+        lr = 3.2/2
         beta = arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
-        dx = - self.car_speed * cos(pi-heading + beta)
-        dy = self.car_speed * sin(pi-heading + beta)
+        dx = - self.car_speed * cos(heading + beta)
+        dy = self.car_speed * sin(heading + beta)
 
         xn = x + dx * dt
         yn = y + dy * dt
-        headingn = heading + self.car_speed * sin(beta)/lr
+        headingn = heading + self.car_speed * sin(beta) * dt / lr
 
         return xn, yn, headingn
 
     def bicycle_forward(self, x, y, heading, steering):
         dt = 0.01  # the car should reach the goal in 10 second
-        lr = 0.32 / 2
+        lr = 3.2 / 2
         beta = arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
         dx = self.car_speed * cos(heading + beta)
         dy = self.car_speed * sin(heading + beta)
 
         xn = x + dx * dt
         yn = y + dy * dt
-        headingn = heading + self.car_speed * sin(beta) / lr
+        headingn = heading + self.car_speed * sin(beta) * dt / lr
 
         return xn, yn, headingn
 
@@ -163,13 +184,14 @@ def checkcollision(p, obs):
     for o in obs:
         if dist(p, (o[0], o[1])) < o[2] + 0.05:
             return False  # collision
-    return True     # no colloision
+    return True     # no collision
 
 
 if __name__ == "__main__":
     startp, goalp = (7, 0.9), (12, 3.5)
 
     obs_lists = myObsList()
-    car = Path(startp, goalp, obs_lists, 0)
+    car = Path(startp, goalp, obs_lists, pi)
     #car.my_plot(obs_lists)
-    car_path = car.parking_path()
+    control_list, time_list = car.build_path()
+
