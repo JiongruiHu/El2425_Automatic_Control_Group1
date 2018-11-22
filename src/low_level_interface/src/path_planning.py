@@ -173,7 +173,7 @@ def dist(p1, p2):
 
 
 def reach_goal(p, goalpoint):
-    if dist(p, goalpoint) < 0.01:
+    if dist(p, goalpoint) < 0.1:
         return True
     else:
         return False
