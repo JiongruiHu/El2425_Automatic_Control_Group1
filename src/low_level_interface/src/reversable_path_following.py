@@ -55,7 +55,6 @@ class FollowThenPark(object):
         if self.has_parking_spot:
             self.parallell_parking_backwards()
 
-
     def __pure_pursuit(self):
         rate = rospy.Rate(10)
         lli_msg = lli_ctrl_request()

@@ -54,7 +54,7 @@ class Path:
         return None
 
     def build_path(self):
-        path, controls, time = [], [], [0]
+        path, controls, time = [], [], []
         route = self.parking_path()
         while route.np is not None:
             #x, y = route.p[0], route.p[1]
@@ -155,7 +155,7 @@ class Path:
     def inflated(self, obs):
         inflated_obs = []
         for o in obs:
-            o[2] = self.car_size[1]/2
+            o[2] = self.car_size[0]/2
             inflated_obs.append(o)
         return inflated_obs
 
@@ -188,7 +188,7 @@ def dist(p1, p2):
 
 
 def reach_goal(p, goalpoint):
-    if dist(p, goalpoint) < 0.1:
+    if dist(p, goalpoint) < 0.01:
         return True
     else:
         return False
