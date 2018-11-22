@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import time
 from tf.transformations import euler_from_quaternion
 from numpy import *
 import matplotlib as mp
@@ -242,10 +243,24 @@ class FollowThenPark(object):
     def parallell_parking_backwards(self):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
-        self.path = parking_path.parking_path()
+        steerings, times = parking_path.build_path()
         self.change_to_reversed()
-        self.__pure_pursuit()
+        # self.__pure_pursuit()
+        self.steer_from_lists(steerings, times)
 
+    def steer_from_lists(self, steerings, times):
+        start = time.time()
+        lli_msg = lli_ctrl_request()
+        lli_msg.velocity = -17
+        time_elapsed = 0
+        i = 0
+        while time_elapsed < times[-1]:
+            while times[i] < time_elapsed:
+                i += 1
+            lli_msg.steering = steerings[i]
+            self.car_control_pub.publish(lli_msg)
+            rospy.sleep(0.05)
+            time_elapsed = time.time() - start
 
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
