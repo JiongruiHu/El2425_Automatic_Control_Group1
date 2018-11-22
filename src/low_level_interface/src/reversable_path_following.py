@@ -4,9 +4,10 @@ from tf.transformations import euler_from_quaternion
 from numpy import *
 import matplotlib as mp
 from sensor_msgs.msg import LaserScan
-from path_points import path_points
+from path_points import path_points, adjustable_path_points
 from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
+from path_planning import Path
 
 
 class FollowThenPark(object):
@@ -23,6 +24,8 @@ class FollowThenPark(object):
         self.parking_identified = 0
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
+        self.pp_goal = [0, 0]
+        self.obs_list = []
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -49,14 +52,9 @@ class FollowThenPark(object):
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
-                    if not self.has_parking_spot:
-                        goal = self.choose_point()
-                        lli_msg.velocity, lli_msg.steering = self.controller(goal)
-                        self.car_control_pub.publish(lli_msg)
-                    else:
-                        lli_msg.velocity, lli_msg.steering = self.parallell_parking_start()
-                        self.car_control_pub.publish(lli_msg)
-                        break
+                    goal = self.choose_point()
+                    lli_msg.velocity, lli_msg.steering = self.controller(goal)
+                    self.car_control_pub.publish(lli_msg)
                     rate.sleep()
                 # goal = self.path[0]
         lli_msg.velocity = 0
@@ -103,7 +101,7 @@ class FollowThenPark(object):
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head',des_heading)
+        print('des_head', des_heading)
         head_err = des_heading - self.current_heading
         # print("headErrOriginal", headErr)
         if head_err > pi:
@@ -207,8 +205,37 @@ class FollowThenPark(object):
         self.path.remove(goal_point)
         return goal_point
 
-    def parallell_parking_start(self):
-        return 0, 0
+    def parallell_parking_start(self, angle, range):
+        parallell_distance = 0.5        # Distance in the car's direction between corner and starting point
+        outward_distance = 0.3      # Same, but to the left
+        parallell_distance_to_travel = parallell_distance - cos(angle) * range
+        outward_distance_to_travel = outward_distance - sin(angle) * range
+        # Rotation into global frame
+        x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
+                               sin(self.current_heading) * outward_distance_to_travel
+        y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
+                               cos(self.current_heading) * outward_distance_to_travel
+        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
+        start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
+        self.path = start_path
+
+        parallell_distance_to_goal = -0.45 - cos(angle) * range         # Heavily subject to change
+        outward_distance_to_goal = -0.08 - sin(angle) * range
+        x_distance_to_goal = cos(self.current_heading) * parallell_distance_to_goal - \
+                               sin(self.current_heading) * outward_distance_to_goal
+        y_distance_to_goal = sin(self.current_heading) * parallell_distance_to_goal + \
+                               cos(self.current_heading) * outward_distance_to_goal
+        xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
+        self.pp_goal = (xp, yp)
+
+    def parallell_parking_backwards(self):
+        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
+        self.path = parking_path.parking_path()
+        self.change_to_reversed()
+        self.__pure_pursuit()
+
 
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
@@ -231,8 +258,25 @@ class FollowThenPark(object):
                     if self.parking_lot_dist > pp_len_threshold:
                         self.has_parking_spot = True
                         self.parking_identified = 2
+                        self.generate_obs_list(angles, ranges)
+                        self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
+
+    # Uses Mocap to transform obstacles from polar local coordinates to
+    # cartesian global coordinates
+    def generate_obs_list(self, angles, ranges):
+        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        head = self.current_heading
+        obs_list = []
+        for i in range(len(ranges)):
+            if ranges[i] < 12:           # Maximum range of LIDAR
+                parallell_distance = -cos(angles[i]) * ranges[i]
+                outward_distance = -sin(angles[i]) * ranges[i]
+                x_distance = cos(head) * parallell_distance - sin(head) * outward_distance
+                y_distance = sin(head) * parallell_distance + cos(head) * outward_distance
+                obs_list.append([xr + x_distance, yr + y_distance])
+        self.obs_list = obs_list
     
     def reversed_lidar_cb(self,data):
         # msg = lli_ctrl_request()
