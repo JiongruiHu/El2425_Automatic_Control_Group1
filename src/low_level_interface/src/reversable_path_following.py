@@ -10,6 +10,7 @@ from nav_msgs.msg import Odometry
 from path_planning import Path
 
 
+# Creates a follow then park implementation in SVEA1 from MOCAP
 class FollowThenPark(object):
     def __init__(self):
         self.path = path_points('figure-8')
@@ -46,6 +47,14 @@ class FollowThenPark(object):
         self.path = path_points('circle')
         self.__pure_pursuit()
 
+    def follow_then_park(self):
+        self.change_to_forward()
+        self.path = path_points('linear')
+        self.__pure_pursuit()
+        if self.has_parking_spot:
+            self.parallell_parking_backwards()
+
+
     def __pure_pursuit(self):
         rate = rospy.Rate(10)
         lli_msg = lli_ctrl_request()
@@ -74,7 +83,7 @@ class FollowThenPark(object):
             self.reversed_lidar_cb(data)
         else:
             self.forward_lidar_cb(data)
-        self.parking_spot(data)
+        self.parking_stop(data)
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
@@ -202,7 +211,8 @@ class FollowThenPark(object):
                 return examined_point
             self.path.remove(examined_point)
         goal_point = self.path[0]
-        self.path.remove(goal_point)
+        if dist((xr, yr), goal_point) < 0.05:
+            self.path.remove(goal_point)
         return goal_point
 
     def parallell_parking_start(self, angle, range):
@@ -263,7 +273,7 @@ class FollowThenPark(object):
                     else:
                         self.parking_identified = 0
 
-    # Uses Mocap to transform obstacles from polar local coordinates to
+    # Uses MOCAP to transform obstacles from polar local coordinates to
     # cartesian global coordinates
     def generate_obs_list(self, angles, ranges):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
