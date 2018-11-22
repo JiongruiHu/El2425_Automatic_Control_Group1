@@ -19,7 +19,7 @@ class AstarNode:
         if self.np is None:
             self.F = self.h
         else:
-            self.F = self.G + self.h + (self.np.F - self.np.h)
+            self.F = self.G + self.h #+ (self.np.F - self.np.h)
             # F cost is the sum of the total cost of the node and
             # its parents cost
 
@@ -39,6 +39,8 @@ class Path:
         initNode = AstarNode(self.car_p, self.goal, self.car_heading)
         initNode.add_gcost(0)
         open_list.append(initNode)
+        #fig = plt.gcf()
+        #ax = fig.gca()
         while open_list is not []:
             node = open_list[0]
             for n in open_list:
@@ -49,15 +51,14 @@ class Path:
             open_list.remove(node)
             #current_list.append(node)
             open_list, close_list = self.update_neighbour(open_list, close_list, node)
+
         return None
 
     def build_path(self):
         path, controls, time = [], [], [0]
         route = self.parking_path()
         while route.np is not None:
-            x, y = route.p[0], route.p[1]
-            plt.plot(x, y, 'g*', markersize=1)
-            plt.show()
+            #x, y = route.p[0], route.p[1]
             path.append(route)
             route = route.np
         path.reverse()
@@ -69,9 +70,11 @@ class Path:
     def update_neighbour(self, openL, closeL, n):
         for delta in linspace(-pi/4, pi/4, 7):    # steering range
             ns = self.find_new_node(n, delta)
+            #plt.plot(ns.p[0], ns.p[1], 'g*', markersize=1)
+            #plt.show()
             nn = []
             if ns not in closeL:
-                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.01)]
+                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.1)]
                 if ns.G == 1000 or (checkcollision(ns.p, self.obs) is not True):
                     closeL.append(ns)
                 elif nn:
@@ -86,35 +89,46 @@ class Path:
         xl, yl, headingl = [node.p[0]], [node.p[1]], [node.heading]
         state = True
         t = 0
-        g = 0
+        collision = False
         while t < 1 and state is True:
             xn, yn, headingn = self.bicycle_backward(xl[-1], yl[-1], headingl[-1], delta)
-            g = g + dist((xn,yn),(xl[-1], yl[-1]))
-            if checkcollision((xn, yn), self.obs):  # if no collision
+            #g = g + dist((xn,yn),(xl[-1], yl[-1]))
+            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal):  # if no collision
                 xl.append(xn)
                 yl.append(yn)
                 headingl.append(headingn)
                 t = t + 0.01
-            else:
+            elif reach_goal((xn, yn), self.goal):
+                xl.append(xn)
+                yl.append(yn)
+                headingl.append(headingn)
+                t = t + 0.01
                 state = False
 
+            else:
+                state = False
+                collision = True
+        #plt.plot(xl, yl , 'r-', markersize=0.1)
+        #plt.plot(xl[-1], yl[-1], 'g*')
+        #plt.axis('equal')
+        #plt.show()
         new_node = AstarNode((xl[-1], yl[-1]), self.goal, headingl[-1])
         new_node.np = node
         new_node.t = t
         new_node.steer = delta
-        if state is False:
+        if state is False and collision is True:
             new_node.add_gcost(1000)
         else:
-            new_node.add_gcost(g)
+            new_node.add_gcost(dist(self.goal, (xl[-1], yl[-1])))
         return new_node
 
     # we assume the car is running in a constant speed.
     def bicycle_backward(self, x, y, heading, steering):
         dt = 0.01  # the car should reach the goal in 10 second
         lr = 3.2/2
-        beta = arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
-        dx = - self.car_speed * cos(heading + beta)
-        dy = self.car_speed * sin(heading + beta)
+        beta =-arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
+        dx = self.car_speed * cos(pi+ heading + beta)
+        dy = self.car_speed * sin(pi+ heading + beta)
 
         xn = x + dx * dt
         yn = y + dy * dt
@@ -159,11 +173,11 @@ class Path:
         rect_s = plp.Rectangle((5, 0.1), car_length, car_width, fill=False)
         # rect_g = plp.Rectangle((10, 2.5), car_length, car_width, fill=False)
         # ax.add_patch(plt.Circle((cx, cy), 0.1,'*'))
-        plt.plot(cx,cy, marker='*', markersize=1)
+        plt.plot(cx, cy, marker='*', markersize=1)
         ax.add_patch(rect_s)
         # ax.add_patch(rect_g)
-        plt.grid()
-        plt.ylim((0, 6))
+        plt.axis('equal')
+        plt.ylim((0, 5))
         plt.xlim((0, 30))
         plt.show()
 
