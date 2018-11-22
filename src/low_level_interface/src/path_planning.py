@@ -2,6 +2,7 @@
 from numpy import *
 import matplotlib.patches as plp
 import matplotlib.pyplot as plt
+from kinematic_model import *
 from myObsList import *
 
 
@@ -20,22 +21,20 @@ class AstarNode:
             self.F = self.h
         else:
             self.F = self.G + self.h #+ (self.np.F - self.np.h)
-            # F cost is the sum of the total cost of the node and
-            # its parents cost
+            # F cost is the sum of the total cost of the node
 
 
 class Path:
     def __init__(self, start, goal, obs, current_heading):
         self.car_p = start
-        self.car_size = (4, 1.6)   # (length, width)
+        self.car_size = (0.4, 0.16)   # (length, width)
         self.obs = self.inflated(obs)
         self.goal = goal  # (goal[0]-start[0], goal[1] - start[1])
-        self.car_speed = 1
+        self.car_speed = 0.1
         self.car_heading = current_heading
 
     def parking_path(self):
         open_list, close_list, current_list = [], [], []
-        steering = linspace(-pi/4, pi/4, 5)
         initNode = AstarNode(self.car_p, self.goal, self.car_heading)
         initNode.add_gcost(0)
         open_list.append(initNode)
@@ -91,7 +90,7 @@ class Path:
         t = 0
         collision = False
         while t < 1 and state is True:
-            xn, yn, headingn = self.bicycle_backward(xl[-1], yl[-1], headingl[-1], delta)
+            xn, yn, headingn = bicycle_backward(self.car_speed, xl[-1], yl[-1], headingl[-1], delta)
             #g = g + dist((xn,yn),(xl[-1], yl[-1]))
             if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal):  # if no collision
                 xl.append(xn)
@@ -122,10 +121,11 @@ class Path:
             new_node.add_gcost(dist(self.goal, (xl[-1], yl[-1])))
         return new_node
 
+    '''
     # we assume the car is running in a constant speed.
     def bicycle_backward(self, x, y, heading, steering):
         dt = 0.01  # the car should reach the goal in 10 second
-        lr = 3.2/2
+        lr = 0.32/2
         beta =-arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
         dx = self.car_speed * cos(pi+ heading + beta)
         dy = self.car_speed * sin(pi+ heading + beta)
@@ -138,7 +138,7 @@ class Path:
 
     def bicycle_forward(self, x, y, heading, steering):
         dt = 0.01  # the car should reach the goal in 10 second
-        lr = 3.2 / 2
+        lr = 0.32 / 2
         beta = arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
         dx = self.car_speed * cos(heading + beta)
         dy = self.car_speed * sin(heading + beta)
@@ -148,6 +148,7 @@ class Path:
         headingn = heading + self.car_speed * sin(beta) * dt / lr
 
         return xn, yn, headingn
+    '''
 
     # inflated the obstacles with circle which has cars half length as radius
     # need to some changes maybe
