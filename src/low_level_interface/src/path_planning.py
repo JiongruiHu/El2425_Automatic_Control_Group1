@@ -113,42 +113,13 @@ class Path:
         #plt.show()
         new_node = AstarNode((xl[-1], yl[-1]), self.goal, headingl[-1])
         new_node.np = node
-        new_node.t = t
+        new_node.t = t + node.t
         new_node.steer = delta
         if state is False and collision is True:
             new_node.add_gcost(1000)
         else:
             new_node.add_gcost(dist(self.goal, (xl[-1], yl[-1])))
         return new_node
-
-    '''
-    # we assume the car is running in a constant speed.
-    def bicycle_backward(self, x, y, heading, steering):
-        dt = 0.01  # the car should reach the goal in 10 second
-        lr = 0.32/2
-        beta =-arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
-        dx = self.car_speed * cos(pi+ heading + beta)
-        dy = self.car_speed * sin(pi+ heading + beta)
-
-        xn = x + dx * dt
-        yn = y + dy * dt
-        headingn = heading + self.car_speed * sin(beta) * dt / lr
-
-        return xn, yn, headingn
-
-    def bicycle_forward(self, x, y, heading, steering):
-        dt = 0.01  # the car should reach the goal in 10 second
-        lr = 0.32 / 2
-        beta = arctan(tan(steering) * 0.5)  # 0.5=lr/(lf+lr)
-        dx = self.car_speed * cos(heading + beta)
-        dy = self.car_speed * sin(heading + beta)
-
-        xn = x + dx * dt
-        yn = y + dy * dt
-        headingn = heading + self.car_speed * sin(beta) * dt / lr
-
-        return xn, yn, headingn
-    '''
 
     # inflated the obstacles with circle which has cars half length as radius
     # need to some changes maybe
@@ -158,29 +129,6 @@ class Path:
             o[2] = self.car_size[0]/2
             inflated_obs.append(o)
         return inflated_obs
-
-    def my_plot(self, obs_list):
-        car_length, car_width = self.car_size[0], self.car_size[1]
-        cx, cy = self.car_p[0], self.car_p[1]
-        fig = plt.gcf()
-        ax = fig.gca()
-        for obs in obs_list:
-            ax.add_patch(plt.Circle((obs[0], obs[1]), obs[2], facecolor="grey", edgecolor="k"))
-            ax.set_aspect('equal')
-            ax.plot()
-
-        # plt.xticks([i + 1 for i in range(0, 30)])
-        # plt.yticks([i + 1 for i in range(0, 6)])
-        rect_s = plp.Rectangle((5, 0.1), car_length, car_width, fill=False)
-        # rect_g = plp.Rectangle((10, 2.5), car_length, car_width, fill=False)
-        # ax.add_patch(plt.Circle((cx, cy), 0.1,'*'))
-        plt.plot(cx, cy, marker='*', markersize=1)
-        ax.add_patch(rect_s)
-        # ax.add_patch(rect_g)
-        plt.axis('equal')
-        plt.ylim((0, 5))
-        plt.xlim((0, 30))
-        plt.show()
 
 
 def dist(p1, p2):
@@ -193,7 +141,6 @@ def reach_goal(p, goalpoint):
     else:
         return False
 
-
 # the obstacles must be inflated before checking the collision
 def checkcollision(p, obs):
     for o in obs:
@@ -201,12 +148,4 @@ def checkcollision(p, obs):
             return False  # collision
     return True     # no collision
 
-
-if __name__ == "__main__":
-    startp, goalp = (7, 0.9), (12, 3.5)
-
-    obs_lists = myObsList()
-    car = Path(startp, goalp, obs_lists, pi)
-    #car.my_plot(obs_lists)
-    control_list, time_list = car.build_path()
 
