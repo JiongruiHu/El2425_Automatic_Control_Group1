@@ -22,8 +22,8 @@ def path_points(type_path):
             path.append([x,y])
 
     elif type_path == 'linear':
-        x0, y0 = -1, -1  # initial point
-        xg, yg = 1, -1  # goal point
+        x0, y0 = -1, -1.5  # initial point
+        xg, yg = 1.5, -1.5  # goal point
         xrange = linspace(x0, xg, nPoint)
         yrange = linspace(y0, yg, nPoint)
         for i in arange(nPoint):
@@ -47,5 +47,19 @@ def path_points(type_path):
         print("I do NOT generate this kind of path")
 
     return path
+
+
+def adjustable_path_points(type_path, start, goal, heading = None):
+    path = []
+    nPoint = 108
+    if type_path == 'linear':
+        x0, y0 = start[0], start[1]  # initial point
+        xg, yg = goal[0], goal[1]  # goal point
+        xrange = linspace(x0, xg, nPoint)
+        yrange = linspace(y0, yg, nPoint)
+        for i in arange(nPoint):
+            path.append([xrange[i], yrange[i]])
+    return path
+
 
 
