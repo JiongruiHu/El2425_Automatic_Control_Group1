@@ -275,15 +275,16 @@ class FollowThenPark(object):
         self.steer_from_lists(steerings, times)
 
     def steer_from_lists(self, steerings, times):
+        self.change_to_reversed()
         start = time.time()
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = -17
+        lli_msg.velocity = -18
         time_elapsed = 0
         i = 0
         while time_elapsed < times[-1]:
             while times[i] < time_elapsed:
                 i += 1
-            lli_msg.steering = int(100*steerings[i]/(pi/4))
+            lli_msg.steering = -int(100*steerings[i]/(pi/4))
             self.car_control_pub.publish(lli_msg)
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
