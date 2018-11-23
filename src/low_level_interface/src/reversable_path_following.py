@@ -176,7 +176,7 @@ class FollowThenPark(object):
             else:
                 speed = 15
         else:
-            speed = -10
+            speed = 0
         # speed = E_stop(speed)
         return speed
 
