@@ -38,7 +38,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__backward_then_forward()
+        self.__follow_then_park()
 
     def __backward_then_forward(self):
         self.change_to_reversed()
@@ -48,7 +48,7 @@ class FollowThenPark(object):
         self.path = path_points('circle')
         self.__pure_pursuit()
 
-    def follow_then_park(self):
+    def __follow_then_park(self):
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
@@ -80,14 +80,16 @@ class FollowThenPark(object):
 
     def lidar_cb(self,data):
         if self.reversed:
-            self.reversed_lidar_cb(data)
+            pass
+            # self.reversed_lidar_cb(data)
         else:
-            self.forward_lidar_cb(data)
+            pass
+            # self.forward_lidar_cb(data)
         self.parking_stop(data)
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = 10
+        lli_msg.velocity = -10
         self.car_control_pub.publish(lli_msg)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -172,11 +174,11 @@ class FollowThenPark(object):
     def speed_control(self, phi):
         if self.Estop == 0:
             if abs(phi) < pi/12:
-                speed = 20
+                speed = 12
             else:
-                speed = 15
+                speed = 12
         else:
-            speed = -10
+            speed = 0
         # speed = E_stop(speed)
         return speed
 
@@ -216,7 +218,7 @@ class FollowThenPark(object):
         return goal_point
 
     def parallell_parking_start(self, angle, range):
-        parallell_distance = 0.5        # Distance in the car's direction between corner and starting point
+        parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
         outward_distance = 0.3      # Same, but to the left
         parallell_distance_to_travel = parallell_distance - cos(angle) * range
         outward_distance_to_travel = outward_distance - sin(angle) * range
@@ -241,10 +243,13 @@ class FollowThenPark(object):
 
     def parallell_parking_backwards(self):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        print("Planning path...")
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
+        print("Building path...")
         steerings, times = parking_path.build_path()
         self.change_to_reversed()
         # self.__pure_pursuit()
+        print("Executing...")
         self.steer_from_lists(steerings, times)
 
     def steer_from_lists(self, steerings, times):
@@ -256,7 +261,7 @@ class FollowThenPark(object):
         while time_elapsed < times[-1]:
             while times[i] < time_elapsed:
                 i += 1
-            lli_msg.steering = steerings[i]
+            lli_msg.steering = int(100*steerings[i]/(pi/4))
             self.car_control_pub.publish(lli_msg)
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
@@ -268,20 +273,20 @@ class FollowThenPark(object):
         pp_len_threshold = 0.7          # Length of gap, subject to change
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
-                if self.parking_identified == 0:
+                if self.parking_identified == 0:            # No lot identified
                     if ranges[i] < parking_threshold:
                         return
                     elif angles[i+1] > pi / 2 + pi / 50 or angles[i+1] < pi / 2 - pi / 50:    # All relevant angles passed test
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                         self.parking_identified = 1
                         print("START:"+str(self.parking_lot_start))
-                elif ranges[i] < parking_threshold and self.parking_identified == 1:
+                elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     self.parking_lot_dist = dist(parking_lot_end, self.parking_lot_start)
                     print("Dist"+str(self.parking_lot_dist))
                     if self.parking_lot_dist > pp_len_threshold:
                         self.has_parking_spot = True
-                        self.parking_identified = 2
+                        self.parking_identified = 2             # parking_stop will detect no more lots
                         self.generate_obs_list(angles, ranges)
                         self.parallell_parking_start(angles[i], ranges[i])
                     else:
