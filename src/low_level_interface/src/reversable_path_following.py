@@ -28,6 +28,8 @@ class FollowThenPark(object):
         self.parking_lot_dist = 0
         self.pp_goal = [0, 0]
         self.obs_list = []
+        self.pp_range = None
+        self.pp_angle = None
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -53,7 +55,7 @@ class FollowThenPark(object):
         self.path = path_points('linear')
         self.__pure_pursuit()
         if self.has_parking_spot:
-            self.parallell_parking_start()
+
             self.parallell_parking_backwards()
 
     def __pure_pursuit(self):
@@ -183,6 +185,8 @@ class FollowThenPark(object):
                 speed = 12
         else:
             speed = 0
+        if self.has_parking_spot:
+            speed = -10
         # speed = E_stop(speed)
         return speed
 
@@ -259,6 +263,7 @@ class FollowThenPark(object):
 
 
     def parallell_parking_backwards(self):
+        rospy.sleep(1)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
@@ -305,6 +310,9 @@ class FollowThenPark(object):
                         self.has_parking_spot = True
                         self.parking_identified = 2             # parking_stop will detect no more lots
                         self.generate_obs_list(angles, ranges)
+                        self.pp_range = ranges[i]
+                        self.pp_angle = angles[i]
+                        self.parallell_parking_start(self.pp_angle, self.pp_range)
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0

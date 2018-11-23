@@ -40,7 +40,7 @@ class Path:
         open_list.append(initNode)
         #fig = plt.gcf()
         #ax = fig.gca()
-        while open_list is not []:
+        while len(open_list) > 0:
             node = open_list[0]
             for n in open_list:
                 if n.F < node.F:
@@ -57,6 +57,9 @@ class Path:
         path, controls, time = [], [], []
         print("Planning internal path...")
         route = self.parking_path()
+        if not route:
+            print("No path!!")
+            return [0], [0]
         while route.np is not None:
             #x, y = route.p[0], route.p[1]
             path.append(route)
