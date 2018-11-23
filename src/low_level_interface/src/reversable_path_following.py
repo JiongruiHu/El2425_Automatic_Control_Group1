@@ -56,7 +56,7 @@ class FollowThenPark(object):
         self.__pure_pursuit()
         if self.has_parking_spot:
             self.parallell_parking_start()
-            self.parallell_parking_backwards()
+            self.parallell_parking_backwards(self.pp_range, self.pp_angle)
 
     def __pure_pursuit(self):
         rate = rospy.Rate(50)
