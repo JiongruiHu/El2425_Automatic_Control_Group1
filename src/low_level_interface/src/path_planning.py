@@ -55,12 +55,14 @@ class Path:
 
     def build_path(self):
         path, controls, time = [], [], []
+        print("Planning internal path...")
         route = self.parking_path()
         while route.np is not None:
             #x, y = route.p[0], route.p[1]
             path.append(route)
             route = route.np
         path.reverse()
+        print("Returning...")
         for nod in path:
             controls.append(nod.steer)
             time.append(nod.t)
