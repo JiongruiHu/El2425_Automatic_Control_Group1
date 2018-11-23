@@ -180,4 +180,4 @@ def checkcollision(p, obs):
     return True     # no collision
 
 
->>>>>>> 0fe2b6b7038673f0c5623b086a647747d69b3e52
+
