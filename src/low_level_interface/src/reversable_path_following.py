@@ -236,6 +236,7 @@ class FollowThenPark(object):
         # y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
         #                        cos(self.current_heading) * outward_distance_to_travel
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        print("")
         # xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
         # start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
         # self.path = start_path
