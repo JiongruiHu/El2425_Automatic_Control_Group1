@@ -128,6 +128,7 @@ class PurePursuit(object):
         ranges = data.ranges
         e_stop_threshold_dist = 1
         Estop = 0
+        parking = 0
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
                 if ranges[i] < e_stop_threshold_dist:
@@ -172,7 +173,6 @@ class PurePursuit(object):
 
 
 
-         
  
  
  
