@@ -80,9 +80,11 @@ class FollowThenPark(object):
 
     def lidar_cb(self,data):
         if self.reversed:
-            self.reversed_lidar_cb(data)
+            pass
+            # self.reversed_lidar_cb(data)
         else:
-            self.forward_lidar_cb(data)
+            pass
+            # self.forward_lidar_cb(data)
         self.parking_stop(data)
 
     def change_to_reversed(self):
