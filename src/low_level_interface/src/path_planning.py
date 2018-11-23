@@ -23,7 +23,8 @@ class AstarNode:
             self.F = self.G + self.h #+ (self.np.F - self.np.h)
             # F cost is the sum of the total cost of the node
 
-
+# Path receives: start position, goal position and heading angel
+#       returns: a list of steering angels and a list of respective time segments
 class Path:
     def __init__(self, start, goal, obs, current_heading):
         self.car_p = start
@@ -44,8 +45,6 @@ class Path:
 
         initNode.add_gcost(0)
         open_list.append(initNode)
-        #fig = plt.gcf()
-        #ax = fig.gca()
         while len(open_list) > 0:
             node = open_list[0]
             for n in open_list:
@@ -54,7 +53,7 @@ class Path:
                     if reach_goal(node.p, self.goal):
                         return node
             open_list.remove(node)
-            if node.t < 10:#current_list.append(node)
+            if node.t < 10: #current_list.append(node)
                 open_list, close_list = self.update_neighbour(open_list, close_list, node)
 
         return None
@@ -81,8 +80,6 @@ class Path:
     def update_neighbour(self, openL, closeL, n):
         for delta in linspace(-pi/4, pi/4, 7):    # steering range
             ns = self.find_new_node(n, delta)
-            #plt.plot(ns.p[0], ns.p[1], 'g*', markersize=1)
-            #plt.show()
             nn = []
             if ns not in closeL:
                 nn = [n for n in openL if (dist(ns.p, n.p) <= 0.01)]
@@ -110,13 +107,13 @@ class Path:
                     xl.append(xn)
                     yl.append(yn)
                     headingl.append(headingn)
-                    t = t + 0.01
+                    t = t + 0.2
             elif reach_goal((xn, yn), self.goal):
                 if abs(headingn-self.car_heading) < 0.2:
                     xl.append(xn)
                     yl.append(yn)
                     headingl.append(headingn)
-                    t = t + 0.01
+                    t = t + 0.2
                     state = False
 
             else:
