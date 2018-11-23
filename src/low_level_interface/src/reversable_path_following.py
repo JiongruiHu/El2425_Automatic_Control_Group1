@@ -28,6 +28,8 @@ class FollowThenPark(object):
         self.parking_lot_dist = 0
         self.pp_goal = [0, 0]
         self.obs_list = []
+        self.pp_range = None
+        self.pp_angle = None
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -305,6 +307,8 @@ class FollowThenPark(object):
                         self.has_parking_spot = True
                         self.parking_identified = 2             # parking_stop will detect no more lots
                         self.generate_obs_list(angles, ranges)
+                        self.pp_range = ranges[i]
+                        self.pp_angle = angles[i]
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
