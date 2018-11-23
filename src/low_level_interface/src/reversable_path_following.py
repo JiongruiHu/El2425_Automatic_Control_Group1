@@ -229,7 +229,7 @@ class FollowThenPark(object):
 
     def parallell_parking_start(self, angle, range):
         parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
-        outward_distance = 0.3      # Same, but to the left
+        outward_distance = 0.4      # Same, but to the left
         parallell_distance_to_travel = parallell_distance - cos(angle) * range
         outward_distance_to_travel = outward_distance - sin(angle) * range
         # Rotation into global frame
