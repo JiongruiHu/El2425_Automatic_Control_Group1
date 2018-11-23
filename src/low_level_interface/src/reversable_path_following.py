@@ -66,11 +66,11 @@ class FollowThenPark(object):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity, lli_msg.steering = self.controller(goal)
-                    if not self.has_parking_spot:
-                        self.car_control_pub.publish(lli_msg)
-                        rate.sleep()
-                    else:
-                        return
+                    # if not self.has_parking_spot:
+                    self.car_control_pub.publish(lli_msg)
+                    rate.sleep()
+                    # else:
+                        # return
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -227,18 +227,18 @@ class FollowThenPark(object):
 
     def parallell_parking_start(self, angle, range):
         parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
-        # outward_distance = 0.3      # Same, but to the left
-        # parallell_distance_to_travel = parallell_distance - cos(angle) * range
-        # outward_distance_to_travel = outward_distance - sin(angle) * range
-        # # Rotation into global frame
-        # x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
-        #                        sin(self.current_heading) * outward_distance_to_travel
-        # y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
-        #                        cos(self.current_heading) * outward_distance_to_travel
+        outward_distance = 0.3      # Same, but to the left
+        parallell_distance_to_travel = parallell_distance - cos(angle) * range
+        outward_distance_to_travel = outward_distance - sin(angle) * range
+        # Rotation into global frame
+        x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
+                               sin(self.current_heading) * outward_distance_to_travel
+        y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
+                               cos(self.current_heading) * outward_distance_to_travel
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        # xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
-        # start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
-        # self.path = start_path
+        xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
+        start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
+        self.path = start_path
 
         parallell_distance_to_goal = -0.45 - cos(angle) * range  # Heavily subject to change
         outward_distance_to_goal = -0.08 - sin(angle) * range
@@ -249,16 +249,16 @@ class FollowThenPark(object):
         xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
         self.pp_goal = (xp, yp)
 
-        head = self.current_heading
-        parallell_start = xr * cos(head) + yr * sin(head)
-        parallell_position = parallell_start
-        lli_msg = lli_ctrl_request()
-        lli_msg.velocity = 12
-        while parallell_position < parallell_start + parallell_distance:
-            self.car_control_pub.publish(lli_msg)
-            rospy.sleep(0.1)
-            xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-            parallell_position = xr * cos(head) + yr * sin(head)
+        # head = self.current_heading
+        # parallell_start = xr * cos(head) + yr * sin(head)
+        # parallell_position = parallell_start
+        # lli_msg = lli_ctrl_request()
+        # lli_msg.velocity = 12
+        # while parallell_position < parallell_start + parallell_distance:
+        #     self.car_control_pub.publish(lli_msg)
+        #     rospy.sleep(0.1)
+        #     xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        #     parallell_position = xr * cos(head) + yr * sin(head)
 
 
 
