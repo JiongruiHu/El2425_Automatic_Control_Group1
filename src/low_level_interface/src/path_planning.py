@@ -77,6 +77,7 @@ class Path:
         for nod in path:
             controls.append(nod.p)
             time.append(nod.t)
+        print(controls)
         return controls, time
 
     def update_neighbour(self, openL, closeL, n):
@@ -105,17 +106,20 @@ class Path:
         while t < 1 and state is True:
             xn, yn, headingn = bicycle_backward(self.car_speed, xl[-1], yl[-1], headingl[-1], delta)
             #g = g + dist((xn,yn),(xl[-1], yl[-1]))
-            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal) and self.in_bounds((xn,yn)):  # if no collision
-                xl.append(xn)
-                yl.append(yn)
-                headingl.append(headingn)
-                t = t + 0.01
+            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal) and self.in_bounds((xn,yn)):
+                #if close_goal((xn,yn), goalpoint) and abs(headingn-self.car_heading) < 0.1:
+                # if no collision
+                    xl.append(xn)
+                    yl.append(yn)
+                    headingl.append(headingn)
+                    t = t + 0.01
             elif reach_goal((xn, yn), self.goal):
-                xl.append(xn)
-                yl.append(yn)
-                headingl.append(headingn)
-                t = t + 0.01
-                state = False
+                if abs(headingn-self.car_heading) < 0.2:
+                    xl.append(xn)
+                    yl.append(yn)
+                    headingl.append(headingn)
+                    t = t + 0.01
+                    state = False
 
             else:
                 state = False
@@ -156,10 +160,20 @@ def dist(p1, p2):
 
 
 def reach_goal(p, goalpoint):
-    if dist(p, goalpoint) < 0.01:
+    if dist(p, goalpoint) < 0.3:
         return True
     else:
         return False
+
+
+def close_goal(p, goalpoint):
+    d = dist(p, goalpoint)
+    if d < 0.2 and d > 0.1:
+        return True
+    else:
+        return False
+
+
 
 # the obstacles must be inflated before checking the collision
 def checkcollision(p, obs):
