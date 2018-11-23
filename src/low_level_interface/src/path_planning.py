@@ -36,6 +36,8 @@ class Path:
     def parking_path(self):
         open_list, close_list, current_list = [], [], []
         initNode = AstarNode(self.car_p, self.goal, self.car_heading)
+        print("position", self.car_p)
+        print("heading",self.car_heading)
         initNode.add_gcost(0)
         open_list.append(initNode)
         #fig = plt.gcf()
