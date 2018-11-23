@@ -121,6 +121,7 @@ class PurePursuit(object):
         e_stop_threshold_dist = 1
         parking_threshold = 0.5
         Estop = 0
+        parking = 0
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
                 if ranges[i] < e_stop_threshold_dist:
@@ -136,7 +137,7 @@ class PurePursuit(object):
                     parking = 0                 				
         self.Estop = Estop
         self.parking = parking
-        #Printa detta på något sätt och testkör?? När det funkar, sätt nödvändig parkeringsplatslängd och lämplig hastighet. 
+        
  
  
  
