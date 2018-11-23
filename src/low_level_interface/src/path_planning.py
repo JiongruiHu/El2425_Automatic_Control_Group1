@@ -85,7 +85,7 @@ class Path:
         path.reverse()
         print("Returning...")
         for nod in path:
-            controls.append(nod.steer)
+            controls.append(nod.p)
             time.append(nod.t)
         return controls, time
 
