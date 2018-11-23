@@ -52,8 +52,8 @@ class FollowThenPark(object):
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
-        # if self.has_parking_spot:
-        #     self.parallell_parking_backwards()
+        if self.has_parking_spot:
+            self.parallell_parking_backwards()
 
     def __pure_pursuit(self):
         rate = rospy.Rate(10)
@@ -218,7 +218,7 @@ class FollowThenPark(object):
         return goal_point
 
     def parallell_parking_start(self, angle, range):
-        parallell_distance = 0.5        # Distance in the car's direction between corner and starting point
+        parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
         outward_distance = 0.3      # Same, but to the left
         parallell_distance_to_travel = parallell_distance - cos(angle) * range
         outward_distance_to_travel = outward_distance - sin(angle) * range
