@@ -28,6 +28,8 @@ class FollowThenPark(object):
         self.parking_lot_dist = 0
         self.pp_goal = [0, 0]
         self.obs_list = []
+        self.pp_range = None
+        self.pp_angle = None
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -53,18 +55,22 @@ class FollowThenPark(object):
         self.path = path_points('linear')
         self.__pure_pursuit()
         if self.has_parking_spot:
+
             self.parallell_parking_backwards()
 
     def __pure_pursuit(self):
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(50)
         lli_msg = lli_ctrl_request()
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity, lli_msg.steering = self.controller(goal)
-                    self.car_control_pub.publish(lli_msg)
-                    rate.sleep()
+                    if not self.has_parking_spot:
+                        self.car_control_pub.publish(lli_msg)
+                        rate.sleep()
+                    else:
+                        return
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -179,6 +185,8 @@ class FollowThenPark(object):
                 speed = 12
         else:
             speed = 0
+        if self.has_parking_spot:
+            speed = -10
         # speed = E_stop(speed)
         return speed
 
@@ -219,29 +227,43 @@ class FollowThenPark(object):
 
     def parallell_parking_start(self, angle, range):
         parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
-        outward_distance = 0.3      # Same, but to the left
-        parallell_distance_to_travel = parallell_distance - cos(angle) * range
-        outward_distance_to_travel = outward_distance - sin(angle) * range
-        # Rotation into global frame
-        x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
-                               sin(self.current_heading) * outward_distance_to_travel
-        y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
-                               cos(self.current_heading) * outward_distance_to_travel
+        # outward_distance = 0.3      # Same, but to the left
+        # parallell_distance_to_travel = parallell_distance - cos(angle) * range
+        # outward_distance_to_travel = outward_distance - sin(angle) * range
+        # # Rotation into global frame
+        # x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
+        #                        sin(self.current_heading) * outward_distance_to_travel
+        # y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
+        #                        cos(self.current_heading) * outward_distance_to_travel
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
-        start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
-        self.path = start_path
+        # xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
+        # start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
+        # self.path = start_path
 
-        parallell_distance_to_goal = -0.45 - cos(angle) * range         # Heavily subject to change
+        parallell_distance_to_goal = -0.45 - cos(angle) * range  # Heavily subject to change
         outward_distance_to_goal = -0.08 - sin(angle) * range
         x_distance_to_goal = cos(self.current_heading) * parallell_distance_to_goal - \
-                               sin(self.current_heading) * outward_distance_to_goal
+                             sin(self.current_heading) * outward_distance_to_goal
         y_distance_to_goal = sin(self.current_heading) * parallell_distance_to_goal + \
-                               cos(self.current_heading) * outward_distance_to_goal
+                             cos(self.current_heading) * outward_distance_to_goal
         xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
         self.pp_goal = (xp, yp)
 
+        head = self.current_heading
+        parallell_start = xr * cos(head) + yr * sin(head)
+        parallell_position = parallell_start
+        lli_msg = lli_ctrl_request()
+        lli_msg.velocity = 12
+        while parallell_position < parallell_start + parallell_distance:
+            self.car_control_pub.publish(lli_msg)
+            rospy.sleep(0.1)
+            xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+            parallell_position = xr * cos(head) + yr * sin(head)
+
+
+
     def parallell_parking_backwards(self):
+        rospy.sleep(1)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
@@ -249,7 +271,7 @@ class FollowThenPark(object):
         steerings, times = parking_path.build_path()
         self.change_to_reversed()
         # self.__pure_pursuit()
-        print("Executing...")
+
         self.steer_from_lists(steerings, times)
 
     def steer_from_lists(self, steerings, times):
@@ -288,7 +310,10 @@ class FollowThenPark(object):
                         self.has_parking_spot = True
                         self.parking_identified = 2             # parking_stop will detect no more lots
                         self.generate_obs_list(angles, ranges)
-                        self.parallell_parking_start(angles[i], ranges[i])
+                        self.pp_range = ranges[i]
+                        self.pp_angle = angles[i]
+                        self.parallell_parking_start(self.pp_angle, self.pp_range)
+                        # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
 

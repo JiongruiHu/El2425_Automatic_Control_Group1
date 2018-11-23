@@ -36,11 +36,14 @@ class Path:
     def parking_path(self):
         open_list, close_list, current_list = [], [], []
         initNode = AstarNode(self.car_p, self.goal, self.car_heading)
+        print("position", self.car_p)
+        print("heading",self.car_heading)
+        print("goal",self.goal)
         initNode.add_gcost(0)
         open_list.append(initNode)
         #fig = plt.gcf()
         #ax = fig.gca()
-        while open_list is not []:
+        while len(open_list) > 0:
             node = open_list[0]
             for n in open_list:
                 if n.F < node.F:
@@ -48,19 +51,24 @@ class Path:
                     if reach_goal(node.p, self.goal):
                         return node
             open_list.remove(node)
-            #current_list.append(node)
-            open_list, close_list = self.update_neighbour(open_list, close_list, node)
+            if node.t < 10:#current_list.append(node)
+                open_list, close_list = self.update_neighbour(open_list, close_list, node)
 
         return None
 
     def build_path(self):
         path, controls, time = [], [], []
+        print("Planning internal path...")
         route = self.parking_path()
+        if not route:
+            print("No path!!")
+            return [0], [0]
         while route.np is not None:
             #x, y = route.p[0], route.p[1]
             path.append(route)
             route = route.np
         path.reverse()
+        print("Returning...")
         for nod in path:
             controls.append(nod.steer)
             time.append(nod.t)
@@ -73,7 +81,7 @@ class Path:
             #plt.show()
             nn = []
             if ns not in closeL:
-                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.1)]
+                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.01)]
                 if ns.G == 1000 or (checkcollision(ns.p, self.obs) is not True):
                     closeL.append(ns)
                 elif nn:
@@ -92,7 +100,7 @@ class Path:
         while t < 1 and state is True:
             xn, yn, headingn = bicycle_backward(self.car_speed, xl[-1], yl[-1], headingl[-1], delta)
             #g = g + dist((xn,yn),(xl[-1], yl[-1]))
-            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal):  # if no collision
+            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal) and self.in_bounds((xn,yn)):  # if no collision
                 xl.append(xn)
                 yl.append(yn)
                 headingl.append(headingn)
@@ -129,6 +137,13 @@ class Path:
             o.append(self.car_size[0]/2)
             inflated_obs.append(o)
         return inflated_obs
+
+    def in_bounds(self,p):
+        r = 1.5
+        if dist(p,self.car_p) >= r:
+            return False
+        else:
+            return True
 
 
 def dist(p1, p2):
