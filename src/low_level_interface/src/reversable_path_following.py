@@ -283,9 +283,9 @@ class FollowThenPark(object):
         print("Building path...")
         steerings, times = parking_path.build_path()
         self.change_to_reversed()
-        # self.__pure_pursuit()
+        self.__pure_pursuit()
 
-        self.steer_from_lists(steerings, times)
+        # self.steer_from_lists(steerings, times)
 
     def steer_from_lists(self, steerings, times):
         self.change_to_reversed()

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/reversable_path_following.py" line="238" mnemonic="7" />
+    <bookmark url="file://$PROJECT_DIR$/src/reversable_path_following.py" line="223" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/reversable_path_following.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/reversable_path_following.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,19 +40,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/reversable_path_following.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="101" column="8" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+            <state relative-caret-position="450">
+              <caret line="287" column="10" selection-start-line="287" selection-start-column="10" selection-end-line="287" selection-end-column="10" />
               <folding>
                 <element signature="e#2629#2759#0" />
                 <element signature="e#2828#2873#0" />
                 <element signature="e#2902#2947#0" />
-                <element signature="e#3237#3258#0" />
-                <element signature="e#3309#4919#0" />
-                <element signature="e#6706#6921#0" />
-                <element signature="e#6738#6832#0" />
-                <element signature="e#6963#7162#0" />
-                <element signature="e#7213#7241#0" />
-                <element signature="e#7406#7606#0" />
                 <element signature="e#10731#11165#0" />
                 <element signature="e#10919#11136#0" />
                 <element signature="e#11875#11942#0" />
@@ -74,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/path_planning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+            <state relative-caret-position="602">
+              <caret line="79" column="21" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -309,8 +303,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/path_planning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+        <state relative-caret-position="602">
+          <caret line="79" column="21" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -330,19 +324,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/reversable_path_following.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="101" column="8" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+        <state relative-caret-position="450">
+          <caret line="287" column="10" selection-start-line="287" selection-start-column="10" selection-end-line="287" selection-end-column="10" />
           <folding>
             <element signature="e#2629#2759#0" />
             <element signature="e#2828#2873#0" />
             <element signature="e#2902#2947#0" />
-            <element signature="e#3237#3258#0" />
-            <element signature="e#3309#4919#0" />
-            <element signature="e#6706#6921#0" />
-            <element signature="e#6738#6832#0" />
-            <element signature="e#6963#7162#0" />
-            <element signature="e#7213#7241#0" />
-            <element signature="e#7406#7606#0" />
             <element signature="e#10731#11165#0" />
             <element signature="e#10919#11136#0" />
             <element signature="e#11875#11942#0" />
