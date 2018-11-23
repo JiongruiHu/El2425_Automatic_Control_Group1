@@ -126,7 +126,7 @@ class Path:
     def inflated(self, obs):
         inflated_obs = []
         for o in obs:
-            o[2] = self.car_size[0]/2
+            o.append(self.car_size[0]/2)
             inflated_obs.append(o)
         return inflated_obs
 
