@@ -37,6 +37,8 @@ class Path:
         self.goal = goal  # (goal[0]-start[0], goal[1] - start[1])
         self.car_speed = 0.1
         self.car_heading = current_heading
+        savetxt("/home/nvidia/catkin_ws/obs_without.csv", obs, delimiter=",")
+        savetxt("/home/nvidia/catkin_ws/obs_with.csv", self.obs, delimiter=",")
 
     def parking_path(self):
         open_list, close_list, current_list = [], [], []
@@ -44,6 +46,7 @@ class Path:
         print("position", self.car_p)
         print("heading",self.car_heading)
         print("goal",self.goal)
+
         initNode.add_gcost(0)
         open_list.append(initNode)
         #fig = plt.gcf()
