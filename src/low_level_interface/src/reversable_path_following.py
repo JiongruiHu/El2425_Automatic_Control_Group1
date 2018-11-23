@@ -291,7 +291,7 @@ class FollowThenPark(object):
         self.change_to_reversed()
         start = time.time()
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = -20
+        lli_msg.velocity = -17
         time_elapsed = 0
         i = 0
         while time_elapsed < times[-1]:
