@@ -263,6 +263,7 @@ class FollowThenPark(object):
 
 
     def parallell_parking_backwards(self):
+        rospy.sleep(1)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
