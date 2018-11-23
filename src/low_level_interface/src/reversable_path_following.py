@@ -38,7 +38,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__follow _then_park()
+        self.__follow_then_park()
 
     def __backward_then_forward(self):
         self.change_to_reversed()
@@ -48,7 +48,7 @@ class FollowThenPark(object):
         self.path = path_points('circle')
         self.__pure_pursuit()
 
-    def follow_then_park(self):
+    def __follow_then_park(self):
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
@@ -268,20 +268,20 @@ class FollowThenPark(object):
         pp_len_threshold = 0.7          # Length of gap, subject to change
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
-                if self.parking_identified == 0:
+                if self.parking_identified == 0:            # No lot identified
                     if ranges[i] < parking_threshold:
                         return
                     elif angles[i+1] > pi / 2 + pi / 50 or angles[i+1] < pi / 2 - pi / 50:    # All relevant angles passed test
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                         self.parking_identified = 1
                         print("START:"+str(self.parking_lot_start))
-                elif ranges[i] < parking_threshold and self.parking_identified == 1:
+                elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     self.parking_lot_dist = dist(parking_lot_end, self.parking_lot_start)
                     print("Dist"+str(self.parking_lot_dist))
                     if self.parking_lot_dist > pp_len_threshold:
                         self.has_parking_spot = True
-                        self.parking_identified = 2
+                        self.parking_identified = 2             # parking_stop will detect no more lots
                         self.generate_obs_list(angles, ranges)
                         self.parallell_parking_start(angles[i], ranges[i])
                     else:
