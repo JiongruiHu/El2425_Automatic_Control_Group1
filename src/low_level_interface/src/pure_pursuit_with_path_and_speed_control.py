@@ -9,7 +9,7 @@ from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
 
 
-class PurePursuit(object):
+class ParkingControl(object):
     def __init__(self):
         self.path = path_points('circle')
         self.Estop = 0
@@ -21,20 +21,24 @@ class PurePursuit(object):
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
         self.car_control_pub = rospy.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
-        rate = rospy.Rate(10)
+        self.rate = rospy.Rate(10)
         # goal = self.path[0]
-        lli_msg = lli_ctrl_request()
-        lli_msg.velocity = speed
+
         self.ld = 0.5
         self.xs = []
         self.ys = []
+        self.__pure_pursuit()
+
+    def __pure_pursuit(self):
+        lli_msg = lli_ctrl_request()
+        lli_msg.velocity = speed
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity,lli_msg.steering = self.controller(goal)
                     self.car_control_pub.publish(lli_msg)
-                    rate.sleep()
+                    self.rate.sleep()
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -148,7 +152,7 @@ if __name__ == "__main__":
     rospy.init_node('path_follow')
     speed = 10
     try:
-        PurePursuit()
+        ParkingControl()
     except rospy.ROSInterruptException:
         pass
     
