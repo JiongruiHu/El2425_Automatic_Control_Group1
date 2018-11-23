@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/reversable_path_following.py" line="230" mnemonic="7" />
+    <bookmark url="file://$PROJECT_DIR$/src/reversable_path_following.py" line="238" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="" />
+    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/reversable_path_following.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/reversable_path_following.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/reversable_path_following.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1013">
-              <caret line="93" column="10" selection-start-line="93" selection-start-column="10" selection-end-line="93" selection-end-column="10" />
+            <state relative-caret-position="677">
+              <caret line="233" column="43" selection-start-line="233" selection-start-column="43" selection-end-line="233" selection-end-column="43" />
               <folding>
                 <element signature="e#2629#2759#0" />
                 <element signature="e#2828#2873#0" />
@@ -49,7 +51,6 @@
                 <element signature="e#6738#6832#0" />
                 <element signature="e#6963#7162#0" />
                 <element signature="e#7213#7241#0" />
-                <element signature="e#7279#7753#0" />
                 <element signature="e#7406#7606#0" />
                 <element signature="e#10731#11165#0" />
                 <element signature="e#10919#11136#0" />
@@ -329,8 +330,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/reversable_path_following.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1013">
-          <caret line="93" column="10" selection-start-line="93" selection-start-column="10" selection-end-line="93" selection-end-column="10" />
+        <state relative-caret-position="677">
+          <caret line="233" column="43" selection-start-line="233" selection-start-column="43" selection-end-line="233" selection-end-column="43" />
           <folding>
             <element signature="e#2629#2759#0" />
             <element signature="e#2828#2873#0" />
@@ -341,7 +342,6 @@
             <element signature="e#6738#6832#0" />
             <element signature="e#6963#7162#0" />
             <element signature="e#7213#7241#0" />
-            <element signature="e#7279#7753#0" />
             <element signature="e#7406#7606#0" />
             <element signature="e#10731#11165#0" />
             <element signature="e#10919#11136#0" />
