@@ -282,6 +282,7 @@ class FollowThenPark(object):
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
         print("Building path...")
         steerings, times = parking_path.build_path()
+        self.path = steerings
         self.change_to_reversed()
         self.__pure_pursuit()
 
