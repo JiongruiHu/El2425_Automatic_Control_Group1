@@ -40,7 +40,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__forward_then_backward()
+        self.__follow_then_park()
 
     def __forward_then_backward(self):
         self.change_to_forward()
@@ -99,7 +99,7 @@ class FollowThenPark(object):
         else:
             pass
             # self.forward_lidar_cb(data)
-        # self.parking_stop(data)
+        self.parking_stop(data)
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
