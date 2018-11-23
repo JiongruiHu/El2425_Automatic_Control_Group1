@@ -243,10 +243,13 @@ class FollowThenPark(object):
 
     def parallell_parking_backwards(self):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        print("Planning path...")
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
+        print("Building path...")
         steerings, times = parking_path.build_path()
         self.change_to_reversed()
         # self.__pure_pursuit()
+        print("Executing...")
         self.steer_from_lists(steerings, times)
 
     def steer_from_lists(self, steerings, times):
