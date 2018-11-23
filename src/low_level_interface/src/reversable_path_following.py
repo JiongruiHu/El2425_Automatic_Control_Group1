@@ -57,7 +57,7 @@ class FollowThenPark(object):
             self.parallell_parking_backwards()
 
     def __pure_pursuit(self):
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(50)
         lli_msg = lli_ctrl_request()
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
