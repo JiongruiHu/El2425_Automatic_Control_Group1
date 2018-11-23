@@ -55,7 +55,7 @@ class FollowThenPark(object):
         self.path = path_points('linear')
         self.__pure_pursuit()
         if self.has_parking_spot:
-            self.parallell_parking_start(self.pp_angle, self.pp_range)
+
             self.parallell_parking_backwards()
 
     def __pure_pursuit(self):
@@ -311,6 +311,7 @@ class FollowThenPark(object):
                         self.generate_obs_list(angles, ranges)
                         self.pp_range = ranges[i]
                         self.pp_angle = angles[i]
+                        self.parallell_parking_start(self.pp_angle, self.pp_range)
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
