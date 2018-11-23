@@ -52,8 +52,11 @@ class FollowThenPark(object):
 
     def __backward_then_forward(self):
         self.change_to_reversed()
-        self.path = path_points('reversed_linear')
+        self.path = path_points('small_circle')
+        self.ld = 0.2
+        self.has_parking_spot = True
         self.__pure_pursuit()
+        return
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
@@ -103,12 +106,15 @@ class FollowThenPark(object):
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
+        lli_msg.velocity = - 10
+        self.car_control_pub.publish(lli_msg)
+        rospy.sleep(0.05)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
-        lli_msg.velocity = -10
+        rospy.sleep(0.05)
+        lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        lli_msg.velocity = 0
-        self.car_control_pub.publish(lli_msg)
+        rospy.sleep(0.05)
         self.reversed = True
 
     def change_to_forward(self):
@@ -208,6 +214,9 @@ class FollowThenPark(object):
                 speed = -20
         else:
             speed = 0
+
+        if self.has_parking_spot:
+            speed = -18
         # speed = E_stop(speed)
         return speed
 
@@ -279,16 +288,18 @@ class FollowThenPark(object):
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
         print("Building path...")
         steerings, times = parking_path.build_path()
+        self.path = steerings
+        self.ld = 0.1
         self.change_to_reversed()
-        # self.__pure_pursuit()
+        self.__pure_pursuit()
 
-        self.steer_from_lists(steerings, times)
+        # self.steer_from_lists(steerings, times)
 
     def steer_from_lists(self, steerings, times):
         self.change_to_reversed()
         start = time.time()
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = -20
+        lli_msg.velocity = -17
         time_elapsed = 0
         i = 0
         while time_elapsed < times[-1]:

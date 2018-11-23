@@ -1,3 +1,8 @@
+from numpy import *
+import matplotlib as plt
+# Given the position of the car, and generate list of points which ends at goal.
+# start: the current position of the car
+
 #!/usr/bin/env python
 from numpy import *
 import matplotlib.patches as plp
@@ -32,6 +37,8 @@ class Path:
         self.goal = goal  # (goal[0]-start[0], goal[1] - start[1])
         self.car_speed = 0.1
         self.car_heading = current_heading
+        savetxt("/home/nvidia/catkin_ws/obs_without.csv", obs, delimiter=",")
+        savetxt("/home/nvidia/catkin_ws/obs_with.csv", self.obs, delimiter=",")
 
     def parking_path(self):
         open_list, close_list, current_list = [], [], []
@@ -39,6 +46,7 @@ class Path:
         print("position", self.car_p)
         print("heading",self.car_heading)
         print("goal",self.goal)
+
         initNode.add_gcost(0)
         open_list.append(initNode)
         #fig = plt.gcf()
@@ -72,8 +80,9 @@ class Path:
         path.reverse()
         print("Returning...")
         for nod in path:
-            controls.append(nod.steer)
+            controls.append(nod.p)
             time.append(nod.t)
+        print(controls)
         return controls, time
 
     def update_neighbour(self, openL, closeL, n):
@@ -102,17 +111,20 @@ class Path:
         while t < 1 and state is True:
             xn, yn, headingn = bicycle_backward(self.car_speed, xl[-1], yl[-1], headingl[-1], delta)
             #g = g + dist((xn,yn),(xl[-1], yl[-1]))
-            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal) and self.in_bounds((xn,yn)):  # if no collision
-                xl.append(xn)
-                yl.append(yn)
-                headingl.append(headingn)
-                t = t + 0.01
+            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal) and self.in_bounds((xn,yn)):
+                #if close_goal((xn,yn), goalpoint) and abs(headingn-self.car_heading) < 0.1:
+                # if no collision
+                    xl.append(xn)
+                    yl.append(yn)
+                    headingl.append(headingn)
+                    t = t + 0.01
             elif reach_goal((xn, yn), self.goal):
-                xl.append(xn)
-                yl.append(yn)
-                headingl.append(headingn)
-                t = t + 0.01
-                state = False
+                if abs(headingn-self.car_heading) < 0.2:
+                    xl.append(xn)
+                    yl.append(yn)
+                    headingl.append(headingn)
+                    t = t + 0.01
+                    state = False
 
             else:
                 state = False
@@ -153,10 +165,20 @@ def dist(p1, p2):
 
 
 def reach_goal(p, goalpoint):
-    if dist(p, goalpoint) < 0.01:
+    if dist(p, goalpoint) < 0.3:
         return True
     else:
         return False
+
+
+def close_goal(p, goalpoint):
+    d = dist(p, goalpoint)
+    if d < 0.2 and d > 0.1:
+        return True
+    else:
+        return False
+
+
 
 # the obstacles must be inflated before checking the collision
 def checkcollision(p, obs):
@@ -164,5 +186,6 @@ def checkcollision(p, obs):
         if dist(p, (o[0], o[1])) < o[2] + 0.05:
             return False  # collision
     return True     # no collision
+
 
 

@@ -51,8 +51,18 @@ def path_points(type_path):
             x = a * cos(al)
             y = b * sin(al) * cos(al)
             path.append([x,y])
+
+    elif type_path == 'small_circle':
+        r = 0.4  # the radius of the circle path
+        alpha = linspace(-pi,pi,nPoint)
+        for a in alpha:
+            x = r * cos(a)
+            y = r * sin(a)
+            path.append([x,y])
     else:
         print("I do NOT generate this kind of path")
+
+
 
     return path
 
@@ -65,6 +75,16 @@ def adjustable_path_points(type_path, start, goal, heading = None):
         xg, yg = goal[0], goal[1]  # goal point
         xrange = linspace(x0, xg, nPoint)
         yrange = linspace(y0, yg, nPoint)
+        for i in arange(nPoint):
+            path.append([xrange[i], yrange[i]])
+     elif type_path == 'parking':
+        x0, y0 = 0, 0  # initial point
+        xg, yg = 0.7, 0.48  # goal point
+        xrange = linspace(x0-xg/2, xg/2, nPoint)
+        yrange = 0.48/(2*pi/2)*arctan(xrange*10/0.7)
+        x_real = xrange * cos(heading) - yrange * sin(heading) + start[0]
+        y_real = xrange * sin(heading) + yrange * cos(heading) + start[1]
+        
         for i in arange(nPoint):
             path.append([xrange[i], yrange[i]])
     return path
