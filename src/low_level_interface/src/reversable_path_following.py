@@ -38,7 +38,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__backward_then_forward()
+        self.__follow _then_park()
 
     def __backward_then_forward(self):
         self.change_to_reversed()
@@ -52,8 +52,8 @@ class FollowThenPark(object):
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
-        if self.has_parking_spot:
-            self.parallell_parking_backwards()
+        # if self.has_parking_spot:
+        #     self.parallell_parking_backwards()
 
 
     def __pure_pursuit(self):
@@ -88,7 +88,7 @@ class FollowThenPark(object):
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
-        lli_msg.velocity = 10
+        lli_msg.velocity = -10
         self.car_control_pub.publish(lli_msg)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -257,7 +257,7 @@ class FollowThenPark(object):
         while time_elapsed < times[-1]:
             while times[i] < time_elapsed:
                 i += 1
-            lli_msg.steering = steerings[i]
+            lli_msg.steering = int(100*steerings[i]/(pi/4))
             self.car_control_pub.publish(lli_msg)
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
