@@ -57,6 +57,9 @@ class Path:
         path, controls, time = [], [], []
         print("Planning internal path...")
         route = self.parking_path()
+        if not route:
+            print("No path!!")
+            return [0], [0]
         while route.np is not None:
             #x, y = route.p[0], route.p[1]
             path.append(route)
