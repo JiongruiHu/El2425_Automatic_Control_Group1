@@ -285,6 +285,7 @@ class FollowThenPark(object):
         rospy.sleep(3.0)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
+        savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
         parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
         print("Building path...")
         steerings, times = parking_path.build_path()

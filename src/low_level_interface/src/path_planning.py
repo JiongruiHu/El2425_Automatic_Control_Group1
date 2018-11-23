@@ -1,8 +1,3 @@
-from numpy import *
-import matplotlib as plt
-# Given the position of the car, and generate list of points which ends at goal.
-# start: the current position of the car
-
 #!/usr/bin/env python
 from numpy import *
 import matplotlib.patches as plp
@@ -37,7 +32,7 @@ class Path:
         self.goal = goal  # (goal[0]-start[0], goal[1] - start[1])
         self.car_speed = 0.1
         self.car_heading = current_heading
-        savetxt("/home/nvidia/catkin_ws/obs_without.csv", obs, delimiter=",")
+
         savetxt("/home/nvidia/catkin_ws/obs_with.csv", self.obs, delimiter=",")
 
     def parking_path(self):
@@ -152,9 +147,9 @@ class Path:
             inflated_obs.append(o)
         return inflated_obs
 
-    def in_bounds(self,p):
+    def in_bounds(self, p):
         r = 1.5
-        if dist(p,self.car_p) >= r:
+        if dist(p, self.car_p) >= r:
             return False
         else:
             return True
