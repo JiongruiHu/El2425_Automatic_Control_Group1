@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from numpy import *
 import matplotlib as plt
 # Given the position of the car, and generate list of points which ends at goal.
