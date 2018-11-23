@@ -68,7 +68,7 @@ class FollowThenPark(object):
                         self.car_control_pub.publish(lli_msg)
                         rate.sleep()
                     else:
-                        break
+                        return
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -235,6 +235,16 @@ class FollowThenPark(object):
         # xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
         # start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
         # self.path = start_path
+
+        parallell_distance_to_goal = -0.45 - cos(angle) * range  # Heavily subject to change
+        outward_distance_to_goal = -0.08 - sin(angle) * range
+        x_distance_to_goal = cos(self.current_heading) * parallell_distance_to_goal - \
+                             sin(self.current_heading) * outward_distance_to_goal
+        y_distance_to_goal = sin(self.current_heading) * parallell_distance_to_goal + \
+                             cos(self.current_heading) * outward_distance_to_goal
+        xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
+        self.pp_goal = (xp, yp)
+
         head = self.current_heading
         parallell_start = xr * cos(head) + yr * sin(head)
         parallell_position = parallell_start
@@ -246,14 +256,7 @@ class FollowThenPark(object):
             xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
             parallell_position = xr * cos(head) + yr * sin(head)
 
-        parallell_distance_to_goal = -0.45 - cos(angle) * range         # Heavily subject to change
-        outward_distance_to_goal = -0.08 - sin(angle) * range
-        x_distance_to_goal = cos(self.current_heading) * parallell_distance_to_goal - \
-                               sin(self.current_heading) * outward_distance_to_goal
-        y_distance_to_goal = sin(self.current_heading) * parallell_distance_to_goal + \
-                               cos(self.current_heading) * outward_distance_to_goal
-        xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
-        self.pp_goal = (xp, yp)
+
 
     def parallell_parking_backwards(self):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
