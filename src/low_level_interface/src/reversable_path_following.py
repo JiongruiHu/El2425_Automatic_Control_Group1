@@ -105,10 +105,13 @@ class FollowThenPark(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
+        rospy.sleep(0.05)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
+        rospy.sleep(0.05)
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
+        rospy.sleep(0.05)
         self.reversed = True
 
     def change_to_forward(self):
