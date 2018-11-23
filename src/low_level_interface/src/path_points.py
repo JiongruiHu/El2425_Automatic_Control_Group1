@@ -29,6 +29,14 @@ def path_points(type_path):
         for i in arange(nPoint):
             path.append([xrange[i], yrange[i]])
 
+    elif type_path == 'reversed_linear':
+        x0, y0 = 1.5, -1.5  # initial point
+        xg, yg = -1, -1.5  # goal point
+        xrange = linspace(x0, xg, nPoint)
+        yrange = linspace(y0, yg, nPoint)
+        for i in arange(nPoint):
+            path.append([xrange[i], yrange[i]])
+
     elif type_path == 'ellipse':
         a, b = 0.8, 1.6
         alpha = linspace(-pi, pi, nPoint)

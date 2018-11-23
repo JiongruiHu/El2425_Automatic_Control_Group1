@@ -40,14 +40,14 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__follow_then_park()
+        self.__backward_then_forward()
 
     def __backward_then_forward(self):
         self.change_to_reversed()
-        self.path = path_points('reversed_circle')
+        self.path = path_points('reversed_linear')
         self.__pure_pursuit()
         self.change_to_forward()
-        self.path = path_points('circle')
+        self.path = path_points('linear')
         self.__pure_pursuit()
 
     def __follow_then_park(self):
@@ -91,7 +91,7 @@ class FollowThenPark(object):
         else:
             pass
             # self.forward_lidar_cb(data)
-        self.parking_stop(data)
+        # self.parking_stop(data)
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
