@@ -51,8 +51,18 @@ def path_points(type_path):
             x = a * cos(al)
             y = b * sin(al) * cos(al)
             path.append([x,y])
+
+    elif type_path == 'small_circle':
+        r = 0.4  # the radius of the circle path
+        alpha = linspace(-pi,pi,nPoint)
+        for a in alpha:
+            x = r * cos(a)
+            y = r * sin(a)
+            path.append([x,y])
     else:
         print("I do NOT generate this kind of path")
+
+
 
     return path
 
