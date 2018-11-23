@@ -94,7 +94,7 @@ class Path:
         while t < 1 and state is True:
             xn, yn, headingn = bicycle_backward(self.car_speed, xl[-1], yl[-1], headingl[-1], delta)
             #g = g + dist((xn,yn),(xl[-1], yl[-1]))
-            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal):  # if no collision
+            if checkcollision((xn, yn), self.obs) and not reach_goal((xn, yn), self.goal) and self.in_bounds((xn,yn)):  # if no collision
                 xl.append(xn)
                 yl.append(yn)
                 headingl.append(headingn)
@@ -131,6 +131,13 @@ class Path:
             o.append(self.car_size[0]/2)
             inflated_obs.append(o)
         return inflated_obs
+
+    def in_bounds(self,p):
+        r = 1.5
+        if dist(p,self.car_p) >= r:
+            return False
+        else:
+            return True
 
 
 def dist(p1, p2):
