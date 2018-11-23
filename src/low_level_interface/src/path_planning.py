@@ -12,7 +12,7 @@ def path_planning(start, goal,obs):
 if __name__ == "__main__":
     obs = arange()
     path_planning((1,1), obs)
-=======
+
 #!/usr/bin/env python
 from numpy import *
 import matplotlib.patches as plp
