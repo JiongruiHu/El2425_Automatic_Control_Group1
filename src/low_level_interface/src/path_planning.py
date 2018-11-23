@@ -48,8 +48,8 @@ class Path:
                     if reach_goal(node.p, self.goal):
                         return node
             open_list.remove(node)
-            #current_list.append(node)
-            open_list, close_list = self.update_neighbour(open_list, close_list, node)
+            if node.t < 10:#current_list.append(node)
+                open_list, close_list = self.update_neighbour(open_list, close_list, node)
 
         return None
 
@@ -75,7 +75,7 @@ class Path:
             #plt.show()
             nn = []
             if ns not in closeL:
-                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.1)]
+                nn = [n for n in openL if (dist(ns.p, n.p) <= 0.01)]
                 if ns.G == 1000 or (checkcollision(ns.p, self.obs) is not True):
                     closeL.append(ns)
                 elif nn:
