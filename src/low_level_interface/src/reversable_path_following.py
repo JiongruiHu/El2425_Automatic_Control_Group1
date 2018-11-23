@@ -42,12 +42,20 @@ class FollowThenPark(object):
         self.ys = []
         self.__follow_then_park()
 
+    def __forward_then_backward(self):
+        self.change_to_forward()
+        self.path = path_points('linear')
+        self.__pure_pursuit()
+        self.change_to_reversed()
+        self.path = path_points('reversed_linear')
+        self.__pure_pursuit()
+
     def __backward_then_forward(self):
         self.change_to_reversed()
-        self.path = path_points('reversed_circle')
+        self.path = path_points('reversed_linear')
         self.__pure_pursuit()
         self.change_to_forward()
-        self.path = path_points('circle')
+        self.path = path_points('linear')
         self.__pure_pursuit()
 
     def __follow_then_park(self):
@@ -223,13 +231,13 @@ class FollowThenPark(object):
                 return examined_point
             self.path.remove(examined_point)
         goal_point = self.path[0]
-        if dist((xr, yr), goal_point) < 0.05:
+        if dist((xr, yr), goal_point) < 0.1:
             self.path.remove(goal_point)
         return goal_point
 
     def parallell_parking_start(self, angle, range):
         parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
-        outward_distance = 0.3      # Same, but to the left
+        outward_distance = 0.4      # Same, but to the left
         parallell_distance_to_travel = parallell_distance - cos(angle) * range
         outward_distance_to_travel = outward_distance - sin(angle) * range
         # Rotation into global frame
