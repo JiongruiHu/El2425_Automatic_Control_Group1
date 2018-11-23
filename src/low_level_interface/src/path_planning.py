@@ -40,7 +40,7 @@ class Path:
         open_list.append(initNode)
         #fig = plt.gcf()
         #ax = fig.gca()
-        while open_list is not []:
+        while len(open_list) > 0:
             node = open_list[0]
             for n in open_list:
                 if n.F < node.F:
