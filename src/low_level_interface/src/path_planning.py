@@ -38,6 +38,7 @@ class Path:
         initNode = AstarNode(self.car_p, self.goal, self.car_heading)
         print("position", self.car_p)
         print("heading",self.car_heading)
+        print("goal",self.goal)
         initNode.add_gcost(0)
         open_list.append(initNode)
         #fig = plt.gcf()
