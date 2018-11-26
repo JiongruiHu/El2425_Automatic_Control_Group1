@@ -47,7 +47,7 @@ class ParkingControl(object):
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        #self.car_heading = self.car_pose.twist.twist.angular.z
+        # self.car_heading = self.car_pose.twist.twist.angular.z
         self.xs.append(xr)
         self.ys.append(yr)
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
@@ -58,18 +58,18 @@ class ParkingControl(object):
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head',des_heading)
+        print('des_head', des_heading)
         headErr = des_heading - self.current_heading
         # print("headErrOriginal", headErr)
         if headErr > pi:
             headErr = -2 * pi + headErr
         if headErr < -1 * pi:
             headErr = 2 * pi + headErr
-        print('phi',headErr)
+        print('phi', headErr)
         # print('difference_phi',phi*180/pi)
         curv = 2 * sin(headErr) / ld
         des_phi = arctan(L * curv)
-        print('des_phi',des_phi)
+        print('des_phi', des_phi)
 
         if headErr > pi/2 or des_phi > pi/4:  # or 100
             phi = pi/4

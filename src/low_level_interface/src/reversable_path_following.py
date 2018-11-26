@@ -40,7 +40,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__follow_then_park()
+        self.__backward_then_forward()
 
     def __forward_then_backward(self):
         self.change_to_forward()
