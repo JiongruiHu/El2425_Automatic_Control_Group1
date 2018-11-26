@@ -123,6 +123,8 @@ class FollowThenPark(object):
 
     def reversed_controller(self, goal):
         xr, yr, self.current_heading = self.__find_current_position(True)
+        self.xs.append(xr)
+        self.ys.append(yr)
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
         ld = dist((xr, yr), (xg, yg))
