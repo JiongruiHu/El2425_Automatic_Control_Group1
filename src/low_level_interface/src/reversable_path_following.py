@@ -86,6 +86,7 @@ class FollowThenPark(object):
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
         pose_arr = array([self.xs, self.ys])
+        print(self.xs)
         savetxt("/home/nvidia/catkin_ws/real_path.csv", pose_arr, delimiter=",")
 
     # Both following functions choose between reversed and forward depending on self.reversed
