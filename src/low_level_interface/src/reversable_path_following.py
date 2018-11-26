@@ -195,7 +195,7 @@ class FollowThenPark(object):
         # speed = E_stop(speed)
         return speed
 
-    def __find_current_position(self, reversed = false):
+    def __find_current_position(self, reversed = False):
         assert hasattr(self, "car_pose")
         dist_diff = 0.06
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
