@@ -121,18 +121,10 @@ class FollowThenPark(object):
         self.reversed = False
 
     def reversed_controller(self, goal):
-        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        # self.car_heading = self.car_pose.twist.twist.angular.z
-        self.xs.append(xr)
-        self.ys.append(yr)
-        xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
-        zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
-
-        recieved_heading = euler_from_quaternion([xo, yo, zo, w])[2]
-        self.current_heading =  recieved_heading - pi if recieved_heading > 0 else recieved_heading + pi        # Ensures that the heading is 180 away from the recorded
+        xr, yr, self.current_heading = self.__find_current_position(True)
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
-        ld = sqrt((xg - xr)**2 + (yg - yr)**2)
+        ld = dist((xr, yr), (xg, yg))
         des_heading = arctan2((yg - yr), (xg - xr))
         print('des_head', des_heading)
         head_err = des_heading - self.current_heading
@@ -158,14 +150,11 @@ class FollowThenPark(object):
         return v, int(100/(pi/4)*phi)      # MAY NEED TO ADD MINUS SIGN
 
     def forward_controller(self, goal):
-        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        xr, yr, self.current_heading = self.__find_current_position()
         # self.car_heading = self.car_pose.twist.twist.angular.z
         self.xs.append(xr)
         self.ys.append(yr)
-        xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
-        zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
 
-        self.current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xg, yg = goal[0], goal[1]  # self.path
         L = 0.32
         ld = sqrt((xg - xr) ** 2 + (yg - yr) ** 2)
@@ -205,6 +194,19 @@ class FollowThenPark(object):
             # speed = -10
         # speed = E_stop(speed)
         return speed
+
+    def __find_current_position(self, reversed = false):
+        assert hasattr(self, "car_pose")
+        dist_diff = 0.06
+        xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
+        zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
+        heading = euler_from_quaternion([xo, yo, zo, w])[2]
+        xp, yp = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        xr, yr = xp + dist_diff * cos(heading), yp + dist_diff * sin(heading)
+        if reversed:
+            heading = heading - pi if heading > 0 else heading + pi
+        return xr, yr, heading
+
 
     def reversed_speed_control(self, phi):
         if self.Estop == 0:
