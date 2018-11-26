@@ -128,6 +128,7 @@ class FollowThenPark(object):
         self.ys.append(yr)
         xg, yg = goal[0],goal[1]  # self.path
         L = 0.32
+        lf = 0.17
         ld = dist((xr, yr), (xg, yg))
         des_heading = arctan2((yg - yr), (xg - xr))
         print('des_head', des_heading)
@@ -140,7 +141,8 @@ class FollowThenPark(object):
         print('phi', head_err)
         # print('difference_phi', phi*180/pi)
         curv = 2 * sin(head_err) / ld
-        des_phi = arctan(L * curv)
+        # des_phi = arctan(L * curv)
+        des_phi = arctan(L / lf * tan(arcsin(lf * curv)))
         print('des_phi', des_phi)
 
         if head_err > pi/2 or des_phi > pi/4:  # or 100
@@ -201,7 +203,7 @@ class FollowThenPark(object):
 
     def __find_current_position(self, reversed = False):
         assert hasattr(self, "car_pose")
-        dist_diff = 0.06
+        dist_diff = 0.05
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
         heading = euler_from_quaternion([xo, yo, zo, w])[2]
