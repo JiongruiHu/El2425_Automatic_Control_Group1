@@ -53,7 +53,7 @@ class FollowThenPark(object):
     def __backward_then_forward(self):
         self.change_to_reversed()
         self.path = path_points('small_circle')
-        self.ld = 0.2
+        self.ld = 0.25
         self.has_parking_spot = True
         self.__pure_pursuit()
         return
