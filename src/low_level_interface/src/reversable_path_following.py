@@ -141,8 +141,8 @@ class FollowThenPark(object):
         print('phi', head_err)
         # print('difference_phi', phi*180/pi)
         curv = 2 * sin(head_err) / ld
-        # des_phi = arctan(L * curv)
-        des_phi = arctan(L / lf * tan(arcsin(lf * curv)))
+        des_phi = arctan(L * curv)
+        # des_phi = arctan(L / lf * tan(arcsin(lf * curv)))
         print('des_phi', des_phi)
 
         if head_err > pi/2 or des_phi > pi/4:  # or 100
