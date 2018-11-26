@@ -7,7 +7,7 @@ def path_points(type_path):
     nPoint = 108
     if type_path == 'circle':
         r = 1  # the radius of the circle path
-        alpha = linspace(-pi,pi,nPoint)
+        alpha = linspace(-pi, 1.1 * pi, nPoint)
         for a in alpha:
             x = r * cos(a)
             y = r * sin(a)
@@ -54,7 +54,7 @@ def path_points(type_path):
 
     elif type_path == 'small_circle':
         r = 0.5  # the radius of the circle path
-        alpha = linspace(-pi,pi,nPoint)
+        alpha = linspace(-pi, 1.1 * pi, nPoint)
         for a in alpha:
             x = r * cos(a)
             y = r * sin(a)
