@@ -221,7 +221,7 @@ class FollowThenPark(object):
             speed = 0
 
         if self.has_parking_spot:
-            speed = -18
+            speed = -17
         # speed = E_stop(speed)
         return speed
 
