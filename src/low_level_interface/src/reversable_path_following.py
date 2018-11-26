@@ -205,7 +205,7 @@ class FollowThenPark(object):
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
         heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xp, yp = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        xr, yr = xp - dist_diff * cos(heading), yp - dist_diff * sin(heading)
+        xr, yr = xp + dist_diff * cos(heading), yp + dist_diff * sin(heading)
         if reversed:
             heading = heading - pi if heading > 0 else heading + pi
         return xr, yr, heading
