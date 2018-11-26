@@ -238,8 +238,8 @@ class FollowThenPark(object):
         self.car_pose = car_pose_msg
 
     def choose_point(self):
-        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        while(len(self.path) > 1):
+        xr, yr,  __= self.__find_current_position()
+        while len(self.path) > 1:
             examined_point = self.path[0]
             distance = dist((xr,yr), examined_point)
             if distance > self.ld:
