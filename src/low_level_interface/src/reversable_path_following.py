@@ -86,7 +86,7 @@ class FollowThenPark(object):
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
         pose_arr = array([self.xs, self.ys])
-        print(self.xs)
+        # print(self.xs)
         savetxt("/home/nvidia/catkin_ws/real_path.csv", pose_arr, delimiter=",")
 
     # Both following functions choose between reversed and forward depending on self.reversed
@@ -205,7 +205,7 @@ class FollowThenPark(object):
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
         heading = euler_from_quaternion([xo, yo, zo, w])[2]
         xp, yp = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        xr, yr = xp + dist_diff * cos(heading), yp + dist_diff * sin(heading)
+        xr, yr = xp - dist_diff * cos(heading), yp - dist_diff * sin(heading)
         if reversed:
             heading = heading - pi if heading > 0 else heading + pi
         return xr, yr, heading
