@@ -251,7 +251,7 @@ class FollowThenPark(object):
                 return examined_point
             self.path.remove(examined_point)
         goal_point = self.path[0]
-        if dist((xr, yr), goal_point) < 0.15:
+        if dist((xr, yr), goal_point) < 0.1:
             self.path.remove(goal_point)
         return goal_point
 
