@@ -341,8 +341,8 @@ class FollowThenPark(object):
                         self.generate_obs_list(angles, ranges)
                         self.pp_range = ranges[i]
                         self.pp_angle = angles[i]
-                        self.pp_corner = [(cos(self.current_heading) * 0.07) + (sin(self.current_heading) * self.pp_range) + /
-                                          self.car_pose.pose.pose.position.x, (sin(self.current_heading)*0.07)-/
+                        self.pp_corner = [(cos(self.current_heading) * 0.07) + (sin(self.current_heading) * self.pp_range) + \
+                                          self.car_pose.pose.pose.position.x, (sin(self.current_heading)*0.07)-\
                                           (cos(self.current_heading) * self.pp_range)+self.car_pose.pose.pose.position.y] #This might have to be calibrated in order to get more correct poition
                         print("corner: " + str(self.pp_corner))
                         print("car: " + str([self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]))
