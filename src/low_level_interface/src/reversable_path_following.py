@@ -14,7 +14,7 @@ from path_planning import Path
 # Creates a follow then park implementation in SVEA1 from MOCAP
 class FollowThenPark(object):
     def __init__(self):
-        self.path = path_points('figure-8')
+        self.path = adjustable_path_points('parking', (1.5, 1,5), (0, 0), heading = pi/2)
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
@@ -40,7 +40,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
-        self.__backward_then_forward()
+        self.__pure_pursuit()
 
     def __forward_then_backward(self):
         self.change_to_forward()
@@ -70,6 +70,7 @@ class FollowThenPark(object):
             self.parallell_parking_backwards()
 
     def __pure_pursuit(self):
+        savetxt("/home/nvidia/catkin_ws/planned_path.csv", array(self.path), delimiter = ",")
         rate = rospy.Rate(50)
         lli_msg = lli_ctrl_request()
         while len(self.path) > 0:
