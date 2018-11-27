@@ -4,9 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/reversable_path_following.py" line="240" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/path_points.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/path_points.py" afterDir="false" />
-    </list>
+    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/src/path_points.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="542">
-              <caret line="83" column="57" selection-start-line="83" selection-start-column="57" selection-end-line="83" selection-end-column="57" />
+              <caret line="83" column="28" lean-forward="true" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -302,7 +300,7 @@
     <entry file="file://$PROJECT_DIR$/src/path_points.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="542">
-          <caret line="83" column="57" selection-start-line="83" selection-start-column="57" selection-end-line="83" selection-end-column="57" />
+          <caret line="83" column="28" lean-forward="true" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
         </state>
       </provider>
     </entry>
