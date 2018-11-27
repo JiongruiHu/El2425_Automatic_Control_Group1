@@ -37,7 +37,7 @@ class FollowThenPark(object):
 
         # goal = self.path[0]
 
-        self.ld = 0.4
+        self.ld = 0.35
         self.xs = []
         self.ys = []
         self.change_to_reversed()
