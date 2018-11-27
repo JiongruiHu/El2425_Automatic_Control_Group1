@@ -26,7 +26,7 @@ class FollowThenPark(object):
         self.parking_identified = 0
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
-        self.pp_goal = [0, 0]
+        self.Atan_start = []
         self.obs_list = []
         self.pp_range = None
         self.pp_angle = None
@@ -255,29 +255,25 @@ class FollowThenPark(object):
             self.path.remove(goal_point)
         return goal_point
 
-    def parallell_parking_start(self, angle, range):
+    def parallell_parking_start(self):
+        #Car positioning
+        self.pp_heading = self.current_heading
         parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
-        outward_distance = 0.4      # Same, but to the left
-        parallell_distance_to_travel = parallell_distance - cos(angle) * range
-        outward_distance_to_travel = outward_distance - sin(angle) * range
-        # Rotation into global frame
-        x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
-                               sin(self.current_heading) * outward_distance_to_travel
-        y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
-                               cos(self.current_heading) * outward_distance_to_travel
+        outward_distance = 0.2      # Same, but to the left
+        xg = self.pp_corner[0] + (parallell_distance * cos(self.current_heading)) - (outward_distance*sin(self.current_heading))
+        yg = self.pp_corner[1] + (parallell_distance * sin(self.current_heading)) + (outward_distance*cos(self.current_heading))
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
         start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
         self.path = start_path
+        #Arctan start point
+        Atan_parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
+        Atan_outward_distance = 0.4      # Same, but to the left
+        Atan_x = self.pp_corner[0] + (Atan_parallell_distance * cos(self.current_heading)) - (Atan_outward_distance*sin(self.current_heading))
+        Atan_y = self.pp_corner[1] + (Atan_parallell_distance * sin(self.current_heading)) + (Atan_outward_distance*cos(self.current_heading))
+        self.Atan_start = [Atan_x, Atan_y]
 
-        parallell_distance_to_goal = -0.45 - cos(angle) * range  # Heavily subject to change
-        outward_distance_to_goal = -0.08 - sin(angle) * range
-        x_distance_to_goal = cos(self.current_heading) * parallell_distance_to_goal - \
-                             sin(self.current_heading) * outward_distance_to_goal
-        y_distance_to_goal = sin(self.current_heading) * parallell_distance_to_goal + \
-                             cos(self.current_heading) * outward_distance_to_goal
-        xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
-        self.pp_goal = (xp, yp)
+        
+        
 
         # head = self.current_heading
         # parallell_start = xr * cos(head) + yr * sin(head)
@@ -297,11 +293,10 @@ class FollowThenPark(object):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
-        parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
+        self.path = adjustable_path_points("parking", (xr, yr), heading = self.pp_heading)
         print("Building path...")
-        steerings, times = parking_path.build_path()
-        self.path = steerings
-        self.ld = 0.1
+        #self.path = steerings
+        self.ld = 0.32
         self.change_to_reversed()
         self.__pure_pursuit()
 
@@ -346,7 +341,9 @@ class FollowThenPark(object):
                         self.generate_obs_list(angles, ranges)
                         self.pp_range = ranges[i]
                         self.pp_angle = angles[i]
-                        self.pp_corner = [(cos(self.current_heading) * 0.07) + (sin(self.current_heading) * self.pp_range) + self.car_pose.pose.pose.position.x, (sin(self.current_heading)*0.07)-(cos(self.current_heading) * self.pp_range)+self.car_pose.pose.pose.position.y] 
+                        self.pp_corner = [(cos(self.current_heading) * 0.07) + (sin(self.current_heading) * self.pp_range) + /
+                                          self.car_pose.pose.pose.position.x, (sin(self.current_heading)*0.07)-/
+                                          (cos(self.current_heading) * self.pp_range)+self.car_pose.pose.pose.position.y] #This might have to be calibrated in order to get more correct poition
                         print("corner: " + str(self.pp_corner))
                         print("car: " + str([self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]))
                         self.parallell_parking_start(self.pp_angle, self.pp_range)

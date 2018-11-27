@@ -67,7 +67,7 @@ def path_points(type_path):
     return path
 
 
-def adjustable_path_points(type_path, start, goal, heading = None):
+def adjustable_path_points(type_path, start, goal = None, heading = None):
     path = []
     nPoint = 108
     if type_path == 'linear':
