@@ -14,7 +14,7 @@ from path_planning import Path
 # Creates a follow then park implementation in SVEA1 from MOCAP
 class FollowThenPark(object):
     def __init__(self):
-        self.path = adjustable_path_points('parking', (1.5, 1,5), (0, 0), heading = pi/2)
+        self.path = adjustable_path_points('parking', (1.5, 1.5), (0, 0), heading = pi/2)
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
@@ -91,7 +91,7 @@ class FollowThenPark(object):
         pose_arr = array([self.xs, self.ys])
         print(self.xs[-1])
         print(self.ys[-1])
-        savetxt("/home/nvidia/catkin_ws/real_path.csv", pose_arr, delimiter=",")
+        savetxt("/home/nvidia/catkin_ws/real_path.csv", transpose(pose_arr), delimiter=",")
 
     # Both following functions choose between reversed and forward depending on self.reversed
     def controller(self, goal):
