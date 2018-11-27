@@ -80,7 +80,7 @@ def adjustable_path_points(type_path, start, goal, heading = None):
     elif type_path == 'parking':
         x0, y0 = 0, 0  # initial point
         xg, yg = 0.7, 0.48  # goal point
-        xrange = linspace(x0, 1.2 * xg, nPoint)
+        xrange = linspace(x0, 1.4 * xg, nPoint)
         yrange = 0.48/(2*pi/2)*arctan((xrange - xg / 2) * 10 / 0.7) + 0.48 / 2
         yrange = yrange - yrange[0]
         xrange = linspace(x0, xg, nPoint)
