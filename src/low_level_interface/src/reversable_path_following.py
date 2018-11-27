@@ -40,6 +40,7 @@ class FollowThenPark(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
+        self.change_to_reversed()
         self.__pure_pursuit()
 
     def __forward_then_backward(self):
