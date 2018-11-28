@@ -300,7 +300,7 @@ class FollowThenPark(object):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
-        self.path = adjustable_path_points("parking", (xr, yr), heading = self.pp_heading)
+        self.path = adjustable_path_points("parking", self.Atan_start, heading = self.pp_heading)
         print("Building path...")
         #self.path = steerings
         self.ld = 0.35
@@ -348,15 +348,36 @@ class FollowThenPark(object):
                         self.generate_obs_list(angles, ranges)
                         self.pp_range = ranges[i]
                         self.pp_angle = angles[i]
-                        self.pp_corner = [(cos(self.current_heading) * 0.07) + (sin(self.current_heading) * self.pp_range) + \
-                                          self.car_pose.pose.pose.position.x, (sin(self.current_heading)*0.07)-\
-                                          (cos(self.current_heading) * self.pp_range)+self.car_pose.pose.pose.position.y] #This might have to be calibrated in order to get more correct poitin
+                        self.__set_pp_corner(data)
                         print("corner: " + str(self.pp_corner))
                         print("car: " + str([self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]))
                         self.parallell_parking_start()
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
+
+     # Decides the corner of the front obstacle as the closest obstacle to the right of the vehicle
+    # Used in parking_stop(data)
+    def __set_pp_corner(self, data):
+        xr, yr, self.pp_heading = self.__find_current_position()
+        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
+        ranges = data.ranges
+        min_range = 12
+        corner_angle = 0
+        for i in range(len(angles)):
+            if (angles[i] < pi/2 + pi/4) and (angles[i] > pi/2 - pi/4):
+                if ranges[i] < min_range:
+                    min_range = ranges[i]
+                    corner_angle = angles[i]
+        if corner_angle > 0:
+            parallell_corner_distance = -min_range * cos(corner_angle)
+            outward_corner_distance = -min_range * sin(corner_angle)
+            x_corner_pos = xr + parallell_corner_distance * cos(self.pp_heading) - outward_corner_distance * sin(self.pp_heading)
+            y_corner_pos = yr + parallell_corner_distance * sin(self.pp_heading) + outward_corner_distance * cos(self.pp_heading)
+            self.pp_corner = (x_corner_pos, y_corner_pos)
+        else:                       # No corner detected!
+            print("Corner detection error!")
+
 
     # Uses MOCAP to transform obstacles from polar local coordinates to
     # cartesian global coordinates
