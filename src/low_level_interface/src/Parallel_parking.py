@@ -23,6 +23,7 @@ class FollowThenPark(object):
         self.reversed = False
 
         self.has_parking_spot = False
+        self.preparing_to_park = False
         self.parking_identified = 0
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
@@ -80,6 +81,8 @@ class FollowThenPark(object):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity, lli_msg.steering = self.controller(goal)
+                    if self.preparing_to_park:
+                        lli_msg.steering = 0
                     # if not self.has_parking_spot:
                     self.car_control_pub.publish(lli_msg)
                     rate.sleep()
@@ -273,6 +276,7 @@ class FollowThenPark(object):
         Atan_x = self.pp_corner[0] + (Atan_parallell_distance * cos(self.current_heading)) - (Atan_outward_distance*sin(self.current_heading))
         Atan_y = self.pp_corner[1] + (Atan_parallell_distance * sin(self.current_heading)) + (Atan_outward_distance*cos(self.current_heading))
         self.Atan_start = [Atan_x, Atan_y]
+        self.preparing_to_park = True
 
         
         
@@ -291,6 +295,7 @@ class FollowThenPark(object):
 
 
     def parallell_parking_backwards(self):
+        self.preparing_to_park = False
         rospy.sleep(1.0)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
