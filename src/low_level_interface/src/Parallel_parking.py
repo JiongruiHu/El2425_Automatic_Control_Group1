@@ -113,13 +113,13 @@ class FollowThenPark(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.05)
+        rospy.sleep(0.1)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.05)
+        rospy.sleep(0.1)
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.05)
+        rospy.sleep(0.1)
         self.reversed = True
 
     def change_to_forward(self):
@@ -258,11 +258,13 @@ class FollowThenPark(object):
     def parallell_parking_start(self):
         #Car positioning
         self.pp_heading = self.current_heading
-        parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
+        parallell_distance = 0.45        # Distance in the car's direction between corner and starting point
         outward_distance = 0.2      # Same, but to the left
         xg = self.pp_corner[0] + (parallell_distance * cos(self.current_heading)) - (outward_distance*sin(self.current_heading))
         yg = self.pp_corner[1] + (parallell_distance * sin(self.current_heading)) + (outward_distance*cos(self.current_heading))
-        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
+        print("GoalPos: "+ str((xg,yg)))
+        xr, yr, __ = self.__find_current_position()
+        print("CarPos: ", str((xr,yr)))
         start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
         self.path = start_path
         #Arctan start point
@@ -296,7 +298,7 @@ class FollowThenPark(object):
         self.path = adjustable_path_points("parking", (xr, yr), heading = self.pp_heading)
         print("Building path...")
         #self.path = steerings
-        self.ld = 0.32
+        self.ld = 0.35
         self.change_to_reversed()
         self.__pure_pursuit()
 
@@ -343,10 +345,10 @@ class FollowThenPark(object):
                         self.pp_angle = angles[i]
                         self.pp_corner = [(cos(self.current_heading) * 0.07) + (sin(self.current_heading) * self.pp_range) + \
                                           self.car_pose.pose.pose.position.x, (sin(self.current_heading)*0.07)-\
-                                          (cos(self.current_heading) * self.pp_range)+self.car_pose.pose.pose.position.y] #This might have to be calibrated in order to get more correct poition
+                                          (cos(self.current_heading) * self.pp_range)+self.car_pose.pose.pose.position.y] #This might have to be calibrated in order to get more correct poitin
                         print("corner: " + str(self.pp_corner))
                         print("car: " + str([self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]))
-                        self.parallell_parking_start(self.pp_angle, self.pp_range)
+                        self.parallell_parking_start()
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
