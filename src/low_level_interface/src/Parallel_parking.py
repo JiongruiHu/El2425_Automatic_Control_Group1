@@ -273,7 +273,7 @@ class FollowThenPark(object):
         self.path = start_path
         #Arctan start point
         Atan_parallell_distance = 0.3        # Distance in the car's direction between corner and starting point
-        Atan_outward_distance = 0.35      # Same, but to the left
+        Atan_outward_distance = 0.4      # Same, but to the left
         Atan_x = self.pp_corner[0] + (Atan_parallell_distance * cos(self.current_heading)) - (Atan_outward_distance*sin(self.current_heading))
         Atan_y = self.pp_corner[1] + (Atan_parallell_distance * sin(self.current_heading)) + (Atan_outward_distance*cos(self.current_heading))
         self.Atan_start = [Atan_x, Atan_y]
