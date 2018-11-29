@@ -24,6 +24,7 @@ class FollowThenPark(object):
 
         self.has_parking_spot = False
         self.preparing_to_park = False
+        self.going_backwards = False
         self.parking_identified = 0
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
@@ -81,13 +82,14 @@ class FollowThenPark(object):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity, lli_msg.steering = self.controller(goal)
-                    # if self.preparing_to_park:
-                    #     lli_msg.steering = 0
+
                     # if not self.has_parking_spot:
                     self.car_control_pub.publish(lli_msg)
                     rate.sleep()
                     # else:
                         # return
+                    if self.going_backwards:
+                        self.__check_backwards_done()
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -295,6 +297,7 @@ class FollowThenPark(object):
 
     def parallell_parking_backwards(self):
         self.preparing_to_park = False
+        self.going_backwards = True
         rospy.sleep(1.0)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
@@ -322,6 +325,15 @@ class FollowThenPark(object):
             self.car_control_pub.publish(lli_msg)
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
+
+    def __check_backwards_done(self):
+        xr, yr, heading = self.__find_current_position()
+        enough_backwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) > 0.25)
+        enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
+            self.pp_heading) > 0.06)
+        small_heading = (abs(self.pp_heading - heading) < pi/10)
+        if enough_backwards and enough_inwards and small_heading:
+            self.path = []
 
     # Changes a linear path to another in a certain outward_distance away
     def change_lane(self, parallell_distance, outward_distance):
