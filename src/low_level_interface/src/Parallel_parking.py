@@ -395,7 +395,7 @@ class FollowThenPark(object):
         min_range = 12
         corner_angle = 0
         for i in range(len(angles)):
-            if (angles[i] < pi/2 + pi/4) and (angles[i] > pi/2 - pi/4):
+            if (angles[i] < pi/2 + pi/50) and (angles[i] > pi/2 - pi/50):
                 if ranges[i] < min_range:
                     min_range = ranges[i]
                     corner_angle = angles[i]
