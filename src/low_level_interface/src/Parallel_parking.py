@@ -332,7 +332,7 @@ class FollowThenPark(object):
         enough_backwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) > 0.25)
         enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
             self.pp_heading) > 0.06)
-        small_heading = (abs(self.pp_heading - heading) < pi/10)
+        small_heading = (abs(self.pp_heading - heading) < pi/15)
         print(abs(self.pp_heading - heading))
         if enough_backwards and enough_inwards and small_heading:
             print("Early stop")
