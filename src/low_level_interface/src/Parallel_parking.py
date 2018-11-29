@@ -327,7 +327,7 @@ class FollowThenPark(object):
     def change_lane(self, parallell_distance, outward_distance):
         initial_p_dist = 0.2
         xr, yr, __ = self.__find_current_position()
-        heading = atan2(goal[1][1]-goal[0][1], goal[1][0] - goal[0][0])
+        heading = arctan2(self.path[1][1]-self.path[0][1], self.path[1][0] - self.path[0][0])
         x_init = initial_p_dist * cos(heading) - outward_distance * sin(heading)
         y_init = initial_p_dist * sin(heading) + outward_distance * cos(heading)
         x_distance = parallell_distance * cos(heading) - outward_distance * sin(heading)
