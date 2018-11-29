@@ -388,7 +388,7 @@ class FollowThenPark(object):
                         print("car: " + str([self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]))
                         self.parallell_parking_start()
                         # self.parallell_parking_start(angles[i], ranges[i])
-                    else:
+                    elif self.parking_lot_dist > 0.03:
                         self.parking_identified = 0
                 print("Angle: "+str(angles[i]))
                 print("Range: "+str(ranges[i]))
