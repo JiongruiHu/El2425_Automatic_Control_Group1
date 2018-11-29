@@ -28,7 +28,7 @@ class FollowThenPark(object):
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
         self.Atan_start = []
-        self.obs_list = []
+        self.current_start_distance = 0.2    # Distance to first obstacle
         self.pp_range = None
         self.pp_angle = None
         self.pp_coner = None
@@ -341,7 +341,6 @@ class FollowThenPark(object):
         ranges = data.ranges
         parking_threshold = 0.5
         pp_len_threshold = 0.7          # Length of gap, subject to change
-        self.current_start_distance = 0.2    # Distance to first obstacle
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
                 if self.parking_identified == 0:            # No lot identified
