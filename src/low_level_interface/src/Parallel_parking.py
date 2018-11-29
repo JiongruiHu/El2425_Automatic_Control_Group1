@@ -364,7 +364,7 @@ class FollowThenPark(object):
                         self.parking_identified = 1
                         print("START:"+str(self.parking_lot_start))
                         # Change lane to be sufficiently close to parked vehicles
-                        outward_distance_to_move = 0.25 - self.current_start_distance
+                        outward_distance_to_move = 0.3 - self.current_start_distance
                         print("Correction: " + str(outward_distance_to_move))
                         self.change_lane(parallell_distance=2.0, outward_distance=outward_distance_to_move)
                 elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
