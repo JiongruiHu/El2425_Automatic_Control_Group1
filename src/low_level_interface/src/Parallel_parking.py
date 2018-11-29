@@ -405,6 +405,9 @@ class FollowThenPark(object):
             x_corner_pos = xr + parallell_corner_distance * cos(self.pp_heading) - outward_corner_distance * sin(self.pp_heading)
             y_corner_pos = yr + parallell_corner_distance * sin(self.pp_heading) + outward_corner_distance * cos(self.pp_heading)
             self.pp_corner = (x_corner_pos, y_corner_pos)
+            print("Car's position: "+str((xr,yr)))
+            print("Corner position: "+str(x_corner_pos,y_corner_pos))
+            print("Distance: "+str(min_range))
         else:                       # No corner detected!
             print("Corner detection error!")
 
