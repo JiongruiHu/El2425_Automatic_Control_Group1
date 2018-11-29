@@ -194,19 +194,6 @@ class FollowThenPark(object):
         # print('real phi',(phi*180/pi))
         return v, -int(100 / (pi / 4) * phi)
 
-    def speed_control(self, phi):
-        if self.Estop == 0:
-            if abs(phi) < pi/12:
-                speed = 12
-            else:
-                speed = 12
-        else:
-            speed = 0
-        # if self.has_parking_spot:
-            # speed = -10
-        # speed = E_stop(speed)
-        return speed
-
     def __find_current_position(self, reversed = False):
         assert hasattr(self, "car_pose")
         dist_diff = 0.05
@@ -219,6 +206,18 @@ class FollowThenPark(object):
             heading = heading - pi if heading > 0 else heading + pi
         return xr, yr, heading
 
+    def speed_control(self, phi):
+        if self.Estop == 0:
+            if abs(phi) < pi / 12:
+                speed = 12
+            else:
+                speed = 12
+        else:
+            speed = 0
+        # if self.has_parking_spot:
+        # speed = -10
+        # speed = E_stop(speed)
+        return speed
 
     def reversed_speed_control(self, phi):
         if self.Estop == 0:
@@ -319,10 +318,21 @@ class FollowThenPark(object):
         while time_elapsed < times[-1]:
             while times[i] < time_elapsed:
                 i += 1
-            lli_msg.steering = -int(100*steerings[i]/(pi/4))
+            lli_msg.steering = -int(100 * steerings[i]/(pi/4))
             self.car_control_pub.publish(lli_msg)
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
+
+    def change_lane(self, parallell_distance, outward_distance):
+        initial_p_dist = 0.2
+        xr, yr, heading = self.__find_current_position()
+        x_init = initial_p_dist * cos(heading) - outward_distance * sin(heading)
+        y_init = initial_p_dist * sin(heading) + outward_distance * cos(heading)
+        x_distance = parallell_distance * cos(heading) - outward_distance * sin(heading)
+        y_distance = parallell_distance * sin(heading) + outward_distance * cos(heading)
+        x_start, y_start = xr + x_init, yr + y_init
+        x_goal, y_goal = xr + x_distance, yr + y_distance
+        self.path = adjustable_path_points("linear", (x_start, y_start), (x_goal, y_goal))
 
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
@@ -338,6 +348,9 @@ class FollowThenPark(object):
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                         self.parking_identified = 1
                         print("START:"+str(self.parking_lot_start))
+                        # Change lane to be sufficiently close to parked vehicles
+                        outward_distance_to_move = 0.2 - ranges[i] * sin(angles[i])
+                        self.change_lane(parallell_distance=2.0, outward_distance=outward_distance_to_move)
                 elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     self.parking_lot_dist = dist(parking_lot_end, self.parking_lot_start)
