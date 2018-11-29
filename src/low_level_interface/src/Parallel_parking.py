@@ -260,7 +260,7 @@ class FollowThenPark(object):
     def parallell_parking_start(self):
         #Car positioning
         self.pp_heading = self.current_heading
-        parallell_distance = 0.45        # Distance in the car's direction between corner and starting point
+        parallell_distance = 0.4        # Distance in the car's direction between corner and starting point
         outward_distance = 0.2      # Same, but to the left
         xg = self.pp_corner[0] + (parallell_distance * cos(self.current_heading)) - (outward_distance*sin(self.current_heading))
         yg = self.pp_corner[1] + (parallell_distance * sin(self.current_heading)) + (outward_distance*cos(self.current_heading))
