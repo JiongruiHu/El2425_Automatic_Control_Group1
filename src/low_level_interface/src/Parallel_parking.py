@@ -334,7 +334,10 @@ class FollowThenPark(object):
             self.pp_heading) > 0.06)
         small_heading = (abs(self.pp_heading - heading) < pi/20)
         if enough_backwards and enough_inwards and small_heading:
+            print("Early stop")
             self.path = []
+        if small_heading:
+            print("Small heading")
 
     # Changes a linear path to another in a certain outward_distance away
     def change_lane(self, parallell_distance, outward_distance):
