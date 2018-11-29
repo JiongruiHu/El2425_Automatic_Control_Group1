@@ -255,7 +255,7 @@ class FollowThenPark(object):
                 return examined_point
             self.path.remove(examined_point)
         goal_point = self.path[0]
-        if dist((xr, yr), goal_point) < 0.2:
+        if dist((xr, yr), goal_point) < 0.15:
             self.path.remove(goal_point)
         return goal_point
 
@@ -331,7 +331,7 @@ class FollowThenPark(object):
         enough_backwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) > 0.25)
         enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
             self.pp_heading) > 0.06)
-        small_heading = (abs(self.pp_heading - heading) < pi/50)
+        small_heading = (abs(self.pp_heading - heading) < pi/20)
         if enough_backwards and enough_inwards and small_heading:
             self.path = []
 
