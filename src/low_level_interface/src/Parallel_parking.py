@@ -359,7 +359,8 @@ class FollowThenPark(object):
                 if self.parking_identified == 0:            # No lot identified
                     if ranges[i] < parking_threshold:
                         self.current_start_distance = ranges[i] * sin(angles[i])
-                        print("Short angle")
+                        print("Angle: " + str(angles[i]))
+                        print("Range: " + str(ranges[i]))
                         return
                     elif angles[i+1] > pi / 2 + pi / 50 or angles[i+1] < pi / 2 - pi / 50:    # All relevant angles passed test
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
