@@ -402,8 +402,8 @@ class FollowThenPark(object):
         if corner_angle > 0:
             parallell_corner_distance = -min_range * cos(corner_angle)
             outward_corner_distance = -min_range * sin(corner_angle)
-            x_corner_pos = xr + parallell_corner_distance * cos(self.pp_heading) - outward_corner_distance * sin(self.pp_heading)
-            y_corner_pos = yr + parallell_corner_distance * sin(self.pp_heading) + outward_corner_distance * cos(self.pp_heading)
+            x_corner_pos = xr + parallell_corner_distance * cos(self.pp_heading) + outward_corner_distance * sin(self.pp_heading)
+            y_corner_pos = yr - parallell_corner_distance * sin(self.pp_heading) + outward_corner_distance * cos(self.pp_heading)
             self.pp_corner = (x_corner_pos, y_corner_pos)
         else:                       # No corner detected!
             print("Corner detection error!")
