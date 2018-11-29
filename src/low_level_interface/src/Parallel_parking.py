@@ -25,6 +25,7 @@ class FollowThenPark(object):
         self.has_parking_spot = False
         self.preparing_to_park = False
         self.going_backwards = False
+        self.going_forwards = False
         self.parking_identified = 0
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
@@ -218,6 +219,8 @@ class FollowThenPark(object):
                 speed = 12
         else:
             speed = 0
+        if self.going_forwards:
+            speed = 10
         # if self.has_parking_spot:
         # speed = -10
         # speed = E_stop(speed)
@@ -315,9 +318,10 @@ class FollowThenPark(object):
 
     def parallell_parking_forwards(self):
         self.going_backwards = False
+        self.going_forwards = True
         rospy.sleep(1.0)
         xr, yr, __ = self.__find_current_position()
-        outward_distance = -0.08
+        outward_distance = -0.12
         parallell_distance = -0.1
         x_goal = self.pp_corner[0] + parallell_distance * cos(self.pp_heading) - outward_distance * sin(self.pp_heading)
         y_goal = self.pp_corner[1] + parallell_distance * sin(self.pp_heading) + outward_distance * cos(self.pp_heading)
