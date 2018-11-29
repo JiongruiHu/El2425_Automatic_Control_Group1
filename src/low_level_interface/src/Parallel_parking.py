@@ -140,19 +140,19 @@ class FollowThenPark(object):
         lf = 0.17
         ld = dist((xr, yr), (xg, yg))
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head', des_heading)
+        # print('des_head', des_heading)
         head_err = des_heading - self.current_heading
         # print("headErrOriginal", headErr)
         if head_err > pi:
             head_err = -2 * pi + head_err
         if head_err < -1 * pi:
             head_err = 2 * pi + head_err
-        print('phi', head_err)
+        # print('phi', head_err)
         # print('difference_phi', phi*180/pi)
         curv = 2 * sin(head_err) / ld
         des_phi = arctan(L * curv)
         # des_phi = arctan(L / lf * tan(arcsin(lf * curv)))
-        print('des_phi', des_phi)
+        # print('des_phi', des_phi)
 
         if head_err > pi/2 or des_phi > pi/4:  # or 100
             phi = pi/4
@@ -174,18 +174,18 @@ class FollowThenPark(object):
         L = 0.32
         ld = sqrt((xg - xr) ** 2 + (yg - yr) ** 2)
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head', des_heading)
+        # print('des_head', des_heading)
         head_err = des_heading - self.current_heading
         # print("headErrOriginal", headErr)
         if head_err > pi:
             head_err = -2 * pi + head_err
         if head_err < -1 * pi:
             head_err = 2 * pi + head_err
-        print('phi', head_err)
+        # print('phi', head_err)
         # print('difference_phi',phi*180/pi)
         curv = 2 * sin(head_err) / ld
         des_phi = arctan(L * curv)
-        print('des_phi', des_phi)
+        # print('des_phi', des_phi)
 
         if head_err > pi / 2 or des_phi > pi / 4:  # or 100
             phi = pi / 4
