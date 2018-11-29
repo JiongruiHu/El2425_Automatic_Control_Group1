@@ -385,6 +385,8 @@ class FollowThenPark(object):
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
+                print("Angle: "+str(angles[i]))
+                print("Range: "+str(ranges[i]))
 
      # Decides the corner of the front obstacle as the closest obstacle to the right of the vehicle
     # Used in parking_stop(data)
