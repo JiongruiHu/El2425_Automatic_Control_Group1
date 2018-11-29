@@ -72,6 +72,7 @@ class FollowThenPark(object):
         if self.has_parking_spot:
 
             self.parallell_parking_backwards()
+            print(self.pp_corner)
 
     def __pure_pursuit(self):
         savetxt("/home/nvidia/catkin_ws/planned_path.csv", array(self.path), delimiter = ",")
