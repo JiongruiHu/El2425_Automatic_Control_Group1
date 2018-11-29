@@ -214,9 +214,9 @@ class FollowThenPark(object):
     def speed_control(self, phi):
         if self.Estop == 0:
             if abs(phi) < pi / 12:
-                speed = 12
+                speed = 11
             else:
-                speed = 12
+                speed = 11
         else:
             speed = 0
         if self.going_forwards:
@@ -321,8 +321,8 @@ class FollowThenPark(object):
         self.going_forwards = True
         rospy.sleep(1.0)
         xr, yr, __ = self.__find_current_position()
-        outward_distance = -0.12
-        parallell_distance = -0.16
+        outward_distance = -0.15
+        parallell_distance = -0.2
         x_goal = self.pp_corner[0] + parallell_distance * cos(self.pp_heading) - outward_distance * sin(self.pp_heading)
         y_goal = self.pp_corner[1] + parallell_distance * sin(self.pp_heading) + outward_distance * cos(self.pp_heading)
         self.path = adjustable_path_points("linear", (xr, yr), goal=(x_goal, y_goal))
