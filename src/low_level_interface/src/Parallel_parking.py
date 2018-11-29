@@ -81,8 +81,8 @@ class FollowThenPark(object):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity, lli_msg.steering = self.controller(goal)
-                    if self.preparing_to_park:
-                        lli_msg.steering = 0
+                    # if self.preparing_to_park:
+                    #     lli_msg.steering = 0
                     # if not self.has_parking_spot:
                     self.car_control_pub.publish(lli_msg)
                     rate.sleep()
