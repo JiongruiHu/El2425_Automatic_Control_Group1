@@ -4,9 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/reversable_path_following.py" line="240" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Parallel_parking.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parallel_parking.py" afterDir="false" />
-    </list>
+    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +34,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Parallel_parking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
+            <state relative-caret-position="-1708">
               <caret line="262" column="32" lean-forward="true" selection-start-line="262" selection-start-column="32" selection-end-line="262" selection-end-column="32" />
             </state>
           </provider>
@@ -334,7 +332,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parallel_parking.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
+        <state relative-caret-position="-1708">
           <caret line="262" column="32" lean-forward="true" selection-start-line="262" selection-start-column="32" selection-end-line="262" selection-end-column="32" />
         </state>
       </provider>

@@ -267,7 +267,7 @@ class FollowThenPark(object):
         print("GoalPos: "+ str((xg,yg)))
         xr, yr, __ = self.__find_current_position()
         print("CarPos: ", str((xr,yr)))
-        start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
+        start_path = adjustable_path_points("linear", (xg, yg), (xg, yg))
         self.path = start_path
         #Arctan start point
         Atan_parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
