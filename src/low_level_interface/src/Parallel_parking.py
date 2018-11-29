@@ -306,7 +306,7 @@ class FollowThenPark(object):
         self.path = adjustable_path_points("parking", self.Atan_start, heading = self.pp_heading)
         print("Building path...")
         #self.path = steerings
-        self.ld = 0.32
+        self.ld = 0.35
         self.change_to_reversed()
         self.__pure_pursuit()
 
