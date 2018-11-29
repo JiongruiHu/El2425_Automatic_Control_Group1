@@ -72,7 +72,7 @@ class FollowThenPark(object):
         if self.has_parking_spot:
 
             self.parallell_parking_backwards()
-            self.paralell_parking_forwards()
+            self.parallell_parking_forwards()
             print(self.pp_corner)
 
     def __pure_pursuit(self):
