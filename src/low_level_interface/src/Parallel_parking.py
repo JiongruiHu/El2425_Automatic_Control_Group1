@@ -72,6 +72,7 @@ class FollowThenPark(object):
         if self.has_parking_spot:
 
             self.parallell_parking_backwards()
+            self.paralell_parking_forwards()
             print(self.pp_corner)
 
     def __pure_pursuit(self):
@@ -311,6 +312,21 @@ class FollowThenPark(object):
         self.__pure_pursuit()
 
         # self.steer_from_lists(steerings, times)
+
+    def parallell_parking_forwards(self):
+        self.going_backwards = False
+        rospy.sleep(1.0)
+        xr, yr, __ = self.__find_current_position()
+        outward_distance = -0.08
+        parallell_distance = -0.1
+        x_goal = self.pp_corner[0] + parallell_distance * cos(self.pp_heading) - outward_distance * sin(self.pp_heading)
+        y_goal = self.pp_corner[1] + parallell_distance * sin(self.pp_heading) + outward_distance * cos(self.pp_heading)
+        self.path = adjustable_path_points("linear", (xr, yr), goal=(x_goal, y_goal))
+        print("Building path...")
+        # self.path = steerings
+        self.ld = 0.25
+        self.change_to_forward()
+        self.__pure_pursuit()
 
     def steer_from_lists(self, steerings, times):
         self.change_to_reversed()
