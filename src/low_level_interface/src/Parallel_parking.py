@@ -414,16 +414,18 @@ class FollowThenPark(object):
                         l2 = newRanges[second_corner_idx]
                         second_corner_x = -l2*sin(newAngles[second_corner_idx] - pi/2)
                         second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi/2)
+                        if abs(second_corner_y - first_corner_y) <= 0.1:
+                            break
+        # calculate the distance between the 1st corner and 2nd corner
 
-                break
-            # calculate the distance between the 1st corner and 2nd corner
         self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
-            self.parking_identified = 2
+            self.parking_identified = 1
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
+            self.parking_identified = 3 # find large parking spot
             # just drive in directly
 
         ####end of play
