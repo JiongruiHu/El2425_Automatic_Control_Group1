@@ -83,13 +83,20 @@ class ParkingControl(object):
 
     def speed_control(self, phi):
         if self.Estop == 0:
-            if abs(phi) < pi/12:
-                speed = 20
-            else:
-                speed = 15
+            speed = self.__choose_speed(phi)
         else:
             speed = -10
         #speed = E_stop(speed)
+        return speed
+
+    def __choose_speed(self, phi):
+        max_speed = 20
+        min_speed = 14
+        ang_thrd = pi / 12
+        if abs(phi) < ang_thrd:
+            speed = max_speed
+        else:
+            speed = max_speed - (pi /4 - ang_thrd) * (max_speed - min_speed)
         return speed
 
     def reach_goal(self, goal):
