@@ -386,7 +386,7 @@ class FollowThenPark(object):
         # ranges where the angle is between 0 and pi
         for a in tmpAngles:
             idx = where(angles == a)
-            tmpRanges.append(ranges(idx))
+            tmpRanges.append(ranges[idx])
 
         newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
         newRanges = tmpRanges[argmin(tmpRanges):]  # newRanges is from the shortest range
@@ -394,7 +394,7 @@ class FollowThenPark(object):
         first_corner_x, first_corner_y = 0, 0
         second_corner_x, second_corner_y = 0, 0
         for i in range(len(DeltaRanges)):
-            if DeltaRanges(i) > 0.15:
+            if DeltaRanges[i] > 0.15:
                 first_corner_idx = i
                 l1 = newRanges[first_corner_idx]
                 # in the car frame
