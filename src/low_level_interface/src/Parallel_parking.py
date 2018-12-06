@@ -382,12 +382,10 @@ class FollowThenPark(object):
 
         #### my play
         tmpAngles, tmpRanges = [], []
-        tmpAngles = [a for a in angles if (0 <= a < pi)]
-        # ranges where the angle is between 0 and pi
-        for a in tmpAngles:
-            idx = where(angles == a)
-            tmpRanges.append(ranges[idx])
-
+        for i in range(len(angles)):
+            if (0<= angles[i] < pi):
+                tmpAngles.append(angles[i])
+                tmpRanges.append(ranges[i])
         newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
         newRanges = tmpRanges[argmin(tmpRanges):]  # newRanges is from the shortest range
         DeltaRanges = [j - i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
