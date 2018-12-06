@@ -33,8 +33,9 @@ class FollowThenPark(object):
         self.current_start_distance = 0.2    # Distance to first obstacle
         self.pp_range = None
         self.pp_angle = None
-        self.pp_coner = None
+        self.pp_corner = None
         self.pp_heading = 0
+        self.fp_corner = (0, 0)
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -379,11 +380,8 @@ class FollowThenPark(object):
                 ranges.pop(i)
                 angles.pop(i)
 
-        increment = data.angle_increment
-        parking_threshold = 0.5
-        pp_len_threshold = 0.7  # Length of gap, subject to change
         #### my play
-        # newAngles, newRanges = [], []
+        tmpAngles, tmpRanges = [], []
         tmpAngles = [a for a in angles if (0 <= a < pi)]
         # ranges where the angle is between 0 and pi
         for a in tmpAngles:
@@ -391,7 +389,7 @@ class FollowThenPark(object):
             tmpRanges.append(ranges(idx))
 
         newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
-        newRanges = tmpranges[argmin(tmpRanges):]  # newRanges is from the shortest range
+        newRanges = tmpRanges[argmin(tmpRanges):]  # newRanges is from the shortest range
         DeltaRanges = [j - i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
         first_corner_x, first_corner_y = 0, 0
         second_corner_x, second_corner_y = 0, 0
@@ -409,8 +407,8 @@ class FollowThenPark(object):
                     if DeltaRanges[j] < 0:
                         second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
-                        second_corner_x = -l2 * sin(newAngles[second_corner_idx] - pi / 2)
-                        second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi / 2)
+                        second_corner_x = -l2 * sin(newAngles[second_corner_idx])
+                        second_corner_y = -l2 * cos(newAngles[second_corner_idx])
                         if abs(second_corner_y - first_corner_y) <= 0.1:
                             break
         # calculate the distance between the 1st corner and 2nd corner
@@ -423,7 +421,22 @@ class FollowThenPark(object):
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
             self.parking_identified = 3 # find large parking spot
+            xr, yr, _ = self.__find_current_position()
+            heading = arctan2(self.path[1][1] - self.path[0][1], self.path[1][0] - self.path[0][0])
+            first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
+            first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
+            self.fp_corner = (first_corner_x_real, first_corner_y_real)
+            self.forward_parking()
             # just drive in directly
+
+    def forward_parking(self):
+        outward_distance = 0.3
+        parallel_distance = -0.4
+        heading = arctan2(self.path[1][1] - self.path[0][1], self.path[1][0] - self.path[0][0])
+        start_x = parallel_distance * cos(heading) - outward_distance * sin(heading) + self.fp_corner[0]
+        start_y = parallel_distance * sin(heading) + outward_distance * cos(heading) + self.fp_corner[1]
+        self.path = adjustable_path_points("parking_forward", (start_x, start_y))
+        self.has_parking_spot = False
 
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
@@ -433,6 +446,8 @@ class FollowThenPark(object):
 
 
         ####end of play
+        parking_threshold = 0.7
+        pp_len_threshold = 0.7  # Length of gap, subject to change
 
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
