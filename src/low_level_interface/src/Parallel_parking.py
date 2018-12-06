@@ -116,7 +116,8 @@ class FollowThenPark(object):
         else:
             pass
             # self.forward_lidar_cb(data)
-        self.parking_stop(data)
+        if hasattr(self, "car_pose"):
+            self.parking_stop(data)
 
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
