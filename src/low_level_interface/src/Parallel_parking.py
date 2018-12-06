@@ -411,8 +411,6 @@ class FollowThenPark(object):
                         l2 = newRanges[second_corner_idx]
                         second_corner_x = -l2 * sin(newAngles[second_corner_idx] - pi / 2)
                         second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi / 2)
-                        second_corner_x = -l2*sin(newAngles[second_corner_idx] - pi/2)
-                        second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi/2)
                         if abs(second_corner_y - first_corner_y) <= 0.1:
                             break
         # calculate the distance between the 1st corner and 2nd corner
@@ -421,7 +419,6 @@ class FollowThenPark(object):
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
             self.current_start_distance = -second_corner_y
-            self.parking_identified = 1
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
