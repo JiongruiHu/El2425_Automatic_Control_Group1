@@ -373,20 +373,17 @@ class FollowThenPark(object):
         x_goal, y_goal = xr + x_distance, yr + y_distance
         self.path = adjustable_path_points("linear", (x_start, y_start), (x_goal, y_goal))
 
-    def parking_stop(self, data):
-        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
-        ranges = data.ranges
-        # preprocess the ranges and angles, take away the inf
+    def preemptive_corner_finding(self, ranges, angles):
         for i in range(len(ranges)):
             if ranges(i) is inf:
                 ranges.pop(i)
                 angles.pop(i)
-        
+
         increment = data.angle_increment
         parking_threshold = 0.5
-        pp_len_threshold = 0.7      # Length of gap, subject to change
+        pp_len_threshold = 0.7  # Length of gap, subject to change
         #### my play
-        #newAngles, newRanges = [], []
+        # newAngles, newRanges = [], []
         tmpAngles = [a for a in angles if (0 <= a < pi)]
         # ranges where the angle is between 0 and pi
         for a in tmpAngles:
@@ -395,44 +392,52 @@ class FollowThenPark(object):
 
         newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
         newRanges = tmpranges[argmin(tmpRanges):]  # newRanges is from the shortest range
-        DeltaRanges = [j-i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
-        first_corner_x,first_corner_y = 0,0
-        second_corner_x,second_corner_y=0,0
+        DeltaRanges = [j - i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
+        first_corner_x, first_corner_y = 0, 0
+        second_corner_x, second_corner_y = 0, 0
         for i in range(len(DeltaRanges)):
             if DeltaRanges(i) > 0.15:
                 first_corner_idx = i
                 l1 = newRanges[first_corner_idx]
                 # in the car frame
-                first_corner_x = -l1 * sin(newAngles[first_corner_idx] - pi/2)
-                first_corner_y = -l1 * cos(newAngles[first_corner_idx] - pi/2)
+                first_corner_x = -l1 * sin(newAngles[first_corner_idx] - pi / 2)
+                first_corner_y = -l1 * cos(newAngles[first_corner_idx] - pi / 2)
                 # reverse the DeltaRanges: the first corner should be the first 1st derivative with negative
                 # sign in the reversed DeltaRanges? Is it true
                 DeltaRanges.reverse()
                 for j in range(len(DeltaRanges)):
                     if DeltaRanges[j] < 0:
-                        second_corner_idx = len(DeltaRanges) -1-j
+                        second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
-                        second_corner_x = -l2*sin(newAngles[second_corner_idx] - pi/2)
-                        second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi/2)
+                        second_corner_x = -l2 * sin(newAngles[second_corner_idx] - pi / 2)
+                        second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi / 2)
 
                 break
             # calculate the distance between the 1st corner and 2nd corner
         self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
-            self.parking_identified = 2
+            self.current_start_distance = -second_corner_y
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
             # just drive in directly
 
+    def parking_stop(self, data):
+        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
+        ranges = data.ranges
+        # preprocess the ranges and angles, take away the inf
+
+
+
         ####end of play
-        '''
+
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
                 if self.parking_identified == 0:            # No lot identified
+                    self.preemptive_corner_finding(ranges, angles)
                     if ranges[i] < parking_threshold:
-                        self.current_start_distance = ranges[i] * sin(angles[i])
+                        # self.current_start_distance = ranges[i] * sin(angles[i])
                         print("Angle: " + str(angles[i]))
                         print("Range: " + str(ranges[i]))
                         return
@@ -450,6 +455,7 @@ class FollowThenPark(object):
                     print("Dist"+str(self.parking_lot_dist))
                     if self.parking_lot_dist > pp_len_threshold:
                         self.has_parking_spot = True
+                    if self.has_parking_spot:
                         self.parking_identified = 2             # parking_stop will detect no more lots
                         self.generate_obs_list(angles, ranges)
                         self.pp_range = ranges[i]
@@ -463,7 +469,7 @@ class FollowThenPark(object):
                         self.parking_identified = 0
                 print("Angle: "+str(angles[i]))
                 print("Range: "+str(ranges[i]))
-        '''
+
 
      # Decides the corner of the front obstacle as the closest obstacle to the right of the vehicle
     # Used in parking_stop(data)

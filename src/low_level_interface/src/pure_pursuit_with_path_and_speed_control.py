@@ -89,6 +89,7 @@ class ParkingControl(object):
         #speed = E_stop(speed)
         return speed
 
+
     def __choose_speed(self, phi):
         max_speed = 17
         min_speed = 11
