@@ -42,7 +42,7 @@ class FollowThenPark(object):
         self.ys = []
         self.change_to_reversed()
         self.has_parking_spot = True
-        self.__pure_pursuit()
+        self.__follow_then_park()
 
     def __forward_then_backward(self):
         self.change_to_forward()

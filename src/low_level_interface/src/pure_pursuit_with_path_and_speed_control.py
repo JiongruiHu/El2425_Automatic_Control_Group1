@@ -11,7 +11,7 @@ from nav_msgs.msg import Odometry
 
 class ParkingControl(object):
     def __init__(self):
-        self.path = path_points('circle')
+        self.path = path_points('figure-8')
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
@@ -47,7 +47,7 @@ class ParkingControl(object):
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        #self.car_heading = self.car_pose.twist.twist.angular.z
+        # self.car_heading = self.car_pose.twist.twist.angular.z
         self.xs.append(xr)
         self.ys.append(yr)
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
@@ -58,18 +58,18 @@ class ParkingControl(object):
         L = 0.32
         ld = sqrt((xg - xr)**2 + (yg - yr)**2)
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head',des_heading)
+        print('des_head', des_heading)
         headErr = des_heading - self.current_heading
         # print("headErrOriginal", headErr)
         if headErr > pi:
             headErr = -2 * pi + headErr
         if headErr < -1 * pi:
             headErr = 2 * pi + headErr
-        print('phi',headErr)
+        print('phi', headErr)
         # print('difference_phi',phi*180/pi)
         curv = 2 * sin(headErr) / ld
         des_phi = arctan(L * curv)
-        print('des_phi',des_phi)
+        print('des_phi', des_phi)
 
         if headErr > pi/2 or des_phi > pi/4:  # or 100
             phi = pi/4
@@ -83,13 +83,24 @@ class ParkingControl(object):
 
     def speed_control(self, phi):
         if self.Estop == 0:
-            if abs(phi) < pi/12:
-                speed = 20
-            else:
-                speed = 15
+            speed = self.__choose_speed(phi)
         else:
             speed = -10
         #speed = E_stop(speed)
+        return speed
+
+
+    def __choose_speed(self, phi):
+        max_speed = 17
+        min_speed = 11
+        min_ang = pi / 12
+        max_ang = pi / 6
+        if abs(phi) < min_ang:
+            speed = max_speed
+        elif abs(phi) > max_ang:
+            speed = min_speed
+        else:
+            speed = max_speed - (max_ang - min_ang) * (max_speed - min_speed)
         return speed
 
     def reach_goal(self, goal):
@@ -130,7 +141,7 @@ class ParkingControl(object):
         angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
         #print(angles)     
         ranges = data.ranges
-        threshold_dist = 1
+        threshold_dist = 0.6
         Estop = 0
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:

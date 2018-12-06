@@ -23,13 +23,17 @@ class FollowThenPark(object):
         self.reversed = False
 
         self.has_parking_spot = False
+        self.preparing_to_park = False
+        self.going_backwards = False
         self.parking_identified = 0
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
-        self.pp_goal = [0, 0]
-        self.obs_list = []
+        self.Atan_start = []
+        self.current_start_distance = 0.2    # Distance to first obstacle
         self.pp_range = None
         self.pp_angle = None
+        self.pp_coner = None
+        self.pp_heading = 0
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -40,9 +44,7 @@ class FollowThenPark(object):
         self.ld = 0.32
         self.xs = []
         self.ys = []
-        self.change_to_reversed()
-        self.has_parking_spot = True
-        self.__pure_pursuit()
+        self.__follow_then_park()
 
     def __forward_then_backward(self):
         self.change_to_forward()
@@ -80,11 +82,14 @@ class FollowThenPark(object):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
                     goal = self.choose_point()
                     lli_msg.velocity, lli_msg.steering = self.controller(goal)
+
                     # if not self.has_parking_spot:
                     self.car_control_pub.publish(lli_msg)
                     rate.sleep()
                     # else:
                         # return
+                    if self.going_backwards:
+                        self.__check_backwards_done()
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -113,13 +118,13 @@ class FollowThenPark(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.05)
+        rospy.sleep(0.1)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.05)
+        rospy.sleep(0.1)
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.05)
+        rospy.sleep(0.1)
         self.reversed = True
 
     def change_to_forward(self):
@@ -191,19 +196,6 @@ class FollowThenPark(object):
         # print('real phi',(phi*180/pi))
         return v, -int(100 / (pi / 4) * phi)
 
-    def speed_control(self, phi):
-        if self.Estop == 0:
-            if abs(phi) < pi/12:
-                speed = 12
-            else:
-                speed = 12
-        else:
-            speed = 0
-        # if self.has_parking_spot:
-            # speed = -10
-        # speed = E_stop(speed)
-        return speed
-
     def __find_current_position(self, reversed = False):
         assert hasattr(self, "car_pose")
         dist_diff = 0.05
@@ -216,6 +208,18 @@ class FollowThenPark(object):
             heading = heading - pi if heading > 0 else heading + pi
         return xr, yr, heading
 
+    def speed_control(self, phi):
+        if self.Estop == 0:
+            if abs(phi) < pi / 12:
+                speed = 11
+            else:
+                speed = 11
+        else:
+            speed = 0
+        # if self.has_parking_spot:
+        # speed = -10
+        # speed = E_stop(speed)
+        return speed
 
     def reversed_speed_control(self, phi):
         if self.Estop == 0:
@@ -255,29 +259,28 @@ class FollowThenPark(object):
             self.path.remove(goal_point)
         return goal_point
 
-    def parallell_parking_start(self, angle, range):
-        parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
-        outward_distance = 0.4      # Same, but to the left
-        parallell_distance_to_travel = parallell_distance - cos(angle) * range
-        outward_distance_to_travel = outward_distance - sin(angle) * range
-        # Rotation into global frame
-        x_distance_to_travel = cos(self.current_heading) * parallell_distance_to_travel - \
-                               sin(self.current_heading) * outward_distance_to_travel
-        y_distance_to_travel = sin(self.current_heading) * parallell_distance_to_travel + \
-                               cos(self.current_heading) * outward_distance_to_travel
-        xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        xg, yg = xr + x_distance_to_travel, yr + y_distance_to_travel
-        start_path = adjustable_path_points("linear", (xr, yr), (xg, yg))
+    def parallell_parking_start(self):
+        #Car positioning
+        self.pp_heading = self.current_heading
+        parallell_distance = 0.4        # Distance in the car's direction between corner and starting point
+        outward_distance = 0.25      # Same, but to the left
+        xg = self.pp_corner[0] + (parallell_distance * cos(self.current_heading)) - (outward_distance*sin(self.current_heading))
+        yg = self.pp_corner[1] + (parallell_distance * sin(self.current_heading)) + (outward_distance*cos(self.current_heading))
+        print("GoalPos: "+ str((xg,yg)))
+        xr, yr, __ = self.__find_current_position()
+        print("CarPos: ", str((xr,yr)))
+        start_path = adjustable_path_points("linear", (xg, yg), (xg, yg))
         self.path = start_path
+        #Arctan start point
+        Atan_parallell_distance = 0.25        # Distance in the car's direction between corner and starting point
+        Atan_outward_distance = 0.4      # Same, but to the left
+        Atan_x = self.pp_corner[0] + (Atan_parallell_distance * cos(self.current_heading)) - (Atan_outward_distance*sin(self.current_heading))
+        Atan_y = self.pp_corner[1] + (Atan_parallell_distance * sin(self.current_heading)) + (Atan_outward_distance*cos(self.current_heading))
+        self.Atan_start = [Atan_x, Atan_y]
+        self.preparing_to_park = True
 
-        parallell_distance_to_goal = -0.45 - cos(angle) * range  # Heavily subject to change
-        outward_distance_to_goal = -0.08 - sin(angle) * range
-        x_distance_to_goal = cos(self.current_heading) * parallell_distance_to_goal - \
-                             sin(self.current_heading) * outward_distance_to_goal
-        y_distance_to_goal = sin(self.current_heading) * parallell_distance_to_goal + \
-                             cos(self.current_heading) * outward_distance_to_goal
-        xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
-        self.pp_goal = (xp, yp)
+        
+        
 
         # head = self.current_heading
         # parallell_start = xr * cos(head) + yr * sin(head)
@@ -293,15 +296,16 @@ class FollowThenPark(object):
 
 
     def parallell_parking_backwards(self):
-        rospy.sleep(3.0)
+        self.preparing_to_park = False
+        self.going_backwards = True
+        rospy.sleep(1.0)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
-        parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
+        self.path = adjustable_path_points("parking", self.Atan_start, heading = self.pp_heading)
         print("Building path...")
-        steerings, times = parking_path.build_path()
-        self.path = steerings
-        self.ld = 0.1
+        #self.path = steerings
+        self.ld = 0.32
         self.change_to_reversed()
         self.__pure_pursuit()
 
@@ -317,10 +321,32 @@ class FollowThenPark(object):
         while time_elapsed < times[-1]:
             while times[i] < time_elapsed:
                 i += 1
-            lli_msg.steering = -int(100*steerings[i]/(pi/4))
+            lli_msg.steering = -int(100 * steerings[i]/(pi/4))
             self.car_control_pub.publish(lli_msg)
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
+
+    def __check_backwards_done(self):
+        xr, yr, heading = self.__find_current_position()
+        enough_backwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) > 0.25)
+        enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
+            self.pp_heading) > 0.06)
+        small_heading = (abs(self.pp_heading - heading) < pi/10)
+        if enough_backwards and enough_inwards and small_heading:
+            self.path = []
+
+    # Changes a linear path to another in a certain outward_distance away
+    def change_lane(self, parallell_distance, outward_distance):
+        initial_p_dist = 0.2
+        xr, yr, __ = self.__find_current_position()
+        heading = arctan2(self.path[1][1]-self.path[0][1], self.path[1][0] - self.path[0][0])
+        x_init = initial_p_dist * cos(heading) - outward_distance * sin(heading)
+        y_init = initial_p_dist * sin(heading) + outward_distance * cos(heading)
+        x_distance = parallell_distance * cos(heading) - outward_distance * sin(heading)
+        y_distance = parallell_distance * sin(heading) + outward_distance * cos(heading)
+        x_start, y_start = xr + x_init, yr + y_init
+        x_goal, y_goal = xr + x_distance, yr + y_distance
+        self.path = adjustable_path_points("linear", (x_start, y_start), (x_goal, y_goal))
 
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
@@ -331,11 +357,16 @@ class FollowThenPark(object):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
                 if self.parking_identified == 0:            # No lot identified
                     if ranges[i] < parking_threshold:
+                        self.current_start_distance = ranges[i] * sin(angles[i])
                         return
                     elif angles[i+1] > pi / 2 + pi / 50 or angles[i+1] < pi / 2 - pi / 50:    # All relevant angles passed test
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                         self.parking_identified = 1
                         print("START:"+str(self.parking_lot_start))
+                        # Change lane to be sufficiently close to parked vehicles
+                        outward_distance_to_move = 0.25 - self.current_start_distance
+                        print("Correction: " + str(outward_distance_to_move))
+                        self.change_lane(parallell_distance=2.0, outward_distance=outward_distance_to_move)
                 elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
                     parking_lot_end = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
                     self.parking_lot_dist = dist(parking_lot_end, self.parking_lot_start)
@@ -346,10 +377,36 @@ class FollowThenPark(object):
                         self.generate_obs_list(angles, ranges)
                         self.pp_range = ranges[i]
                         self.pp_angle = angles[i]
-                        self.parallell_parking_start(self.pp_angle, self.pp_range)
+                        self.__set_pp_corner(data)
+                        print("corner: " + str(self.pp_corner))
+                        print("car: " + str([self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]))
+                        self.parallell_parking_start()
                         # self.parallell_parking_start(angles[i], ranges[i])
                     else:
                         self.parking_identified = 0
+
+     # Decides the corner of the front obstacle as the closest obstacle to the right of the vehicle
+    # Used in parking_stop(data)
+    def __set_pp_corner(self, data):
+        xr, yr, self.pp_heading = self.__find_current_position()
+        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
+        ranges = data.ranges
+        min_range = 12
+        corner_angle = 0
+        for i in range(len(angles)):
+            if (angles[i] < pi/2 + pi/4) and (angles[i] > pi/2 - pi/4):
+                if ranges[i] < min_range:
+                    min_range = ranges[i]
+                    corner_angle = angles[i]
+        if corner_angle > 0:
+            parallell_corner_distance = -min_range * cos(corner_angle)
+            outward_corner_distance = -min_range * sin(corner_angle)
+            x_corner_pos = xr + parallell_corner_distance * cos(self.pp_heading) - outward_corner_distance * sin(self.pp_heading)
+            y_corner_pos = yr + parallell_corner_distance * sin(self.pp_heading) + outward_corner_distance * cos(self.pp_heading)
+            self.pp_corner = (x_corner_pos, y_corner_pos)
+        else:                       # No corner detected!
+            print("Corner detection error!")
+
 
     # Uses MOCAP to transform obstacles from polar local coordinates to
     # cartesian global coordinates
