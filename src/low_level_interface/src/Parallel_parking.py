@@ -431,11 +431,7 @@ class FollowThenPark(object):
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
-        # preprocess the ranges and angles, take away the inf
-
-
-
-        ####end of play
+     
 
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
