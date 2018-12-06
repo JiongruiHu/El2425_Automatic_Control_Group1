@@ -11,7 +11,7 @@ from nav_msgs.msg import Odometry
 
 class ParkingControl(object):
     def __init__(self):
-        self.path = path_points('circle')
+        self.path = path_points('figure-8')
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
@@ -83,13 +83,23 @@ class ParkingControl(object):
 
     def speed_control(self, phi):
         if self.Estop == 0:
-            if abs(phi) < pi/12:
-                speed = 20
-            else:
-                speed = 15
+            speed = self.__choose_speed(phi)
         else:
             speed = -10
         #speed = E_stop(speed)
+        return speed
+
+    def __choose_speed(self, phi):
+        max_speed = 17
+        min_speed = 11
+        min_ang = pi / 12
+        max_ang = pi / 6
+        if abs(phi) < min_ang:
+            speed = max_speed
+        elif abs(phi) > max_ang:
+            speed = min_speed
+        else:
+            speed = max_speed - (max_ang - min_ang) * (max_speed - min_speed)
         return speed
 
     def reach_goal(self, goal):
@@ -130,7 +140,7 @@ class ParkingControl(object):
         angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
         #print(angles)     
         ranges = data.ranges
-        threshold_dist = 1
+        threshold_dist = 0.6
         Estop = 0
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
