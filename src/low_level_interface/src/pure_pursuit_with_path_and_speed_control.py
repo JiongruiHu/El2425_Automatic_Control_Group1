@@ -91,7 +91,7 @@ class ParkingControl(object):
 
     def __choose_speed(self, phi):
         max_speed = 20
-        min_speed = 14
+        min_speed = 10
         ang_thrd = pi / 12
         if abs(phi) < ang_thrd:
             speed = max_speed
