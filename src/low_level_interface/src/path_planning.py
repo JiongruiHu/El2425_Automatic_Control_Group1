@@ -46,6 +46,8 @@ class Path:
         initNode.add_gcost(0)
         open_list.append(initNode)
         while len(open_list) > 0:
+            if self.in_bounds(self.goal):
+                return None
             node = open_list[0]
             for n in open_list:
                 if n.F < node.F:

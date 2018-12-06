@@ -441,14 +441,8 @@ class FollowThenPark(object):
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
-        # preprocess the ranges and angles, take away the inf
-
-
-
-        ####end of play
         parking_threshold = 0.7
         pp_len_threshold = 0.7  # Length of gap, subject to change
-
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
                 if self.parking_identified == 0:            # No lot identified
