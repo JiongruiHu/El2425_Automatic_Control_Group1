@@ -409,25 +409,16 @@ class FollowThenPark(object):
                     if DeltaRanges[j] < 0:
                         second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
-<<<<<<< HEAD
                         second_corner_x = -l2 * sin(newAngles[second_corner_idx] - pi / 2)
                         second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi / 2)
-=======
-                        second_corner_x = -l2*sin(newAngles[second_corner_idx] - pi/2)
-                        second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi/2)
                         if abs(second_corner_y - first_corner_y) <= 0.1:
                             break
         # calculate the distance between the 1st corner and 2nd corner
->>>>>>> 765ea9768c3227d19383eff392a929194b2fbab5
 
         self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
-<<<<<<< HEAD
             self.current_start_distance = -second_corner_y
-=======
-            self.parking_identified = 1
->>>>>>> 765ea9768c3227d19383eff392a929194b2fbab5
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
