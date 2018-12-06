@@ -386,7 +386,7 @@ class FollowThenPark(object):
         parking_threshold = 0.5
         pp_len_threshold = 0.7      # Length of gap, subject to change
         #### my play
-        newAngles, newRanges = [], []
+        #newAngles, newRanges = [], []
         tmpAngles = [a for a in angles if (0 <= a < pi)]
         # ranges where the angle is between 0 and pi
         for a in tmpAngles:
@@ -395,19 +395,36 @@ class FollowThenPark(object):
 
         newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
         newRanges = tmpranges[argmin(tmpRanges):]  # newRanges is from the shortest range
-        for i in range(len(newRanges)):
-            if newRange(i) * cos(increment):
-                idx_first_corner = i
-                l = newRanges[0] / cos(newAngles[idx_first_corner] - newAngles[0])
-                # in Lidars frame
-                first_corner_x = l * sin(newAngles[idx_first_corner] - pi/2)
-                first_corner_y = l * cos(newAngles[idx_first_corner] - pi/2)
-                rangesfrom1stcorner = newRanges[idx_first_corner:]
-                continue
-        
+        DeltaRanges = [j-i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
+        first_corner_x,first_corner_y = 0,0
+        second_corner_x,second_corner_y=0,0
+        for i in range(len(DeltaRanges)):
+            if DeltaRanges(i) > 0.15:
+                first_corner_idx = i
+                l1 = newRanges[first_corner_idx]
+                # in the car frame
+                first_corner_x = -l1 * sin(newAngles[first_corner_idx] - pi/2)
+                first_corner_y = -l1 * cos(newAngles[first_corner_idx] - pi/2)
+                # reverse the DeltaRanges: the first corner should be the first 1st derivative with negative
+                # sign in the reversed DeltaRanges? Is it true
+                DeltaRanges.reverse()
+                for j in range(len(DeltaRanges)):
+                    if DeltaRanges[j] < 0:
+                        second_corner_idx = len(DeltaRanges) -1-j
+                        l2 = newRanges[second_corner_idx]
+                        second_corner_x = -l2*sin(newAngles[second_corner_idx] - pi/2)
+                        second_corner_y = -l2 * cos(newAngles[second_corner_idx] - pi/2)
 
-
-
+                break
+            # calculate the distance between the 1st corner and 2nd corner
+        self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
+        if 0.7 <= self.parking_lot_dist < 1.2:
+            self.has_parking_spot = True
+            self.parking_identified = 2
+            # assign back into the parking place
+        elif self.parking_lot_dist >= 1.2:
+            self.has_parking_spot = True
+            # just drive in directly
 
         ####end of play
         '''
