@@ -415,6 +415,7 @@ class FollowThenPark(object):
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
             self.current_start_distance = -second_corner_y
+            print("Preparing parallel parking")
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
@@ -424,6 +425,7 @@ class FollowThenPark(object):
             first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
             first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
+            print("Preparing forward parking")
             self.forward_parking()
             # just drive in directly
 
@@ -447,8 +449,8 @@ class FollowThenPark(object):
                     self.preemptive_corner_finding(ranges, angles)
                     if ranges[i] < parking_threshold:
                         # self.current_start_distance = ranges[i] * sin(angles[i])
-                        print("Angle: " + str(angles[i]))
-                        print("Range: " + str(ranges[i]))
+                        # print("Angle: " + str(angles[i]))
+                        # print("Range: " + str(ranges[i]))
                         return
                     elif angles[i+1] > pi / 2 + pi / 50 or angles[i+1] < pi / 2 - pi / 50:    # All relevant angles passed test
                         self.parking_lot_start = [self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y]
@@ -476,8 +478,8 @@ class FollowThenPark(object):
                         # self.parallell_parking_start(angles[i], ranges[i])
                     elif self.parking_lot_dist > 0.03:
                         self.parking_identified = 0
-                print("Angle: "+str(angles[i]))
-                print("Range: "+str(ranges[i]))
+                # print("Angle: "+str(angles[i]))
+                # print("Range: "+str(ranges[i]))
 
 
      # Decides the corner of the front obstacle as the closest obstacle to the right of the vehicle
