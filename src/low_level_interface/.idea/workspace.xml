@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/Parallel_parking.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parallel_parking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/path_planning.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/path_planning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reversable_path_following.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/reversable_path_following.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Parallel_parking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
-              <caret line="443" selection-start-line="443" selection-end-line="443" />
+            <state relative-caret-position="165">
+              <caret line="380" column="27" selection-start-line="380" selection-start-column="27" selection-end-line="380" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -352,8 +350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parallel_parking.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="443" selection-start-line="443" selection-end-line="443" />
+        <state relative-caret-position="165">
+          <caret line="380" column="27" selection-start-line="380" selection-start-column="27" selection-end-line="380" selection-end-column="27" />
         </state>
       </provider>
     </entry>

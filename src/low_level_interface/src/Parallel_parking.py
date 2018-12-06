@@ -376,9 +376,9 @@ class FollowThenPark(object):
 
     def preemptive_corner_finding(self, ranges, angles):
         for i in range(len(ranges)):
-            if ranges(i) is inf:
-                ranges.pop(i)
-                angles.pop(i)
+            if ranges[i] is inf:
+                ranges.pop[i]
+                angles.pop[i]
 
         #### my play
         tmpAngles, tmpRanges = [], []
