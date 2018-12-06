@@ -376,8 +376,41 @@ class FollowThenPark(object):
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         ranges = data.ranges
+        # preprocess the ranges and angles, take away the inf
+        for i in range(len(ranges)):
+            if ranges(i) is inf:
+                ranges.pop(i)
+                angles.pop(i)
+        
+        increment = data.angle_increment
         parking_threshold = 0.5
-        pp_len_threshold = 0.7          # Length of gap, subject to change
+        pp_len_threshold = 0.7      # Length of gap, subject to change
+        #### my play
+        newAngles, newRanges = [], []
+        tmpAngles = [a for a in angles if (0 <= a < pi)]
+        # ranges where the angle is between 0 and pi
+        for a in tmpAngles:
+            idx = where(angles == a)
+            tmpRanges.append(ranges(idx))
+
+        newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
+        newRanges = tmpranges[argmin(tmpRanges):]  # newRanges is from the shortest range
+        for i in range(len(newRanges)):
+            if newRange(i) * cos(increment):
+                idx_first_corner = i
+                l = newRanges[0] / cos(newAngles[idx_first_corner] - newAngles[0])
+                # in Lidars frame
+                first_corner_x = l * sin(newAngles[idx_first_corner] - pi/2)
+                first_corner_y = l * cos(newAngles[idx_first_corner] - pi/2)
+                rangesfrom1stcorner = newRanges[idx_first_corner:]
+                continue
+        
+
+
+
+
+        ####end of play
+        '''
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
                 if self.parking_identified == 0:            # No lot identified
@@ -413,6 +446,7 @@ class FollowThenPark(object):
                         self.parking_identified = 0
                 print("Angle: "+str(angles[i]))
                 print("Range: "+str(ranges[i]))
+        '''
 
      # Decides the corner of the front obstacle as the closest obstacle to the right of the vehicle
     # Used in parking_stop(data)

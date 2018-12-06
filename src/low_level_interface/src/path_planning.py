@@ -53,7 +53,7 @@ class Path:
                     if reach_goal(node.p, self.goal):
                         return node
             open_list.remove(node)
-            if node.t < 10: #current_list.append(node)
+            if node.t < 10:
                 open_list, close_list = self.update_neighbour(open_list, close_list, node)
 
         return None
