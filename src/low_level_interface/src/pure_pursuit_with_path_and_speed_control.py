@@ -90,7 +90,7 @@ class ParkingControl(object):
         return speed
 
     def __choose_speed(self, phi):
-        max_speed = 20
+        max_speed = 18
         min_speed = 10
         min_ang = pi / 12
         max_ang = pi / 6
