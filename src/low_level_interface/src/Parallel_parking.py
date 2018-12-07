@@ -424,7 +424,7 @@ class FollowThenPark(object):
         self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
-            self.current_start_distance = -second_corner_y
+            self.current_start_distance = second_corner_y       # May need to add minus sign
             self.parking_identified = 0
             print("Preparing parallel parking")
             xr, yr, heading = self.__find_current_position()
