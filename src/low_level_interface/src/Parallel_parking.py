@@ -395,6 +395,7 @@ class FollowThenPark(object):
         for i in range(len(DeltaRanges)):
             if DeltaRanges[i] > 0.15:
                 print("Angle: ",newAngles[i])
+                print("Range: ",newRanges[i])
                 print("MinAngle: ",newAngles[0])
                 print("MinRange: ",newRanges[0])
                 first_corner_idx = i
@@ -429,6 +430,7 @@ class FollowThenPark(object):
             first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
             first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
+            print("First corner local: ",(first_corner_x, first_corner_y))
             print("First corner :", self.fp_corner)
             print("Distance :", self.parking_lot_dist)
             print("Preparing forward parking")
