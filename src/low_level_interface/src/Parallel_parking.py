@@ -394,6 +394,9 @@ class FollowThenPark(object):
         second_corner_x, second_corner_y = 0, 0
         for i in range(len(DeltaRanges)):
             if DeltaRanges[i] > 0.15:
+                print("Angle: ",newAngles[i])
+                print("MinAngle: ",newAngles[0])
+                print("MinRange: ",newRanges[0])
                 first_corner_idx = i
                 l1 = newRanges[first_corner_idx]
                 # in the car frame
