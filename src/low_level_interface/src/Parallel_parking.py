@@ -404,8 +404,8 @@ class FollowThenPark(object):
                 first_corner_idx = i
                 l1 = newRanges[first_corner_idx]
                 # in the car frame
-                first_corner_x = -l1 * sin(newAngles[first_corner_idx] - pi / 2)
-                first_corner_y = -l1 * cos(newAngles[first_corner_idx] - pi / 2)
+                first_corner_x = -l1 * sin(newAngles[first_corner_idx])
+                first_corner_y = -l1 * cos(newAngles[first_corner_idx])
                 # reverse the DeltaRanges: the first corner should be the first 1st derivative with negative
                 # sign in the reversed DeltaRanges? Is it true
                 DeltaRanges.reverse()
