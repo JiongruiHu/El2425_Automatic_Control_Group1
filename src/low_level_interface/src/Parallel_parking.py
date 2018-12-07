@@ -428,13 +428,15 @@ class FollowThenPark(object):
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
             self.parking_identified = 3 # find large parking spot
-            xr, yr, _ = self.__find_current_position()
-            heading = arctan2(self.path[1][1] - self.path[0][1], self.path[1][0] - self.path[0][0])
+            xr, yr, heading = self.__find_current_position()
             first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
             first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
+            second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
+            second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
             print("First corner local: ",(first_corner_x, first_corner_y))
             print("First corner :", self.fp_corner)
+            print("Second corner :", (second_corner_x, second_corner_y))
             print("Distance :", self.parking_lot_dist)
             print("Preparing forward parking")
             self.forward_parking()
