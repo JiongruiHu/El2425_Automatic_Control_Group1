@@ -426,6 +426,8 @@ class FollowThenPark(object):
             first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
             first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
+            print("First corner :", self.fp_corner)
+            print("Distance :", self.parking_lot_dist)
             print("Preparing forward parking")
             self.forward_parking()
             # just drive in directly

@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/Parallel_parking.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parallel_parking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/path_points.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/path_points.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Parallel_parking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="438" column="97" selection-start-line="438" selection-start-column="97" selection-end-line="438" selection-end-column="97" />
+            <state relative-caret-position="525">
+              <caret line="429" column="53" selection-start-line="429" selection-start-column="53" selection-end-line="429" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -351,8 +350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parallel_parking.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="438" column="97" selection-start-line="438" selection-start-column="97" selection-end-line="438" selection-end-column="97" />
+        <state relative-caret-position="525">
+          <caret line="429" column="53" selection-start-line="429" selection-start-column="53" selection-end-line="429" selection-end-column="53" />
         </state>
       </provider>
     </entry>
