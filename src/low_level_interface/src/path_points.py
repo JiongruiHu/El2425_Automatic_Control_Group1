@@ -104,7 +104,7 @@ def adjustable_path_points(type_path, start, goal = None, heading = None):
         for i in arange(nPoint):
             path.append([x_real[i], y_real[i]])
         # savetxt("/home/lindstah/Documents/EL2425project/planned_path.csv", array(path), delimiter=",")
-        # print(path)
+        print(path)[-1]
     return path
 
 if __name__ == "__main__":
