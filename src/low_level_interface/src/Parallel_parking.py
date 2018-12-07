@@ -436,7 +436,7 @@ class FollowThenPark(object):
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
             print("First corner local: ",(first_corner_x, first_corner_y))
             print("First corner :", self.fp_corner)
-            print("Second corner :", (second_corner_x, second_corner_y))
+            print("Second corner :", (second_corner_x_real, second_corner_y_real))
             print("Distance :", self.parking_lot_dist)
             print("Preparing forward parking")
             self.forward_parking()
