@@ -26,7 +26,7 @@ class FollowThenPark(object):
         self.preparing_to_park = False
         self.going_backwards = False
         self.going_forwards = False
-        self.parking_identified = 0
+        self.parking_identified = -1
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
         self.Atan_start = []
@@ -425,6 +425,7 @@ class FollowThenPark(object):
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
             self.current_start_distance = -second_corner_y
+            self.parking_identified = 0
             print("Preparing parallel parking")
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
@@ -461,8 +462,9 @@ class FollowThenPark(object):
         pp_len_threshold = 0.7  # Length of gap, subject to change
         for i in range(len(angles)):
             if (angles[i] < pi / 2 + pi / 50) and (angles[i] > pi / 2 - pi / 50):
-                if self.parking_identified == 0:            # No lot identified
+                if self.parking_identified == -1:
                     self.preemptive_corner_finding(ranges, angles)
+                elif self.parking_identified == 0:            # No lot identified
                     if ranges[i] < parking_threshold:
                         # self.current_start_distance = ranges[i] * sin(angles[i])
                         # print("Angle: " + str(angles[i]))
