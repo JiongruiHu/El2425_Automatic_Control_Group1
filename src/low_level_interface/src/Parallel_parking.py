@@ -427,6 +427,11 @@ class FollowThenPark(object):
             self.current_start_distance = -second_corner_y
             self.parking_identified = 0
             print("Preparing parallel parking")
+            xr, yr, heading = self.__find_current_position()
+            second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
+            second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
+            print("Second corner :", (second_corner_x_real, second_corner_y_real))
+
             # assign back into the parking place
         elif self.parking_lot_dist >= 1.2:
             self.has_parking_spot = True
@@ -434,12 +439,9 @@ class FollowThenPark(object):
             xr, yr, heading = self.__find_current_position()
             first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
             first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
-            second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
-            second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
             print("First corner local: ",(first_corner_x, first_corner_y))
             print("First corner :", self.fp_corner)
-            print("Second corner :", (second_corner_x_real, second_corner_y_real))
             print("Distance :", self.parking_lot_dist)
             print("Preparing forward parking")
             self.forward_parking()
