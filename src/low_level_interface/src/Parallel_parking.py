@@ -376,10 +376,13 @@ class FollowThenPark(object):
         self.path = adjustable_path_points("linear", (x_start, y_start), (x_goal, y_goal))
 
     def preemptive_corner_finding(self, ranges, angles):
-        for i in range(len(ranges)):
-            if ranges[i] is inf:
-                ranges.pop[i]
-                angles.pop[i]
+        i = 0
+        while i < len(ranges):
+            if ranges[i] < 12:
+                i += 1
+            else:
+                ranges.remove[i]
+                angles.remove[i]
 
         #### my play
         tmpAngles, tmpRanges = [], []
