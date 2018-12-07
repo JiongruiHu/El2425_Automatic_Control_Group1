@@ -408,10 +408,11 @@ class FollowThenPark(object):
                 first_corner_y = -l1 * sin(newAngles[first_corner_idx])
                 # reverse the DeltaRanges: the first corner should be the first 1st derivative with negative
                 # sign in the reversed DeltaRanges? Is it true
-                MeltaRanges = reversed(DeltaRanges)
-                for j in range(len(MeltaRanges)):
+                DeltaRanges.reverse()
+                for j in range(len(DeltaRanges)):
+                    print(DeltaRanges[j])
                     if DeltaRanges[j] < 0:
-                        second_corner_idx = len(MeltaRanges) - 1 - j
+                        second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
                         second_corner_x = -l2 * cos(newAngles[second_corner_idx])
                         second_corner_y = -l2 * sin(newAngles[second_corner_idx])
