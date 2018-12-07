@@ -377,19 +377,19 @@ class FollowThenPark(object):
 
     def preemptive_corner_finding(self, ranges, angles):
         i = 0
-        while i < len(ranges):
-            if ranges[i] < 12:
-                i += 1
-            else:
-                ranges.remove[i]
-                angles.remove[i]
+        filtered_ranges = []
+        filtered_angles = []
+        for i in range(len(ranges)):
+            if range[i] < 12:
+                filtered_ranges.append(ranges[i])
+                filtered_angles.append(angles[i])
 
         #### my play
         tmpAngles, tmpRanges = [], []
-        for i in range(len(angles)):
+        for i in range(len(filtered_angles)):
             if (0<= angles[i] < pi):
-                tmpAngles.append(angles[i])
-                tmpRanges.append(ranges[i])
+                tmpAngles.append(filtered_angles[i])
+                tmpRanges.append(filtered_ranges[i])
         newAngles = tmpAngles[argmin(tmpRanges):]  # newAngles is from the angles where the shortest range starts
         newRanges = tmpRanges[argmin(tmpRanges):]  # newRanges is from the shortest range
         DeltaRanges = [j - i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
