@@ -404,8 +404,8 @@ class FollowThenPark(object):
                 first_corner_idx = i
                 l1 = newRanges[first_corner_idx]
                 # in the car frame
-                first_corner_x = -l1 * sin(newAngles[first_corner_idx])
-                first_corner_y = -l1 * cos(newAngles[first_corner_idx])
+                first_corner_x = -l1 * cos(newAngles[first_corner_idx])
+                first_corner_y = -l1 * sin(newAngles[first_corner_idx])
                 # reverse the DeltaRanges: the first corner should be the first 1st derivative with negative
                 # sign in the reversed DeltaRanges? Is it true
                 DeltaRanges.reverse()
@@ -413,8 +413,8 @@ class FollowThenPark(object):
                     if DeltaRanges[j] < 0:
                         second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
-                        second_corner_x = -l2 * sin(newAngles[second_corner_idx])
-                        second_corner_y = -l2 * cos(newAngles[second_corner_idx])
+                        second_corner_x = -l2 * cos(newAngles[second_corner_idx])
+                        second_corner_y = -l2 * sin(newAngles[second_corner_idx])
                         if abs(second_corner_y - first_corner_y) <= 0.1:
                             break
         # calculate the distance between the 1st corner and 2nd corner
