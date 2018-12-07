@@ -441,7 +441,7 @@ class FollowThenPark(object):
             # just drive in directly
 
     def forward_parking(self):
-        outward_distance = 0.4
+        outward_distance = 0.35
         parallel_distance = -0.4
         heading = arctan2(self.path[1][1] - self.path[0][1], self.path[1][0] - self.path[0][0])
         start_x = parallel_distance * cos(heading) - outward_distance * sin(heading) + self.fp_corner[0]
