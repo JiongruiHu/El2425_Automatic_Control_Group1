@@ -380,7 +380,7 @@ class FollowThenPark(object):
         filtered_ranges = []
         filtered_angles = []
         for i in range(len(ranges)):
-            if range[i] < 12:
+            if ranges[i] < 12:
                 filtered_ranges.append(ranges[i])
                 filtered_angles.append(angles[i])
 
