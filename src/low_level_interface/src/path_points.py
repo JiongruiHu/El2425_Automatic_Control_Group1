@@ -96,7 +96,7 @@ def adjustable_path_points(type_path, start, goal = None, heading = None):
         xrange = linspace(x0, 2.2 * xg, nPoint)
         yrange = -0.48 / (2 * pi / 2) * arctan((xrange - xg * 1.1) * 12 / 0.9)
         yrange = yrange - yrange[0]
-        yrange = -yrange * 0.48 / yrange[-1]
+        yrange = -yrange * 0.52 / yrange[-1]
         xrange = linspace(x0, 1.5 * xg, nPoint)
         x_real = xrange * cos(heading) - yrange * sin(heading) + start[0]
         y_real = xrange * sin(heading) + yrange * cos(heading) + start[1]
