@@ -438,6 +438,7 @@ class FollowThenPark(object):
                                 second_corner_x = -l2 * cos(newAngles[second_corner_idx])
                                 second_corner_y = -l2 * sin(newAngles[second_corner_idx])
                                 break
+                break
         # calculate the distance between the 1st corner and 2nd corner
 
         self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
