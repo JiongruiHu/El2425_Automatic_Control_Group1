@@ -379,7 +379,6 @@ class FollowThenPark(object):
                 ranges.pop(i)
                 angles.pop(i)
 
-        increment = data.angle_increment
         parking_threshold = 0.5
         pp_len_threshold = 0.7  # Length of gap, subject to change
         #### my play
