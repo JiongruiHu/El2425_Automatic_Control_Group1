@@ -26,6 +26,7 @@ class FollowThenPark(object):
         self.preparing_to_park = False
         self.going_backwards = False
         self.going_forwards = False
+        self.doing_forward_parking = False
         self.parking_identified = -1
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
@@ -94,6 +95,8 @@ class FollowThenPark(object):
                         # return
                     if self.going_backwards:
                         self.__check_backwards_done()
+                    if self.doing_forward_parking:
+                        self.__check_backwards_done(forwards=True)
                 # goal = self.path[0]
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
@@ -349,18 +352,28 @@ class FollowThenPark(object):
             rospy.sleep(0.05)
             time_elapsed = time.time() - start
 
-    def __check_backwards_done(self):
+    def __check_backwards_done(self, forwards = False):
         xr, yr, heading = self.__find_current_position()
-        enough_backwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) > 0.25)
-        enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
-            self.pp_heading) > 0.06)
-        small_heading = (abs(self.pp_heading - heading) < pi/20)
-        print(abs(self.pp_heading - heading))
-        if enough_backwards and enough_inwards and small_heading:
-            print("Early stop")
-            self.path = []
-        if small_heading:
-            print("Small heading")
+        if not forwards:
+            enough_backwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) > 0.25)
+            enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
+                self.pp_heading) > 0.06)
+            small_heading = (abs(self.pp_heading - heading) < pi/20)
+            print(abs(self.pp_heading - heading))
+            if enough_backwards and enough_inwards and small_heading:
+                print("Early stop")
+                self.path = []
+            if small_heading:
+                print("Small heading")
+        else:
+            enough_forwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) < -0.25)
+            enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
+                self.pp_heading) > 0.06)
+            small_heading = (abs(self.pp_heading - heading) < pi / 20)
+            print(abs(self.pp_heading - heading))
+            if enough_forwards and enough_inwards and small_heading:
+                print("Early stop")
+                self.path = []
 
     # Changes a linear path to another in a certain outward_distance away
     def change_lane(self, parallell_distance, outward_distance):
