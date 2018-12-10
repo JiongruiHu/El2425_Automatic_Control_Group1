@@ -407,7 +407,7 @@ class FollowThenPark(object):
         newRanges = tmpRanges[argmin(tmpRanges):]  # newRanges is from the shortest range
         DeltaRanges = [j - i for i, j in zip(newRanges[:-1], newRanges[1:])]  # first derivative of ranges
         first_corner_x, first_corner_y = 0, 0
-        second_corner_x, second_corner_y = 0, 0
+        second_corner_x, second_corner_y = None, None
         for i in range(len(DeltaRanges)):
             if DeltaRanges[i] > 0.15:
                 #print("Angle: ",newAngles[i])
@@ -440,8 +440,10 @@ class FollowThenPark(object):
                                 break
                 break
         # calculate the distance between the 1st corner and 2nd corner
-
-        self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
+        if second_corner_x:
+            self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
+        else:
+            return
         #print("distance of parking spot",self.parking_lot_dist)
         if 0.7 <= self.parking_lot_dist < 1.2:
             self.has_parking_spot = True
