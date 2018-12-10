@@ -255,7 +255,7 @@ class FollowThenPark(object):
 
     def car_pose_cb(self, car_pose_msg):
         self.car_pose = car_pose_msg
-        print("Pose: ", (self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y))
+        # print("Pose: ", (self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y))
 
     def choose_point(self):
         xr, yr,  __= self.__find_current_position()
