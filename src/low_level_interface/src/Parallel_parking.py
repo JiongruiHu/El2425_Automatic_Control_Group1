@@ -78,7 +78,7 @@ class FollowThenPark(object):
             print(self.pp_corner)
 
     def __pure_pursuit(self):
-        savetxt("/home/nvidia/catkin_ws/planned_path.csv", array(self.path), delimiter = ",")
+        #savetxt("/home/nvidia/catkin_ws/planned_path.csv", array(self.path), delimiter = ",")
         rate = rospy.Rate(50)
         lli_msg = lli_ctrl_request()
         while len(self.path) > 0:
@@ -100,7 +100,7 @@ class FollowThenPark(object):
         pose_arr = array([self.xs, self.ys])
         print(self.xs[-1])
         print(self.ys[-1])
-        savetxt("/home/nvidia/catkin_ws/real_path.csv", transpose(pose_arr), delimiter=",")
+        #savetxt("/home/nvidia/catkin_ws/real_path.csv", transpose(pose_arr), delimiter=",")
 
     # Both following functions choose between reversed and forward depending on self.reversed
     def controller(self, goal):
@@ -308,7 +308,7 @@ class FollowThenPark(object):
         rospy.sleep(1.0)
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
-        savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
+        #savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
         self.path = adjustable_path_points("parking", self.Atan_start, heading = self.pp_heading)
         print("Building path...")
         #self.path = steerings
