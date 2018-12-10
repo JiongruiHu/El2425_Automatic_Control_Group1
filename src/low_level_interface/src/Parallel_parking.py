@@ -450,7 +450,7 @@ class FollowThenPark(object):
             print("First corner :", self.fp_corner)
             print("Distance :", self.parking_lot_dist)
             print("Second corner :", (second_corner_x_real, second_corner_y_real))
-
+            self.ld = 0.25
             self.forward_parking()
             # just drive in directly
 
