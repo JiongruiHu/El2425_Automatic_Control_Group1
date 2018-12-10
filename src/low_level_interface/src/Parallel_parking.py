@@ -366,8 +366,8 @@ class FollowThenPark(object):
             if small_heading:
                 print("Small heading")
         else:
-            enough_forwards = ((self.pp_corner[0] - xr) * cos(self.pp_heading) + (self.pp_corner[1] - yr) * sin(self.pp_heading) < -0.25)
-            enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
+            enough_forwards = ((self.fp_corner[0] - xr) * cos(self.pp_heading) + (self.fp_corner[1] - yr) * sin(self.pp_heading) < -0.25)
+            enough_inwards = (- (self.fp_corner[0] - xr) * sin(self.pp_heading) + (self.fp_corner[1] - yr) * cos(
                 self.pp_heading) > 0.06)
             small_heading = (abs(self.pp_heading - heading) < pi / 20)
             print(abs(self.pp_heading - heading))
@@ -477,6 +477,7 @@ class FollowThenPark(object):
         print("Start position: ", (start_x, start_y))
         self.path = adjustable_path_points("parking_forward", (start_x, start_y), heading=heading)
         self.has_parking_spot = False
+        self.pp_heading = heading
 
     def parking_stop(self, data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
