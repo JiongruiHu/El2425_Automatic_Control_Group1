@@ -397,10 +397,11 @@ class FollowThenPark(object):
         second_corner_x, second_corner_y = 0, 0
         for i in range(len(DeltaRanges)):
             if DeltaRanges[i] > 0.15:
-                print("Angle: ",newAngles[i])
-                print("Range: ",newRanges[i])
-                print("MinAngle: ",newAngles[0])
-                print("MinRange: ",newRanges[0])
+                #print("Angle: ",newAngles[i])
+                #print("Range: ",newRanges[i])
+                #print("MinAngle: ",newAngles[0])
+                #print("MinRange: ",newRanges[0])
+                print("DeltaRange",DeltaRanges)
                 first_corner_idx = i
                 l1 = newRanges[first_corner_idx]
                 # in the car frame
@@ -410,7 +411,7 @@ class FollowThenPark(object):
                 # sign in the reversed DeltaRanges? Is it true
                 DeltaRanges.reverse()
                 for j in range(len(DeltaRanges)):
-                    print(DeltaRanges[j])
+                    print("rev DeltaRange",DeltaRanges[j])
                     if DeltaRanges[j] < 0:
                         second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
