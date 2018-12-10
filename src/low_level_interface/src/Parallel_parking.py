@@ -442,6 +442,8 @@ class FollowThenPark(object):
             xr, yr, heading = self.__find_current_position()
             first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
             first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
+            second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
+            second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
             print("Preparing forward parking,dist > 1.2")
             print("First corner local: ",(first_corner_x, first_corner_y))
