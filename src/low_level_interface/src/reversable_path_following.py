@@ -27,6 +27,7 @@ class FollowThenPark(object):
         self.parking_lot_start = [0, 0]
         self.parking_lot_dist = 0
         self.pp_goal = [0, 0]
+        self.mgoal = [0,0]
         self.obs_list = []
         self.pp_range = None
         self.pp_angle = None
@@ -278,6 +279,7 @@ class FollowThenPark(object):
                              cos(self.current_heading) * outward_distance_to_goal
         xp, yp = xr + x_distance_to_goal, yr + y_distance_to_goal
         self.pp_goal = (xp, yp)
+        self.mgoal = ()
 
         # head = self.current_heading
         # parallell_start = xr * cos(head) + yr * sin(head)
@@ -297,7 +299,7 @@ class FollowThenPark(object):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         print("Planning path...")
         savetxt("/home/nvidia/catkin_ws/obs_without.csv", self.obs_list, delimiter=",")
-        parking_path = Path((xr, yr), self.pp_goal, self.obs_list, self.current_heading)
+        parking_path = Path((xr, yr), self.pp_goal,self.mgoal, self.obs_list, self.current_heading)
         print("Building path...")
         steerings, times = parking_path.build_path()
         self.path = steerings
