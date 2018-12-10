@@ -416,9 +416,10 @@ class FollowThenPark(object):
                         second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
                         if l2 < 2.5:
-                            second_corner_x = -l2 * cos(newAngles[second_corner_idx])
-                            second_corner_y = -l2 * sin(newAngles[second_corner_idx])
-                            if abs(second_corner_y - first_corner_y) <= 0.1:
+                            test_corner_y = -l2 * sin(newAngles[second_corner_idx])
+                            if abs(test_corner_y - first_corner_y) <= 0.1:
+                                second_corner_x = -l2 * cos(newAngles[second_corner_idx])
+                                second_corner_y = -l2 * sin(newAngles[second_corner_idx])
                                 break
         # calculate the distance between the 1st corner and 2nd corner
 
