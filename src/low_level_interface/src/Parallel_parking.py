@@ -424,7 +424,7 @@ class FollowThenPark(object):
                 # sign in the reversed DeltaRanges? Is it true
                 DeltaRanges.reverse()
                 for j in range(len(DeltaRanges)):
-                    print("rev DeltaRange",DeltaRanges[j])
+                    #print("rev DeltaRange",DeltaRanges[j])
                     if DeltaRanges[j] < -0.01:
                         second_corner_idx = len(DeltaRanges) - 1 - j
                         l2 = newRanges[second_corner_idx]
