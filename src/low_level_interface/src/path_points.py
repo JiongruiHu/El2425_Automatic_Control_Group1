@@ -22,7 +22,7 @@ def path_points(type_path):
             path.append([x,y])
 
     elif type_path == 'linear':
-        x0, y0 = 1.5, -1.5  # initial point
+        x0, y0 = 1.5, -0.8  # initial point
         xg, yg = 1.5, 1.5  # goal point
         xrange = linspace(x0, xg, nPoint)
         yrange = linspace(y0, yg, nPoint)
