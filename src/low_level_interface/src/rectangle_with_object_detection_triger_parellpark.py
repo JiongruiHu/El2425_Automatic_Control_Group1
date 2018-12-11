@@ -105,7 +105,6 @@ def obstacle_detected(angles,ranges):
                 DETECTED=True
 
 
-
 if __name__ == '__main__':
     rospy.init_node('test_control',anonymous=True)
     rospy.Subscriber("SVEA1/odom", Odometry, updatePos)
