@@ -52,7 +52,6 @@ def updatePos(msg):
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
 
-
 def trace_path():
     global current_point, path
     while(dist((xr,yr),path[current_point])<0.5):
