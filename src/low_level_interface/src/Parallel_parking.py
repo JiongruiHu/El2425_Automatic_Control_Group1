@@ -75,11 +75,13 @@ class FollowThenPark(object):
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
+        print("I am here 1")
         if self.has_parking_spot:
 
             self.parallell_parking_backwards()
             self.parallell_parking_forwards()
         rospy.sleep(1.0)
+        print("I am here 2")
         self.leave_from_parking("backward_parking")
             # print(self.pp_corner)
 
@@ -505,14 +507,17 @@ class FollowThenPark(object):
         goal_pos_x = xr - (backward_dist - 0.18) * cos(self.pp_heading)
         goal_pos_y = yr - (backward_dist - 0.18) * sin(self.pp_heading)
         self.path = adjustable_path_points("linear", (xr, yr), goal=(goal_pos_x, goal_pos_y))
+        print("I am here 3")
         self.change_to_reversed()
         self.__pure_pursuit()
+        print("I am here 4")
         rospy.sleep(1.0)
 
         if howparked == "forward_parking":
             self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=self.pp_heading + pi)
 
         if howparked == "backward_parking":
+            print("i am here 5")
             self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=self.pp_heading + pi)
             self.ld = 0.32
 
