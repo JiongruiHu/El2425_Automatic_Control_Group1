@@ -35,7 +35,7 @@ def generate():
     for i in arange(25):
         path.append([2,yrange[25+i]])
     for i in arange(25):
-        path.append([xrange_[50+i],3)
+        path.append([xrange_[50+i],3])
     for i in arange(25):
         path.append([0,yrange_[75+i]])
 
