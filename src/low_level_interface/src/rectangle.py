@@ -18,9 +18,9 @@ NPOINTS = 100
 
 current_point=0
 path=[]
-yr = 1
+yr = 0
 xr = 0
-xo = 0
+xo = 1
 yo = 0
 zo = 0
 w = 0
