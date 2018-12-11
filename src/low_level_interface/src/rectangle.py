@@ -46,8 +46,6 @@ def generate():
         path.append([xmin,yrange_[i]])
 
 
-
-
 def updatePos(msg):
     global xr,yr, xo, yo, zo, w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
