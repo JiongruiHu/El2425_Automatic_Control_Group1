@@ -97,7 +97,7 @@ def lidar_cb(data):
 def obstacle_detected(angles,ranges):
     threshold_dist = 0.6
     for i in range(len(angles)):
-        if abs(angles[i]) < pi/6:
+        if abs(angles[i]) < pi/6:#vision angle needs to be tuned
             if ranges[i] < threshold_dist:
                 Estop = 1
         if abs(angles[i]) > pi/4:
