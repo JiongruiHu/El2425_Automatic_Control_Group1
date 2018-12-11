@@ -91,6 +91,7 @@ if __name__ == '__main__':
     rospy.init_node('test_control',anonymous=True)
     rospy.Subscriber("SVEA1/odom", Odometry, updatePos)
     rate = rospy.Rate(10)
+    generate()
     while not rospy.is_shutdown():
         trace_path()
         rate.sleep()
