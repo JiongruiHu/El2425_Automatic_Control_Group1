@@ -10,7 +10,6 @@ from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
 from path_planning import Path
 
-
 # Creates a follow then park implementation in SVEA1 from MOCAP
 class FollowThenPark(object):
     def __init__(self):
