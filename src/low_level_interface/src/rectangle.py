@@ -49,8 +49,7 @@ def generate():
 
 
 def updatePos(msg):
-    global xr
-    global yr, xo, yo, zo, w
+    global xr,yr, xo, yo, zo, w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
