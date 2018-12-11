@@ -95,7 +95,7 @@ if __name__ == '__main__':
     rate = rospy.Rate(10)
     generate()
     while not rospy.is_shutdown():
-        if abs(xr) > 0 or abs(yr) > 0:
+        if abs(xr) > 0 or abs(yr) > 0:#zero exception
             trace_path()
         rate.sleep()
         
