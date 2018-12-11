@@ -24,7 +24,7 @@ xo = 0
 yo = 0
 zo = 0
 w = 0
-pub= rospy.Publisher('/lli/lli_ctrl_request',msg_out,queue_size=10)
+
 
 def generate():
     global path
@@ -91,6 +91,7 @@ def dist(p1, p2):
 
 if __name__ == '__main__':
     rospy.init_node('test_control',anonymous=True)
+    pub = rospy.Publisher('/lli/ctrl_request', msg_out, queue_size=10)
     rospy.Subscriber("SVEA1/odom", Odometry, updatePos)
     rate = rospy.Rate(10)
     generate()
