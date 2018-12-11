@@ -9,7 +9,7 @@ from sensor_msgs.msg import LaserScan
 
 ros_out = msg_out()
 
-ros_out.velocity = 15
+ros_out.velocity = 10#speed can be regualted for demo
 
 vel = 0;
 steer =0;
