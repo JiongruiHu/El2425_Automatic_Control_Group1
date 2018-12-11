@@ -58,6 +58,7 @@ def trace_path():
     move(path[current_point])
 
 def move(goal):
+    global pub, xo, yo, zo, w, xr, yr, ros_out
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
     xg, yg = goal[0],goal[1]
     des_heading = arctan2((yg - yr), (xg - xr))
