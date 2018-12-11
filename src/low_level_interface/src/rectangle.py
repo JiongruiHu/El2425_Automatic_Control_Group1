@@ -27,6 +27,7 @@ w = 0
 pub= rospy.Publisher('/lli/lli_ctrl_request',msg_out,queue_size=10)
 
 def generate():
+    global path
     xrange = linspace(0,2,25)
     yrange = linspace(0,3,25)
     yrange_ = linspace(3,0,25)
@@ -51,6 +52,7 @@ def updatePos(msg):
 
 def trace_path():
     global current_point
+    global path
     if(dist((xr,yr),path[current_point])>0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
