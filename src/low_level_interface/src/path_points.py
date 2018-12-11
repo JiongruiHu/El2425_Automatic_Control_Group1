@@ -59,6 +59,16 @@ def path_points(type_path):
             x = r * cos(a)
             y = r * sin(a)
             path.append([x,y])
+    
+	
+	if type_path = 'rectangle':
+		r = 1
+		alpha = linespace(pi, 1.10 + pi, nPoint)
+		for a in alpha:
+			x = r + cos(a)
+			y = r + sin(a)
+			path.append([x+1.10,y+2.20])
+	return type_path
     else:
         print("I do NOT generate this kind of path")
 
