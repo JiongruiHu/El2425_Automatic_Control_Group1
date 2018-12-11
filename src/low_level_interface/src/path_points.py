@@ -59,9 +59,7 @@ def path_points(type_path):
             x = r * cos(a)
             y = r * sin(a)
             path.append([x,y])
-    
-	
-	elif type_path = 'rectangle':
+    elif type_path = 'rectangle':
 		r = 1
 		alpha = linespace(pi, 1.10 + pi, nPoint)
 		for a in alpha:
