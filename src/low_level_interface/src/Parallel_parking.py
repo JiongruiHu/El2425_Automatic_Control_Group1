@@ -499,7 +499,7 @@ class FollowThenPark(object):
                     filtered_ranges.append(ranges[i])
                     filtered_angles.append(angles[i])
 
-            idx_minangles = argmin(abs(filtered_angles))
+            idx_minangles = argmin(abs(array(filtered_angles)))
             backward_dist = filtered_ranges[idx_minangles]
             xr, yr, heading = self.__find_current_position()
             goal_pos_x = xr - backward_dist * cos(heading)
