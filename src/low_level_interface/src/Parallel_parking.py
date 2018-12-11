@@ -80,8 +80,8 @@ class FollowThenPark(object):
             self.parallell_parking_backwards()
             self.parallell_parking_forwards()
             rospy.sleep(1.0)
-            self.leave_from_parking("backward_parking",self.pp_path.tolist())
-            print(self.pp_corner)
+        self.leave_from_parking("backward_parking",self.pp_path.tolist())
+            # print(self.pp_corner)
 
     def __pure_pursuit(self):
         #savetxt("/home/nvidia/catkin_ws/planned_path.csv", array(self.path), delimiter = ",")
@@ -347,6 +347,8 @@ class FollowThenPark(object):
         self.change_to_forward()
         self.__pure_pursuit()
 
+
+
     def steer_from_lists(self, steerings, times):
         self.change_to_reversed()
         start = time.time()
@@ -508,10 +510,10 @@ class FollowThenPark(object):
         rospy.sleep(1.0)
 
         if howparked == "forward_parking":
-            self.path = path
+            self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=self.pp_heading + pi)
 
         if howparked == "backward_parking":
-            self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=heading)
+            self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=self.pp_heading + pi)
             self.ld = 0.32
 
         self.change_to_forward()
