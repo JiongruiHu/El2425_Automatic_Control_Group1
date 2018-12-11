@@ -28,18 +28,22 @@ w = 0
 
 def generate():
     global path
-    xrange = linspace(0,2,25)
-    yrange = linspace(0,3,25)
-    yrange_ = linspace(3,0,25)
-    xrange_ = linspace(2,0,25)
+    xmin = -1
+    xmax = 1
+    ymin = -1.5
+    ymax = 1.5
+    xrange = linspace(xmin,xmax,25)
+    yrange = linspace(ymin,ymax,25)
+    yrange_ = linspace(ymax,ymin,25)
+    xrange_ = linspace(xmax,xmin,25)
     for i in arange(25):
-        path.append([xrange[i],0])
+        path.append([xrange[i],ymin])
     for i in arange(25):
-        path.append([2,yrange[i]])
+        path.append([xmax,yrange[i]])
     for i in arange(25):
-        path.append([xrange_[i],3])
+        path.append([xrange_[i],ymax])
     for i in arange(25):
-        path.append([0,yrange_[i]])
+        path.append([xmin,yrange_[i]])
 
 
 
