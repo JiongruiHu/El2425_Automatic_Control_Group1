@@ -50,7 +50,7 @@ def updatePos(msg):
 
 
 def trace_path():
-    if(dist((xr,xy),path[current_point])>0.5):
+    if(dist((xr,yr),path[current_point])>0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
 
