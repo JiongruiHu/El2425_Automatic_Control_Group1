@@ -9,8 +9,8 @@ ros_out = msg_out()
 
 ros_out.velocity = 15
 
-vel = 0;
-steer =0;
+vel = 0
+steer =0
 
 STEP_VELOCITY = 5
 STEP_STEERING = 20
@@ -53,7 +53,7 @@ def updatePos(msg):
 
 def trace_path():
     global current_point, path
-    if(dist((xr,yr),path[current_point])>0.5):
+    while(dist((xr,yr),path[current_point])<0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
 
