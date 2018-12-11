@@ -30,7 +30,7 @@ def generate():
     yrange = linspace(0,3,25)
     yrange_ = linspace(3,0,25)
     xrange_ = linspace(2,0,25)
-    for i in arange(25):
+    for i in arange(26):
         path.append([xrange[i],0])
     for i in arange(25):
         path.append([2,yrange[25+i]])
