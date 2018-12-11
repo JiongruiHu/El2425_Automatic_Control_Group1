@@ -25,7 +25,6 @@ yo = 0
 zo = 0
 w = 0
 
-
 def generate():
     global path
     xmin = -1
