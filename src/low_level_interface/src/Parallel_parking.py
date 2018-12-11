@@ -493,6 +493,7 @@ class FollowThenPark(object):
     def leave_from_parking(self, howparked):
         #preprocess the scan data, take away the inf datas
         self.doing_forward_parking = False
+        self.has_parking_spot = True
         data = self.scan
         filtered_ranges, filtered_angles = [], []
         ranges = data.ranges
@@ -501,10 +502,9 @@ class FollowThenPark(object):
             if ranges[i] < 12:
                 filtered_ranges.append(ranges[i])
                 filtered_angles.append(angles[i])
-        _, _, heading = self.__find_current_position(reversed=False)
+        xr, yr, heading = self.__find_current_position(reversed=False)
         idx_minangles = argmin(abs(array(filtered_angles)+(heading - self.pp_heading)))
         backward_dist = filtered_ranges[idx_minangles]
-        xr, yr, heading = self.__find_current_position(reversed=True)
         goal_pos_x = xr - (backward_dist - 0.18) * cos(self.pp_heading)
         goal_pos_y = yr - (backward_dist - 0.18) * sin(self.pp_heading)
         self.path = adjustable_path_points("linear", (xr, yr), goal=(goal_pos_x, goal_pos_y))
