@@ -45,14 +45,14 @@ def generate():
 
 
 def updatePos(msg):
+    global xr, yr, xo, yo, zo, w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
 
 
 def trace_path():
-    global current_point
-    global path
+    global current_point, path
     if(dist((xr,yr),path[current_point])>0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
@@ -94,5 +94,6 @@ if __name__ == '__main__':
     rate = rospy.Rate(10)
     generate()
     while not rospy.is_shutdown():
-        trace_path()
+        if abs(xr) > 0 or abs(yr) > 0:
+            trace_path()
         rate.sleep()
