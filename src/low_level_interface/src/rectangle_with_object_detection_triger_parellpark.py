@@ -136,5 +136,5 @@ if __name__ == '__main__':
                 LOOP = False
                 move(_point)
             rate.sleep()
-            FollowThenPark()#not sure if its write way to call -as this and above code are using same subscribers. 
+            FollowThenPark()#not sure if its right way to call -as this and above code are using same subscribers. 
 #TODO:Call Parallel Parking
