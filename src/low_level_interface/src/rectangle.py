@@ -7,7 +7,7 @@ from nav_msgs.msg import Odometry
 
 ros_out = msg_out()
 
-ros_out.velocity = 15
+ros_out.velocity = 10
 
 vel = 0
 steer =0
