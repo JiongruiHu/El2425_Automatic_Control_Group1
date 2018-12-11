@@ -80,7 +80,7 @@ class FollowThenPark(object):
             self.parallell_parking_backwards()
             self.parallell_parking_forwards()
             rospy.sleep(1.0)
-            self.leave_from_parking("backward_parking",)
+            self.leave_from_parking("backward_parking",self.pp_path)
             print(self.pp_corner)
 
     def __pure_pursuit(self):
