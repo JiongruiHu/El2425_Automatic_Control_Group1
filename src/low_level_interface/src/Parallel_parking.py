@@ -502,13 +502,14 @@ class FollowThenPark(object):
             idx_minangles = argmin(abs(array(filtered_angles)))
             backward_dist = filtered_ranges[idx_minangles]
             xr, yr, heading = self.__find_current_position()
-            goal_pos_x = xr - (backward_dist - 0.1) * cos(heading)
-            goal_pos_y = yr - (backward_dist - 0.1) * sin(heading)
+            goal_pos_x = xr - (backward_dist - 0.15) * cos(heading)
+            goal_pos_y = yr - (backward_dist - 0.15) * sin(heading)
             self.path = adjustable_path_points("linear",(xr,yr),goal=(goal_pos_x,goal_pos_y))
             self.change_to_reversed()
             self.__pure_pursuit()
             path.reverse()
             self.path = path
+            self.ld = 0.32
             self.change_to_forward()
             self.__pure_pursuit()
 
