@@ -66,7 +66,7 @@ def move(goal):
         headErr = -2 * pi + headErr
     if headErr < -1 * pi:
         headErr = 2 * pi + headErr
-    print('difference_phi',phi*180/pi)
+    # print('difference_phi',phi*180/pi)
     curv = 2 * sin(headErr) / ld
     des_phi = arctan(0.32 * curv)
 
