@@ -80,7 +80,7 @@ class FollowThenPark(object):
             self.parallell_parking_backwards()
             self.parallell_parking_forwards()
             rospy.sleep(1.0)
-            self.leave_from_parking("backward_parking",self.pp_path)
+            self.leave_from_parking("backward_parking",self.pp_path.tolist())
             print(self.pp_corner)
 
     def __pure_pursuit(self):
@@ -502,8 +502,8 @@ class FollowThenPark(object):
             idx_minangles = argmin(abs(array(filtered_angles)))
             backward_dist = filtered_ranges[idx_minangles]
             xr, yr, heading = self.__find_current_position()
-            goal_pos_x = xr - backward_dist * cos(heading)
-            goal_pos_y = yr - backward_dist * sin(heading)
+            goal_pos_x = xr - (backward_dist - 0.1) * cos(heading)
+            goal_pos_y = yr - (backward_dist - 0.1) * sin(heading)
             self.path = adjustable_path_points("linear",(xr,yr),goal=(goal_pos_x,goal_pos_y))
             self.change_to_reversed()
             self.__pure_pursuit()
