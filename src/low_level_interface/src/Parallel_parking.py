@@ -510,7 +510,7 @@ class FollowThenPark(object):
             self.path = path
 
         if howparked == "backward_parking":
-            self.path = adjustable_path_points("parking",(xr, yr), heading=heading)
+            self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=heading)
             self.ld = 0.35
 
         self.change_to_forward()
