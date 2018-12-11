@@ -23,7 +23,7 @@ xr = 0
 xo = 0
 yo = 0
 zo = 0
-w = 0
+w = 1
 
 
 def generate():
