@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "mouse_teleop"
-PROJECT_SPACE_DIR = "/home/nvidia/catkin_ws/install"
+PROJECT_SPACE_DIR = "/home/nvidia/El2425_Automatic_Control_Group1/install"
 PROJECT_VERSION = "0.2.6"

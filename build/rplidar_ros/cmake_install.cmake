@@ -1,8 +1,8 @@
-# Install script for directory: /home/nvidia/catkin_ws/src/rplidar_ros
+# Install script for directory: /home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/nvidia/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/nvidia/El2425_Automatic_Control_Group1/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,18 +33,18 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/nvidia/catkin_ws/build/rplidar_ros/catkin_generated/installspace/rplidar_ros.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/nvidia/El2425_Automatic_Control_Group1/build/rplidar_ros/catkin_generated/installspace/rplidar_ros.pc")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rplidar_ros/cmake" TYPE FILE FILES
-    "/home/nvidia/catkin_ws/build/rplidar_ros/catkin_generated/installspace/rplidar_rosConfig.cmake"
-    "/home/nvidia/catkin_ws/build/rplidar_ros/catkin_generated/installspace/rplidar_rosConfig-version.cmake"
+    "/home/nvidia/El2425_Automatic_Control_Group1/build/rplidar_ros/catkin_generated/installspace/rplidar_rosConfig.cmake"
+    "/home/nvidia/El2425_Automatic_Control_Group1/build/rplidar_ros/catkin_generated/installspace/rplidar_rosConfig-version.cmake"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rplidar_ros" TYPE FILE FILES "/home/nvidia/catkin_ws/src/rplidar_ros/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rplidar_ros" TYPE FILE FILES "/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/package.xml")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
@@ -54,7 +54,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros/rplidarNode"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros" TYPE EXECUTABLE FILES "/home/nvidia/catkin_ws/devel/lib/rplidar_ros/rplidarNode")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros" TYPE EXECUTABLE FILES "/home/nvidia/El2425_Automatic_Control_Group1/devel/lib/rplidar_ros/rplidarNode")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros/rplidarNode" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros/rplidarNode")
     file(RPATH_CHANGE
@@ -74,7 +74,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros/rplidarNodeClient"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros" TYPE EXECUTABLE FILES "/home/nvidia/catkin_ws/devel/lib/rplidar_ros/rplidarNodeClient")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros" TYPE EXECUTABLE FILES "/home/nvidia/El2425_Automatic_Control_Group1/devel/lib/rplidar_ros/rplidarNodeClient")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros/rplidarNodeClient" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/rplidar_ros/rplidarNodeClient")
     file(RPATH_CHANGE
@@ -89,9 +89,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rplidar_ros" TYPE DIRECTORY FILES
-    "/home/nvidia/catkin_ws/src/rplidar_ros/launch"
-    "/home/nvidia/catkin_ws/src/rplidar_ros/rviz"
-    "/home/nvidia/catkin_ws/src/rplidar_ros/sdk"
+    "/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/launch"
+    "/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/rviz"
+    "/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/sdk"
     USE_SOURCE_PERMISSIONS)
 endif()
 

@@ -1,8 +1,8 @@
-prefix=/home/nvidia/catkin_ws/install
+prefix=/home/nvidia/El2425_Automatic_Control_Group1/install
 
 Name: ros_tutorial
 Description: Description of ros_tutorial
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/nvidia/catkin_ws/install/lib 
+Libs: -L/home/nvidia/El2425_Automatic_Control_Group1/install/lib 
 Requires: 

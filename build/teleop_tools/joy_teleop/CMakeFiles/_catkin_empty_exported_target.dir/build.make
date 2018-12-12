@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nvidia/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/nvidia/El2425_Automatic_Control_Group1/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nvidia/catkin_ws/build
+CMAKE_BINARY_DIR = /home/nvidia/El2425_Automatic_Control_Group1/build
 
 # Utility rule file for _catkin_empty_exported_target.
 
@@ -63,10 +63,10 @@ teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/build: _cat
 .PHONY : teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/build
 
 teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	cd /home/nvidia/catkin_ws/build/teleop_tools/joy_teleop && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
 .PHONY : teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/depend:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/catkin_ws/src /home/nvidia/catkin_ws/src/teleop_tools/joy_teleop /home/nvidia/catkin_ws/build /home/nvidia/catkin_ws/build/teleop_tools/joy_teleop /home/nvidia/catkin_ws/build/teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/El2425_Automatic_Control_Group1/src /home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop /home/nvidia/El2425_Automatic_Control_Group1/build /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/depend
 

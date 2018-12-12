@@ -1,8 +1,8 @@
-# Install script for directory: /home/nvidia/catkin_ws/src/teleop_tools/joy_teleop
+# Install script for directory: /home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/nvidia/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/nvidia/El2425_Automatic_Control_Group1/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,32 +33,32 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/nvidia/catkin_ws/build/teleop_tools/joy_teleop/catkin_generated/installspace/joy_teleop.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop/catkin_generated/installspace/joy_teleop.pc")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop/cmake" TYPE FILE FILES
-    "/home/nvidia/catkin_ws/build/teleop_tools/joy_teleop/catkin_generated/installspace/joy_teleopConfig.cmake"
-    "/home/nvidia/catkin_ws/build/teleop_tools/joy_teleop/catkin_generated/installspace/joy_teleopConfig-version.cmake"
+    "/home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop/catkin_generated/installspace/joy_teleopConfig.cmake"
+    "/home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop/catkin_generated/installspace/joy_teleopConfig-version.cmake"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop" TYPE FILE FILES "/home/nvidia/catkin_ws/src/teleop_tools/joy_teleop/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop" TYPE FILE FILES "/home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop/package.xml")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/joy_teleop" TYPE PROGRAM FILES
-    "/home/nvidia/catkin_ws/src/teleop_tools/joy_teleop/scripts/joy_teleop.py"
-    "/home/nvidia/catkin_ws/src/teleop_tools/joy_teleop/scripts/incrementer_server.py"
+    "/home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop/scripts/joy_teleop.py"
+    "/home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop/scripts/incrementer_server.py"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop/config" TYPE DIRECTORY FILES "/home/nvidia/catkin_ws/src/teleop_tools/joy_teleop/config/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop/config" TYPE DIRECTORY FILES "/home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop/config/")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop/launch" TYPE DIRECTORY FILES "/home/nvidia/catkin_ws/src/teleop_tools/joy_teleop/launch/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/joy_teleop/launch" TYPE DIRECTORY FILES "/home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/joy_teleop/launch/")
 endif()
 

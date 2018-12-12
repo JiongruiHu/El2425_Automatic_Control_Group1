@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD="/home/nvidia/catkin_ws/build"
+export PWD="/home/nvidia/El2425_Automatic_Control_Group1/build"

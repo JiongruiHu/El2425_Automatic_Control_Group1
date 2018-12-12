@@ -5,8 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/rplidarNode.dir/sdk/src/arch/linux/net_socket.cpp.o"
   "CMakeFiles/rplidarNode.dir/sdk/src/hal/thread.cpp.o"
   "CMakeFiles/rplidarNode.dir/sdk/src/rplidar_driver.cpp.o"
-  "/home/nvidia/catkin_ws/devel/lib/rplidar_ros/rplidarNode.pdb"
-  "/home/nvidia/catkin_ws/devel/lib/rplidar_ros/rplidarNode"
+  "/home/nvidia/El2425_Automatic_Control_Group1/devel/lib/rplidar_ros/rplidarNode.pdb"
+  "/home/nvidia/El2425_Automatic_Control_Group1/devel/lib/rplidar_ros/rplidarNode"
 )
 
 # Per-language clean rules from dependency scanning.

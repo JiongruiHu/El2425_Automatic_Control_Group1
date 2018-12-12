@@ -1,8 +1,8 @@
-prefix=/home/nvidia/catkin_ws/devel
+prefix=/home/nvidia/El2425_Automatic_Control_Group1/devel
 
 Name: teleop_tools_msgs
 Description: Description of teleop_tools_msgs
 Version: 0.2.6
-Cflags: -I/home/nvidia/catkin_ws/devel/include
-Libs: -L/home/nvidia/catkin_ws/devel/lib 
+Cflags: -I/home/nvidia/El2425_Automatic_Control_Group1/devel/include
+Libs: -L/home/nvidia/El2425_Automatic_Control_Group1/devel/lib 
 Requires: message_runtime actionlib_msgs

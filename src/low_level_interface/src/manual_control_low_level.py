@@ -1,6 +1,4 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
+#!/usr/bin/env python
 import rospy as rp
 from geometry_msgs.msg import Twist
 from low_level_interface.msg import lli_ctrl_request
@@ -15,21 +13,21 @@ def callback(data):
 	steering = int(data.angular.z)
 	fun_str = "{steering: " + str(steering) + ", velocity: " + str(velocity) + ", transmission: 0, differential_front: 0, differential_rear: 0, ctrl_code: 0}"
 	rp.loginfo(fun_str)
-	#pub.publish(steering, velocity, 0, 0, 0, 0)
+	pub.publish(steering, velocity, 0, 0, 0, 0)
 	
 
 def listener():
-	rp.init_node("translator", anonymous=True)
+	# rp.init_node("translator", anonymous=True)
 	rp.Subscriber("key_vel", Twist, callback)
 	rp.spin()
 
 if __name__=="__main__":
 	pub = rp.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
-	rospy.init_node('talker', anonymous=True)
-	rate = rospy.Rate(10)
+	rp.init_node('talker', anonymous=True)
+	rate = rp.Rate(10)
 
-	pub.publish(0,10,0,0,0,0)
-	#listener()
+	# pub.publish(0,10,0,0,0,0)
+	listener()
 
 
 
