@@ -58,12 +58,9 @@ def updatePos(msg):
 
 
 def trace_path():
-<<<<<<< HEAD
-    if(dist((xr,yr),path[current_point])>0.5):
-=======
     global current_point, path
     if(dist((xr,xy),path[current_point])>0.5):
->>>>>>> 048651ab260cfe07e4d19875018514e98f455c62
+
         current_point=(current_point+1)%len(path)
     move(path[current_point])
     print('genrate')
