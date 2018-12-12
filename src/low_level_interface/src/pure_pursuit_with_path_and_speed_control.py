@@ -149,19 +149,19 @@ class ParkingControl(object):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         # print(angles)
         ranges = data.ranges
-        threshold_dist = (V / 0.1) * 0.02 + 0.5  # dynamic change formula
+        threshold_dist = (V / 0.1) * 0.05 + 0.5  # dynamic change formula
         Estop = 0
         print("Beta: ",beta)
         for i in range(len(angles)):
             if beta < 0:
                 if angles[i] < -pi + beta + pi / 6 or angles[i] > -pi + beta - pi / 6:
-                    print("Trying to stop 1")
+                    # print("Trying to stop 1")
                     if ranges[i] < threshold_dist:
                         Estop = 1
                         print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
             elif beta >= 0:
                 if angles[i] < -pi + beta + pi / 6 or angles[i] > pi + beta - pi / 6:
-                    print("Trying to stop 2")
+                    # print("Trying to stop 2")
                     if ranges[i] < threshold_dist:
                         Estop = 1
                         print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
