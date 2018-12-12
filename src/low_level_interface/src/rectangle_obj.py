@@ -28,7 +28,7 @@ xo = 0
 yo = 0
 zo = 0
 w = 0
-pub= rospy.Publisher('/lli/lli_ctrl_request',msg_out,queue_size=10)
+pub= rospy.Publisher('lli/ctrl_request',msg_out,queue_size=10)
 
 def generate():
     xmin = -1
