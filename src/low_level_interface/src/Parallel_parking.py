@@ -466,6 +466,7 @@ class FollowThenPark(object):
             xr, yr, heading = self.__find_current_position()
             second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
             second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
+            self.pp_corner = (second_corner_x_real, second_corner_y_real)
             print("Second corner :", (second_corner_x_real, second_corner_y_real))
 
         elif self.parking_lot_dist >= 1.2: # find large parking spot
@@ -559,7 +560,12 @@ class FollowThenPark(object):
                         self.parking_identified = 1
                         print("START:"+str(self.parking_lot_start))
                         # Change lane to be sufficiently close to parked vehicles
-                        outward_distance_to_move = 0.2 - self.current_start_distance
+                        path_heading = arctan2(self.path[1][1] - self.path[0][1], self.path[1][0] - self.path[0][0])
+                        xr,yr,_ = self.__find_current_position()
+                        gamma = arctan2(self.pp_corner[1]-yr, self.pp_corner[0]-xr)
+                        dl = dist((xr,yr),self.pp_corner)
+                        self.current_start_distance = dl*sin(path_heading-gamma)
+                        outward_distance_to_move = 0.25 - self.current_start_distance
                         print("Correction: " + str(outward_distance_to_move))
                         self.change_lane(parallell_distance=2.0, outward_distance=outward_distance_to_move)
                 elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
