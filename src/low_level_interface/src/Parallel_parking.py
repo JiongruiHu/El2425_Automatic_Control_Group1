@@ -565,7 +565,7 @@ class FollowThenPark(object):
                         gamma = arctan2(self.pp_corner[1]-yr, self.pp_corner[0]-xr)
                         dl = dist((xr,yr),self.pp_corner)
                         self.current_start_distance = dl*sin(path_heading-gamma)
-                        outward_distance_to_move = 0.40 - self.current_start_distance
+                        outward_distance_to_move = 0.3 - self.current_start_distance
                         print("Correction: " + str(outward_distance_to_move))
                         self.change_lane(parallell_distance=2.0, outward_distance=outward_distance_to_move)
                 elif ranges[i] < parking_threshold and self.parking_identified == 1:    # Start but not end of lot identified
