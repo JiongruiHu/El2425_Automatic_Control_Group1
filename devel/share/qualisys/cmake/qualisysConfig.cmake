@@ -67,14 +67,14 @@ set(qualisys_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(qualisys_SOURCE_PREFIX /home/nvidia/catkin_ws/src/qualisys)
-  set(qualisys_DEVEL_PREFIX /home/nvidia/catkin_ws/devel)
+  set(qualisys_SOURCE_PREFIX /home/nvidia/El2425_Automatic_Control_Group1/src/qualisys)
+  set(qualisys_DEVEL_PREFIX /home/nvidia/El2425_Automatic_Control_Group1/devel)
   set(qualisys_INSTALL_PREFIX "")
   set(qualisys_PREFIX ${qualisys_DEVEL_PREFIX})
 else()
   set(qualisys_SOURCE_PREFIX "")
   set(qualisys_DEVEL_PREFIX "")
-  set(qualisys_INSTALL_PREFIX /home/nvidia/catkin_ws/install)
+  set(qualisys_INSTALL_PREFIX /home/nvidia/El2425_Automatic_Control_Group1/install)
   set(qualisys_PREFIX ${qualisys_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(qualisys_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/nvidia/catkin_ws/devel/include;/usr/include;/usr/include/eigen3 " STREQUAL " ")
+if(NOT "/home/nvidia/El2425_Automatic_Control_Group1/devel/include;/usr/include;/usr/include/eigen3 " STREQUAL " ")
   set(qualisys_INCLUDE_DIRS "")
-  set(_include_dirs "/home/nvidia/catkin_ws/devel/include;/usr/include;/usr/include/eigen3")
+  set(_include_dirs "/home/nvidia/El2425_Automatic_Control_Group1/devel/include;/usr/include;/usr/include/eigen3")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/nvidia/catkin_ws/devel/include;/usr/include;/usr/include/eigen3 " 
         message(FATAL_ERROR "Project 'qualisys' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'qualisys' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/nvidia/catkin_ws/src/qualisys/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'qualisys' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/${idir}'.  ${_report}")
     endif()
     _list_append_unique(qualisys_INCLUDE_DIRS ${include})
   endforeach()
@@ -129,7 +129,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/nvidia/catkin_ws/devel/lib;/home/nvidia/catkin_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/nvidia/El2425_Automatic_Control_Group1/devel/lib;/home/nvidia/El2425_Automatic_Control_Group1/devel/lib;/opt/ros/kinetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

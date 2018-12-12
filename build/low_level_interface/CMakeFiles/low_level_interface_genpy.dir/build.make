@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nvidia/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/nvidia/El2425_Automatic_Control_Group1/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nvidia/catkin_ws/build
+CMAKE_BINARY_DIR = /home/nvidia/El2425_Automatic_Control_Group1/build
 
 # Utility rule file for low_level_interface_genpy.
 
@@ -63,10 +63,10 @@ low_level_interface/CMakeFiles/low_level_interface_genpy.dir/build: low_level_in
 .PHONY : low_level_interface/CMakeFiles/low_level_interface_genpy.dir/build
 
 low_level_interface/CMakeFiles/low_level_interface_genpy.dir/clean:
-	cd /home/nvidia/catkin_ws/build/low_level_interface && $(CMAKE_COMMAND) -P CMakeFiles/low_level_interface_genpy.dir/cmake_clean.cmake
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build/low_level_interface && $(CMAKE_COMMAND) -P CMakeFiles/low_level_interface_genpy.dir/cmake_clean.cmake
 .PHONY : low_level_interface/CMakeFiles/low_level_interface_genpy.dir/clean
 
 low_level_interface/CMakeFiles/low_level_interface_genpy.dir/depend:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/catkin_ws/src /home/nvidia/catkin_ws/src/low_level_interface /home/nvidia/catkin_ws/build /home/nvidia/catkin_ws/build/low_level_interface /home/nvidia/catkin_ws/build/low_level_interface/CMakeFiles/low_level_interface_genpy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/El2425_Automatic_Control_Group1/src /home/nvidia/El2425_Automatic_Control_Group1/src/low_level_interface /home/nvidia/El2425_Automatic_Control_Group1/build /home/nvidia/El2425_Automatic_Control_Group1/build/low_level_interface /home/nvidia/El2425_Automatic_Control_Group1/build/low_level_interface/CMakeFiles/low_level_interface_genpy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : low_level_interface/CMakeFiles/low_level_interface_genpy.dir/depend
 

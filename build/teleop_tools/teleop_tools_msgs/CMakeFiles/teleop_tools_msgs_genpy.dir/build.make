@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nvidia/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/nvidia/El2425_Automatic_Control_Group1/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nvidia/catkin_ws/build
+CMAKE_BINARY_DIR = /home/nvidia/El2425_Automatic_Control_Group1/build
 
 # Utility rule file for teleop_tools_msgs_genpy.
 
@@ -63,10 +63,10 @@ teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/build: tel
 .PHONY : teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/build
 
 teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/clean:
-	cd /home/nvidia/catkin_ws/build/teleop_tools/teleop_tools_msgs && $(CMAKE_COMMAND) -P CMakeFiles/teleop_tools_msgs_genpy.dir/cmake_clean.cmake
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/teleop_tools_msgs && $(CMAKE_COMMAND) -P CMakeFiles/teleop_tools_msgs_genpy.dir/cmake_clean.cmake
 .PHONY : teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/clean
 
 teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/depend:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/catkin_ws/src /home/nvidia/catkin_ws/src/teleop_tools/teleop_tools_msgs /home/nvidia/catkin_ws/build /home/nvidia/catkin_ws/build/teleop_tools/teleop_tools_msgs /home/nvidia/catkin_ws/build/teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/El2425_Automatic_Control_Group1/src /home/nvidia/El2425_Automatic_Control_Group1/src/teleop_tools/teleop_tools_msgs /home/nvidia/El2425_Automatic_Control_Group1/build /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/teleop_tools_msgs /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : teleop_tools/teleop_tools_msgs/CMakeFiles/teleop_tools_msgs_genpy.dir/depend
 

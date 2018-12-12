@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nvidia/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/nvidia/El2425_Automatic_Control_Group1/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nvidia/catkin_ws/build
+CMAKE_BINARY_DIR = /home/nvidia/El2425_Automatic_Control_Group1/build
 
 # Utility rule file for geometry_msgs_generate_messages_py.
 
@@ -63,10 +63,10 @@ rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/build: geometry_ms
 .PHONY : rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
 
 rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean:
-	cd /home/nvidia/catkin_ws/build/rplidar_ros && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build/rplidar_ros && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
 
 rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/catkin_ws/src /home/nvidia/catkin_ws/src/rplidar_ros /home/nvidia/catkin_ws/build /home/nvidia/catkin_ws/build/rplidar_ros /home/nvidia/catkin_ws/build/rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/El2425_Automatic_Control_Group1/src /home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros /home/nvidia/El2425_Automatic_Control_Group1/build /home/nvidia/El2425_Automatic_Control_Group1/build/rplidar_ros /home/nvidia/El2425_Automatic_Control_Group1/build/rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : rplidar_ros/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend
 

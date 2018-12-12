@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/nvidia/catkin_ws/src/rplidar_ros/src/client.cpp
+/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/src/client.cpp
 ros/ros.h
-/home/nvidia/catkin_ws/src/rplidar_ros/src/ros/ros.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/src/ros/ros.h
 sensor_msgs/LaserScan.h
-/home/nvidia/catkin_ws/src/rplidar_ros/src/sensor_msgs/LaserScan.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/rplidar_ros/src/sensor_msgs/LaserScan.h
 
 /opt/ros/kinetic/include/ros/advertise_options.h
 ros/forwards.h

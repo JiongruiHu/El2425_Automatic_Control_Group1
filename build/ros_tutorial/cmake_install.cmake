@@ -1,8 +1,8 @@
-# Install script for directory: /home/nvidia/catkin_ws/src/ros_tutorial
+# Install script for directory: /home/nvidia/El2425_Automatic_Control_Group1/src/ros_tutorial
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/nvidia/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/nvidia/El2425_Automatic_Control_Group1/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/nvidia/catkin_ws/build/ros_tutorial/catkin_generated/installspace/ros_tutorial.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/nvidia/El2425_Automatic_Control_Group1/build/ros_tutorial/catkin_generated/installspace/ros_tutorial.pc")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_tutorial/cmake" TYPE FILE FILES
-    "/home/nvidia/catkin_ws/build/ros_tutorial/catkin_generated/installspace/ros_tutorialConfig.cmake"
-    "/home/nvidia/catkin_ws/build/ros_tutorial/catkin_generated/installspace/ros_tutorialConfig-version.cmake"
+    "/home/nvidia/El2425_Automatic_Control_Group1/build/ros_tutorial/catkin_generated/installspace/ros_tutorialConfig.cmake"
+    "/home/nvidia/El2425_Automatic_Control_Group1/build/ros_tutorial/catkin_generated/installspace/ros_tutorialConfig-version.cmake"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_tutorial" TYPE FILE FILES "/home/nvidia/catkin_ws/src/ros_tutorial/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_tutorial" TYPE FILE FILES "/home/nvidia/El2425_Automatic_Control_Group1/src/ros_tutorial/package.xml")
 endif()
 

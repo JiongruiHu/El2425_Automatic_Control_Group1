@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/nvidia/catkin_ws/devel/include/qualisys/Marker.h
+/home/nvidia/El2425_Automatic_Control_Group1/devel/include/qualisys/Marker.h
 string
 -
 vector
@@ -24,7 +24,7 @@ ros/message_operations.h
 geometry_msgs/Point.h
 -
 
-/home/nvidia/catkin_ws/devel/include/qualisys/Subject.h
+/home/nvidia/El2425_Automatic_Control_Group1/devel/include/qualisys/Subject.h
 string
 -
 vector
@@ -48,9 +48,9 @@ geometry_msgs/Quaternion.h
 qualisys/Marker.h
 -
 
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/Network.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/Network.h
 
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/QualisysDriver.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/QualisysDriver.h
 sstream
 -
 cmath
@@ -70,21 +70,21 @@ qualisys/Subject.h
 qualisys/RTProtocol.h
 -
 
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/RTPacket.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/RTPacket.h
 stdio.h
 -
 
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/RTProtocol.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/RTProtocol.h
 RTPacket.h
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/RTPacket.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/RTPacket.h
 StdString.h
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/StdString.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/StdString.h
 vector
 -
 Network.h
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/Network.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/Network.h
 
-/home/nvidia/catkin_ws/src/qualisys/include/qualisys/StdString.h
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/include/qualisys/StdString.h
 TCHAR.H
 -
 WTYPES.H
@@ -126,7 +126,7 @@ malloc.h
 afxconv.h
 -
 
-/home/nvidia/catkin_ws/src/qualisys/src/qualisys.cpp
+/home/nvidia/El2425_Automatic_Control_Group1/src/qualisys/src/qualisys.cpp
 ros/ros.h
 -
 qualisys/QualisysDriver.h
