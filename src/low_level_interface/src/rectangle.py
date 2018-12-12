@@ -7,10 +7,10 @@ from nav_msgs.msg import Odometry
 
 ros_out = msg_out()
 
-ros_out.velocity = 15
+ros_out.velocity = 10
 
-vel = 0;
-steer =0;
+vel = 0
+steer =0
 
 STEP_VELOCITY = 5
 STEP_STEERING = 20
@@ -24,40 +24,41 @@ xo = 0
 yo = 0
 zo = 0
 w = 0
-pub= rospy.Publisher('/lli/lli_ctrl_request',msg_out,queue_size=10)
 
 def generate():
     global path
-    xrange = linspace(0,2,25)
-    yrange = linspace(0,3,25)
-    yrange_ = linspace(3,0,25)
-    xrange_ = linspace(2,0,25)
+    xmin = -1
+    xmax = 1
+    ymin = -1.5
+    ymax = 1.5
+    xrange = linspace(xmin,xmax,25)
+    yrange = linspace(ymin,ymax,25)
+    yrange_ = linspace(ymax,ymin,25)
+    xrange_ = linspace(xmax,xmin,25)
     for i in arange(25):
-        path.append([xrange[i],0])
+        path.append([xrange[i],ymin])
     for i in arange(25):
-        path.append([2,yrange[i]])
+        path.append([xmax,yrange[i]])
     for i in arange(25):
-        path.append([xrange_[i],3])
+        path.append([xrange_[i],ymax])
     for i in arange(25):
-        path.append([0,yrange_[i]])
-
-
+        path.append([xmin,yrange_[i]])
 
 
 def updatePos(msg):
+    global xr,yr, xo, yo, zo, w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
 
-
 def trace_path():
-    global current_point
-    global path
-    if(dist((xr,yr),path[current_point])>0.5):
+    global current_point, path
+    while(dist((xr,yr),path[current_point])<0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
 
 def move(goal):
+    global pub, xo, yo, zo, w, xr, yr, ros_out
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
     xg, yg = goal[0],goal[1]
     des_heading = arctan2((yg - yr), (xg - xr))
@@ -84,15 +85,17 @@ def move(goal):
 
 
 def dist(p1, p2):
-    return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-
+   return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 
 if __name__ == '__main__':
     rospy.init_node('test_control',anonymous=True)
+    pub = rospy.Publisher('/lli/ctrl_request', msg_out, queue_size=10)
     rospy.Subscriber("SVEA1/odom", Odometry, updatePos)
     rate = rospy.Rate(10)
     generate()
     while not rospy.is_shutdown():
-        trace_path()
+        if abs(xr) > 0 or abs(yr) > 0:#zeroexception
+            trace_path()
         rate.sleep()
+        

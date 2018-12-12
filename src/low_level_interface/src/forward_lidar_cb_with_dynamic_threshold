@@ -15,7 +15,7 @@ def forward_lidar_cb(self,data):
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         # print(angles)
         ranges = data.ranges
-        threshold_dist = ((V/10)**2)*0.6
+        threshold_dist = ((V/10)**2)*0.6#dynamic change formula
         Estop = 0
         for i in range(len(angles)):
             if beta < 0:
