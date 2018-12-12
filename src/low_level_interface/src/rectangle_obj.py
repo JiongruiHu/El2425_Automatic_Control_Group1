@@ -69,6 +69,7 @@ def move(goal):
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
     xg, yg = goal[0],goal[1]
     des_heading = arctan2((yg - yr), (xg - xr))
+    ld = dist((xr,yr),(xg,yg))
     headErr = des_heading - current_heading
     if headErr > pi:
         headErr = -2 * pi + headErr
