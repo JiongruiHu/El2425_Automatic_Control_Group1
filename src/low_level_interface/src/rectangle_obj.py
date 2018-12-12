@@ -4,9 +4,7 @@ from low_level_interface.msg import lli_ctrl_request as msg_out
 from tf.transformations import euler_from_quaternion
 from numpy import *
 from nav_msgs.msg import Odometry
-
-from sensor_msgs.msg import LaserScan
-
+from Parallel_parking.py import FollowThenPark
 
 
 ros_out = msg_out()
@@ -143,7 +141,6 @@ if __name__ == '__main__':
                 LOOP = False
                 move(_point)
             rate.sleep()
-
-
+            FollowThenPark()
 
     #TODO:Call Parallel Parking
