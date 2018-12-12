@@ -121,6 +121,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown() and LOOP:
         if( xr != 0 and yr != 0 ):
             if not DETECTED:
+                print("Not yet detected")
                 trace_path()
             else:
                 _x,_y = path[current_point]
