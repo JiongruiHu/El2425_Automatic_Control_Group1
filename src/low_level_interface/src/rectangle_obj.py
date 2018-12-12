@@ -63,6 +63,7 @@ def trace_path():
     print('genrate')
 
 def move(goal):
+    global current_point, path
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
     xg, yg = goal[0],goal[1]
     des_heading = arctan2((yg - yr), (xg - xr))
