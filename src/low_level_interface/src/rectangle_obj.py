@@ -51,13 +51,14 @@ def generate():
 
 
 def updatePos(msg):
+    global xr,yr,xo,yo,zo,w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
 
 
 def trace_path():
-    if(dist((xr,xy),path[current_point])>0.5):
+    if(dist((xr,yr),path[current_point])>0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
     print('genrate')
@@ -116,9 +117,11 @@ if __name__ == '__main__':
     rate = rospy.Rate(10)
     _point=[]
     while not rospy.is_shutdown() and LOOP:
+        print("Looping")
         if( xr != 0 and yr != 0 ):
+            print("Found pos")
             if not DETECTED:
-                 print("not detect ")
+                print("not detect ")
                 trace_path()
             else:
                 _x,_y = path[current_point]
@@ -135,7 +138,7 @@ if __name__ == '__main__':
                     if(_x < _x1):
                         point=[_x-1,yr]
                         _point = point
-                         print("x rectangle")
+                        print("x rectangle")
                     elif(_x > _x1):#its goving forward
                         point=[_x+1,yr]
                         _point = point
