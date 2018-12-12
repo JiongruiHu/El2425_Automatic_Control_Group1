@@ -100,6 +100,7 @@ def lidar_cb(data):
     obstacle_detected(angles,ranges)
 
 def obstacle_detected(angles,ranges):
+    global DETECTED, Estop
     threshold_dist = 0.6
     for i in range(len(angles)):
         if abs(angles[i]) < pi/6:
