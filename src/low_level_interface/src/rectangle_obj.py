@@ -93,6 +93,7 @@ def lidar_cb(data):
     angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
     ranges = data.ranges
     obstacle_detected(angles,ranges)
+    print("lidar")
 
 def obstacle_detected(angles,ranges):
     threshold_dist = 0.6
@@ -103,6 +104,7 @@ def obstacle_detected(angles,ranges):
         if abs(angles[i]) > pi/4:#vision angle needs to be tuned
             if ranges[i] < threshold_dist:
                 DETECTED=True
+                print("detected")
 
 
 if __name__ == '__main__':
@@ -114,6 +116,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown() and LOOP:
         if( xr != 0 and yr != 0 ):
             if not DETECTED:
+                 print("not detect ")
                 trace_path()
             else:
                 _x,_y = path[current_point]
@@ -122,6 +125,7 @@ if __name__ == '__main__':
                     if(_y < _y1):#it is moving right(lower line of rectangle)
                         point=[xr,_y-1]
                         _point = point
+                        print("lower rectangle")
                     elif(_y > _y1):
                         point=[xr,_y+1]
                         _point = point
@@ -129,6 +133,7 @@ if __name__ == '__main__':
                     if(_x < _x1):
                         point=[_x-1,yr]
                         _point = point
+                         print("x rectangle")
                     elif(_x > _x1):#its goving forward
                         point=[_x+1,yr]
                         _point = point
