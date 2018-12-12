@@ -141,6 +141,7 @@ if __name__ == '__main__':
                 LOOP = False
                 move(_point)
             rate.sleep()
+            print("before follow then park")
             FollowThenPark()
 
     #TODO:Call Parallel Parking
