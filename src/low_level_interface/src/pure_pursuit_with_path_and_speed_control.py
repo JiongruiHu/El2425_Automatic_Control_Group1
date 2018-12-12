@@ -154,12 +154,12 @@ class ParkingControl(object):
         print("Beta: ",beta)
         for i in range(len(angles)):
             if beta < 0:
-                if angles[i] < -pi - beta + pi / 6 and angles[i] > -pi - beta - pi / 6:
+                if angles[i] < -pi + beta + pi / 6 or angles[i] > -pi + beta - pi / 6:
                     if ranges[i] < threshold_dist:
                         Estop = 1
                         print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
             elif beta >= 0:
-                if angles[i] < pi - beta + pi / 6 and angles[i] > pi - beta - pi / 6:
+                if angles[i] < -pi + beta + pi / 6 or angles[i] > pi + beta - pi / 6:
                     if ranges[i] < threshold_dist:
                         Estop = 1
                         print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
