@@ -10,7 +10,7 @@ from Parallel_parking import FollowThenPark
 
 ros_out = msg_out()
 
-ros_out.velocity = 15
+ros_out.velocity = 14
 
 vel = 0;
 steer =0;
@@ -59,7 +59,8 @@ def updatePos(msg):
 
 def trace_path():
     global current_point, path
-    if(dist((xr,yr),path[current_point])<0.5):
+    ld = 0.6
+    if(dist((xr,yr),path[current_point])<0.6):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
 
