@@ -228,9 +228,9 @@ class FollowThenPark(object):
     def speed_control(self, phi):
         if self.Estop == 0:
             if abs(phi) < pi / 12:
-                speed = 11
+                speed = 12
             else:
-                speed = 11
+                speed = 12
         else:
             speed = 0
         if self.going_forwards:
