@@ -133,29 +133,36 @@ class ParkingControl(object):
         self.path.remove(goal_point)
         return goal_point
 
-    
+
     def lidar_cb(self,data):
-        #msg = lli_ctrl_request()
-        #msg.velocity = speed
-        #if not hasattr(self, 'car_pose'):
-        #return
-        #vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
-        #self.car_heading = arctan2(vy, vx)
-        #if vx**2+vy**2 < 10**(-3):
-        #    return
-        #beta = self.car_heading - self.current_heading
-        angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
-        #print(angles)     
+        # msg = lli_ctrl_request()
+        # msg.velocity = speed
+        if not hasattr(self, 'car_pose'):
+            return
+        vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
+        if vx ** 2 + vy ** 2 < 10 ** (-3):
+            return
+        V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
+        beta = arctan(tan(self.steering_angle) * 0.5)
+        angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
+        # print(angles)
         ranges = data.ranges
-        threshold_dist = 0.9
+        threshold_dist = ((V / 10) ** 2) * 0.6  # dynamic change formula
         Estop = 0
         for i in range(len(angles)):
-            if abs(angles[i]) > pi-pi/6:
-                if ranges[i] < threshold_dist:
-                    Estop = 1
+            if beta < 0:
+                if angles[i] < -pi - beta + pi / 6 and angles[i] > -pi - beta - pi / 6:
+                    if ranges[i] < threshold_dist:
+                        Estop = 1
+                        print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
+            elif beta > 0:
+                if angles[i] < pi - beta + pi / 6 and angles[i] > pi - beta - pi / 6:
+                    if ranges[i] < threshold_dist:
+                        Estop = 1
+                        print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
         self.Estop = Estop
-        #msg.velocity = speed
-        #car_speed.publish(msg)
+        # msg.velocity = speed
+        # car_speed.publish(msg)
 
     def race_path_cb(self, data):
         if len(self.path) == 0:
