@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/pure_pursuit_with_path_and_speed_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pure_pursuit_with_path_and_speed_control.py" afterDir="false" />
-    </list>
+    <list default="true" id="0193c7be-5571-486c-8658-ca65a8a63e7d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
