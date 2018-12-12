@@ -106,7 +106,7 @@ def obstacle_detected(angles,ranges):
         if abs(angles[i]) < pi/6:
             if ranges[i] < threshold_dist:
                 Estop = 1
-        if abs(angles[i] - pi/2) < pi/10:
+        if abs(angles[i] - pi/2) < pi/20:
             if ranges[i] < threshold_dist:
                 DETECTED=True
 
