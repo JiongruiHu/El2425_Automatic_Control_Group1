@@ -58,12 +58,18 @@ def updatePos(msg):
 
 
 def trace_path():
+<<<<<<< HEAD
     if(dist((xr,yr),path[current_point])>0.5):
+=======
+    global current_point, path
+    if(dist((xr,xy),path[current_point])>0.5):
+>>>>>>> 048651ab260cfe07e4d19875018514e98f455c62
         current_point=(current_point+1)%len(path)
     move(path[current_point])
     print('genrate')
 
 def move(goal):
+    global pub, xo, yo, zo, w, xr, yr, ros_out
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
     xg, yg = goal[0],goal[1]
     des_heading = arctan2((yg - yr), (xg - xr))
@@ -113,6 +119,7 @@ def obstacle_detected(angles,ranges):
 if __name__ == '__main__':
     rospy.init_node('test_control',anonymous=True)
     rospy.Subscriber("SVEA1/odom", Odometry, updatePos)
+    generate()
     rospy.Subscriber("/scan", LaserScan, lidar_cb)
     rate = rospy.Rate(10)
     _point=[]
