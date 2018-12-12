@@ -26,6 +26,7 @@ class ParkingControl(object):
         self.car_control_pub = rospy.Publisher("lli/ctrl_request", lli_ctrl_request, queue_size=10)
         self.rate = rospy.Rate(10)
         # goal = self.path[0]
+        self.steering_angle = 0
 
         self.ld = 0.5
         self.xs = []
@@ -83,6 +84,7 @@ class ParkingControl(object):
         else:
             phi = des_phi
         v = self.speed_control(phi)
+        self.steering_angle = phi
         # print('real phi',(phi*180/pi))
         return v, -int(100/(pi/4)*phi)
 
