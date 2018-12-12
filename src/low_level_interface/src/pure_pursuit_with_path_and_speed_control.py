@@ -147,7 +147,7 @@ class ParkingControl(object):
         angles = arange(data.angle_min, data.angle_max+data.angle_increment, data.angle_increment)
         #print(angles)     
         ranges = data.ranges
-        threshold_dist = 0.6
+        threshold_dist = 1
         Estop = 0
         for i in range(len(angles)):
             if abs(angles[i]) > pi-pi/6:
