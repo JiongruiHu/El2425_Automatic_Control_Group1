@@ -37,6 +37,7 @@ def generate():
     yrange = linspace(ymin,ymax,25)
     yrange_ = linspace(ymax,ymin,25)
     xrange_ = linspace(xmax,xmin,25)
+    print('genrate')
     for i in arange(25):
         path.append([xrange[i],ymin])
     for i in arange(25):
@@ -59,6 +60,7 @@ def trace_path():
     if(dist((xr,xy),path[current_point])>0.5):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
+    print('genrate')
 
 def move(goal):
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
