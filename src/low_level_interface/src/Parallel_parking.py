@@ -328,6 +328,7 @@ class FollowThenPark(object):
         #self.path = steerings
         self.ld = 0.35
         self.change_to_reversed()
+        print("i am stucked2")
         self.__pure_pursuit()
         self.parked = True
 
