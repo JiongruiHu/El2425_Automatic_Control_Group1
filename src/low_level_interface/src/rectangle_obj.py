@@ -114,6 +114,7 @@ def obstacle_detected(angles,ranges):
 if __name__ == '__main__':
     rospy.init_node('test_control',anonymous=True)
     rospy.Subscriber("SVEA1/odom", Odometry, updatePos)
+    generate()
     rospy.Subscriber("/scan", LaserScan, lidar_cb)
     rate = rospy.Rate(10)
     _point=[]
