@@ -142,8 +142,8 @@ class ParkingControl(object):
         if not hasattr(self, 'car_pose'):
             return
         vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
-        if vx ** 2 + vy ** 2 < 10 ** (-3):
-            return
+        # if vx ** 2 + vy ** 2 < 10 ** (-3):
+        #     return
         V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
         beta = arctan(tan(self.steering_angle) * 0.5)
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
