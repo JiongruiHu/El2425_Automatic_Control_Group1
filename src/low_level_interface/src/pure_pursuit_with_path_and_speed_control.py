@@ -13,7 +13,7 @@ from geometry_msgs.msg import PoseArray
 class ParkingControl(object):
     def __init__(self):
         self.path = path_points('figure-8')
-        # self.path =
+        # self.path = []
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
