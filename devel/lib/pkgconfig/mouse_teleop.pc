@@ -1,8 +1,8 @@
-prefix=/home/nvidia/catkin_ws/devel
+prefix=/home/nvidia/El2425_Automatic_Control_Group1/devel
 
 Name: mouse_teleop
 Description: Description of mouse_teleop
 Version: 0.2.6
 Cflags: 
-Libs: -L/home/nvidia/catkin_ws/devel/lib 
+Libs: -L/home/nvidia/El2425_Automatic_Control_Group1/devel/lib 
 Requires: 

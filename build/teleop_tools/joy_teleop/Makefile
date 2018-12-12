@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nvidia/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/nvidia/El2425_Automatic_Control_Group1/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nvidia/catkin_ws/build
+CMAKE_BINARY_DIR = /home/nvidia/El2425_Automatic_Control_Group1/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -135,14 +135,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/nvidia/catkin_ws/build/CMakeFiles /home/nvidia/catkin_ws/build/teleop_tools/joy_teleop/CMakeFiles/progress.marks
-	cd /home/nvidia/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nvidia/catkin_ws/build/CMakeFiles 0
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles /home/nvidia/El2425_Automatic_Control_Group1/build/teleop_tools/joy_teleop/CMakeFiles/progress.marks
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/nvidia/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/clean
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/clean
 .PHONY : clean
 
 # The main clean target
@@ -152,22 +152,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/nvidia/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/preinstall
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/nvidia/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/preinstall
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/rule:
-	cd /home/nvidia/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/rule
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(MAKE) -f CMakeFiles/Makefile2 teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/rule
 .PHONY : teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/rule
 
 # Convenience name for target.
@@ -177,7 +177,7 @@ _catkin_empty_exported_target: teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_
 
 # fast build rule for target.
 _catkin_empty_exported_target/fast:
-	cd /home/nvidia/catkin_ws/build && $(MAKE) -f teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/build.make teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/build
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(MAKE) -f teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/build.make teleop_tools/joy_teleop/CMakeFiles/_catkin_empty_exported_target.dir/build
 .PHONY : _catkin_empty_exported_target/fast
 
 # Help Target
@@ -205,6 +205,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

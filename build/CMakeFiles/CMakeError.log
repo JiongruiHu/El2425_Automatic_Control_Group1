@@ -1,25 +1,25 @@
 Determining if the pthread_create exist failed with the following output:
-Change Dir: /home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp
+Change Dir: /home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_922ef/fast"
-/usr/bin/make -f CMakeFiles/cmTC_922ef.dir/build.make CMakeFiles/cmTC_922ef.dir/build
-make[1]: Entering directory '/home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_922ef.dir/CheckSymbolExists.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_922ef.dir/CheckSymbolExists.c.o   -c /home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_922ef
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_922ef.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_922ef.dir/CheckSymbolExists.c.o  -o cmTC_922ef -rdynamic 
-CMakeFiles/cmTC_922ef.dir/CheckSymbolExists.c.o: In function `main':
+Run Build Command:"/usr/bin/make" "cmTC_03f96/fast"
+/usr/bin/make -f CMakeFiles/cmTC_03f96.dir/build.make CMakeFiles/cmTC_03f96.dir/build
+make[1]: Entering directory '/home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_03f96.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_03f96.dir/CheckSymbolExists.c.o   -c /home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_03f96
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_03f96.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_03f96.dir/CheckSymbolExists.c.o  -o cmTC_03f96 -rdynamic 
+CMakeFiles/cmTC_03f96.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x14): undefined reference to `pthread_create'
 CheckSymbolExists.c:(.text+0x18): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_922ef.dir/build.make:97: recipe for target 'cmTC_922ef' failed
-make[1]: *** [cmTC_922ef] Error 1
-make[1]: Leaving directory '/home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_922ef/fast' failed
-make: *** [cmTC_922ef/fast] Error 2
+CMakeFiles/cmTC_03f96.dir/build.make:97: recipe for target 'cmTC_03f96' failed
+make[1]: *** [cmTC_03f96] Error 1
+make[1]: Leaving directory '/home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_03f96/fast' failed
+make: *** [cmTC_03f96/fast] Error 2
 
-File /home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+File /home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
 #include <pthread.h>
 
@@ -35,22 +35,22 @@ int main(int argc, char** argv)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp
+Change Dir: /home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_e3768/fast"
-/usr/bin/make -f CMakeFiles/cmTC_e3768.dir/build.make CMakeFiles/cmTC_e3768.dir/build
-make[1]: Entering directory '/home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e3768.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_e3768.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
-Linking C executable cmTC_e3768
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e3768.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_e3768.dir/CheckFunctionExists.c.o  -o cmTC_e3768 -rdynamic -lpthreads 
+Run Build Command:"/usr/bin/make" "cmTC_aada9/fast"
+/usr/bin/make -f CMakeFiles/cmTC_aada9.dir/build.make CMakeFiles/cmTC_aada9.dir/build
+make[1]: Entering directory '/home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_aada9.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_aada9.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
+Linking C executable cmTC_aada9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aada9.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_aada9.dir/CheckFunctionExists.c.o  -o cmTC_aada9 -rdynamic -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_e3768.dir/build.make:97: recipe for target 'cmTC_e3768' failed
-make[1]: *** [cmTC_e3768] Error 1
-make[1]: Leaving directory '/home/nvidia/catkin_ws/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_e3768/fast' failed
-make: *** [cmTC_e3768/fast] Error 2
+CMakeFiles/cmTC_aada9.dir/build.make:97: recipe for target 'cmTC_aada9' failed
+make[1]: *** [cmTC_aada9] Error 1
+make[1]: Leaving directory '/home/nvidia/El2425_Automatic_Control_Group1/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_aada9/fast' failed
+make: *** [cmTC_aada9/fast] Error 2
 
 

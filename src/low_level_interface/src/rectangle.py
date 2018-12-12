@@ -7,7 +7,7 @@ from nav_msgs.msg import Odometry
 
 ros_out = msg_out()
 
-ros_out.velocity = 15
+ros_out.velocity = 10
 
 vel = 0
 steer =0
@@ -24,7 +24,6 @@ xo = 0
 yo = 0
 zo = 0
 w = 0
-
 
 def generate():
     global path
@@ -46,14 +45,11 @@ def generate():
         path.append([xmin,yrange_[i]])
 
 
-
-
 def updatePos(msg):
-    global xr, yr, xo, yo, zo, w
+    global xr,yr, xo, yo, zo, w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
-
 
 def trace_path():
     global current_point, path
@@ -89,8 +85,7 @@ def move(goal):
 
 
 def dist(p1, p2):
-    return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-
+   return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 
 if __name__ == '__main__':
@@ -100,6 +95,7 @@ if __name__ == '__main__':
     rate = rospy.Rate(10)
     generate()
     while not rospy.is_shutdown():
-        if abs(xr) > 0 or abs(yr) > 0:
+        if abs(xr) > 0 or abs(yr) > 0:#zeroexception
             trace_path()
         rate.sleep()
+        

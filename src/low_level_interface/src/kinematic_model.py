@@ -1,6 +1,5 @@
 from numpy import *
 
-
 def bicycle_backward(car_speed,x, y, heading, steering):
     dt = 0.2  # the car should reach the goal in 10 second #Not really relevant for the choice of dt?
     lr = 0.32 / 2

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nvidia/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/nvidia/El2425_Automatic_Control_Group1/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nvidia/catkin_ws/build
+CMAKE_BINARY_DIR = /home/nvidia/El2425_Automatic_Control_Group1/build
 
 # Utility rule file for qualisys_gencpp.
 
@@ -63,10 +63,10 @@ qualisys/CMakeFiles/qualisys_gencpp.dir/build: qualisys_gencpp
 .PHONY : qualisys/CMakeFiles/qualisys_gencpp.dir/build
 
 qualisys/CMakeFiles/qualisys_gencpp.dir/clean:
-	cd /home/nvidia/catkin_ws/build/qualisys && $(CMAKE_COMMAND) -P CMakeFiles/qualisys_gencpp.dir/cmake_clean.cmake
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build/qualisys && $(CMAKE_COMMAND) -P CMakeFiles/qualisys_gencpp.dir/cmake_clean.cmake
 .PHONY : qualisys/CMakeFiles/qualisys_gencpp.dir/clean
 
 qualisys/CMakeFiles/qualisys_gencpp.dir/depend:
-	cd /home/nvidia/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/catkin_ws/src /home/nvidia/catkin_ws/src/qualisys /home/nvidia/catkin_ws/build /home/nvidia/catkin_ws/build/qualisys /home/nvidia/catkin_ws/build/qualisys/CMakeFiles/qualisys_gencpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nvidia/El2425_Automatic_Control_Group1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nvidia/El2425_Automatic_Control_Group1/src /home/nvidia/El2425_Automatic_Control_Group1/src/qualisys /home/nvidia/El2425_Automatic_Control_Group1/build /home/nvidia/El2425_Automatic_Control_Group1/build/qualisys /home/nvidia/El2425_Automatic_Control_Group1/build/qualisys/CMakeFiles/qualisys_gencpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : qualisys/CMakeFiles/qualisys_gencpp.dir/depend
 

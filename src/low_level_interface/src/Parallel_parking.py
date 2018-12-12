@@ -135,10 +135,10 @@ class FollowThenPark(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.1)
+        rospy.sleep(1.0)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.1)
+        rospy.sleep(1.0)
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
         rospy.sleep(0.1)
@@ -505,11 +505,12 @@ class FollowThenPark(object):
         xr, yr, heading = self.__find_current_position(reversed=False)
         idx_minangles = argmin(abs(array(filtered_angles)+(heading - self.pp_heading)))
         backward_dist = filtered_ranges[idx_minangles]
-        goal_pos_x = xr - (backward_dist - 0.18) * cos(self.pp_heading)
-        goal_pos_y = yr - (backward_dist - 0.18) * sin(self.pp_heading)
+        goal_pos_x = xr - (backward_dist - 0.28) * cos(self.pp_heading)
+        goal_pos_y = yr - (backward_dist - 0.28) * sin(self.pp_heading)
         self.path = adjustable_path_points("linear", (xr, yr), goal=(goal_pos_x, goal_pos_y))
         print("I am here 3")
         self.change_to_reversed()
+        print("i am stucked")
         self.__pure_pursuit()
         print("I am here 4")
         rospy.sleep(1.0)

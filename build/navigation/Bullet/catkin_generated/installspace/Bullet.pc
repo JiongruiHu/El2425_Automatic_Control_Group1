@@ -1,8 +1,0 @@
-prefix=/home/nvidia/catkin_ws/install
-
-Name: Bullet
-Description: Description of Bullet
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/nvidia/catkin_ws/install/lib 
-Requires: 
