@@ -7,16 +7,19 @@ from sensor_msgs.msg import LaserScan
 from path_points import path_points
 from low_level_interface.msg import lli_ctrl_request
 from nav_msgs.msg import Odometry
+from geometry_msgs.msg import PoseArray
 
 
 class ParkingControl(object):
     def __init__(self):
         self.path = path_points('figure-8')
+        # self.path =
         self.Estop = 0
         self.car_heading = 0
         # Subscribe to the topics
         self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odometry, self.car_pose_cb)
         self.Lidar_sub = rospy.Subscriber("/scan", LaserScan, self.lidar_cb)
+        self.race_path_sub = rospy.Subscriber("/race_course", PoseArray, self.race_path_cb)
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -27,6 +30,8 @@ class ParkingControl(object):
         self.ld = 0.5
         self.xs = []
         self.ys = []
+        while len(self.path) == 0:
+            self.rate.sleep()
         self.__pure_pursuit()
 
     def __pure_pursuit(self):
@@ -123,6 +128,7 @@ class ParkingControl(object):
             if distance > self.ld:
                 return examined_point
             self.path.remove(examined_point)
+            self.path.append(examined_point)
         goal_point = self.path[0]
         self.path.remove(goal_point)
         return goal_point
@@ -150,6 +156,13 @@ class ParkingControl(object):
         self.Estop = Estop
         #msg.velocity = speed
         #car_speed.publish(msg)
+
+    def race_path_cb(self, data):
+        if len(self.path) == 0:
+            path = []
+            for pose in data.poses:
+                path.append((pose.position.x, pose.position.y))
+            self.path = path
 
  
 
