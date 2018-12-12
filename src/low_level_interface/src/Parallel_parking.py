@@ -135,10 +135,10 @@ class FollowThenPark(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.2)
+        rospy.sleep(1.0)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.2)
+        rospy.sleep(1.0)
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
         rospy.sleep(0.1)
@@ -328,7 +328,6 @@ class FollowThenPark(object):
         #self.path = steerings
         self.ld = 0.35
         self.change_to_reversed()
-        print("i am stucked2")
         self.__pure_pursuit()
         self.parked = True
 
