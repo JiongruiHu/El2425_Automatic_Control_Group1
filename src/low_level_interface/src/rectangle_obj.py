@@ -139,10 +139,11 @@ if __name__ == '__main__':
                     elif(_x > _x1):
                         point=[_x+1,yr]
                         _point = point
+                FollowThenPark()
                 LOOP = False
                 move(_point)
             rate.sleep()
             print("before follow then park")
-            FollowThenPark()
+
 
     #TODO:Call Parallel Parking
