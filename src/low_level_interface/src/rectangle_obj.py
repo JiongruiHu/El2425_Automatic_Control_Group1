@@ -42,7 +42,7 @@ def generate():
     for i in arange(25):
         path.append([xmax,yrange[i]])
     for i in arange(25):
-        path.append([xrange_[i],ymax)
+        path.append([xrange_[i],ymax])
     for i in arange(25):
         path.append([xmin,yrange_[i]])
 
