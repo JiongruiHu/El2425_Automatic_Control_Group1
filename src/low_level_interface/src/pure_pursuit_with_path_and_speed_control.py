@@ -48,7 +48,7 @@ class ParkingControl(object):
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
         pose_arr = array([self.xs, self.ys])
-        savetxt("/home/nvidia/catkin_ws/real_path.csv", pose_arr, delimiter=",")
+        #savetxt("/home/nvidia/catkin_ws/real_path.csv", pose_arr, delimiter=",")
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
