@@ -135,10 +135,10 @@ class FollowThenPark(object):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.1)
+        rospy.sleep(0.2)
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
-        rospy.sleep(0.1)
+        rospy.sleep(0.2)
         lli_msg.velocity = - 10
         self.car_control_pub.publish(lli_msg)
         rospy.sleep(0.1)
