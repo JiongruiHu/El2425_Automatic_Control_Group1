@@ -100,7 +100,7 @@ class ParkingControl(object):
 
     def __choose_speed(self, phi):
         max_speed = 25
-        min_speed = 12
+        min_speed = 25
         min_ang = pi / 48
         max_ang = pi / 6
         if abs(phi) < min_ang:
@@ -148,6 +148,7 @@ class ParkingControl(object):
         else:
             V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
             threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
+        threshold_dist = 0.8
         beta = arctan(tan(self.steering_angle) * 0.5)
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         # print(angles)
