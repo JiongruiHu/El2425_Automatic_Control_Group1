@@ -32,8 +32,8 @@ pub= rospy.Publisher('lli/ctrl_request',msg_out,queue_size=10)
 
 def generate():
     xmin = -1
-    xmax = 1
-    ymin = -1.5
+    xmax = 1.5
+    ymin = -1.8
     ymax = 1.5
     xrange = linspace(xmin,xmax,25)
     yrange = linspace(ymin,ymax,25)
