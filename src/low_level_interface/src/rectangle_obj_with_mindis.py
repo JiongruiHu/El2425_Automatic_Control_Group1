@@ -168,6 +168,7 @@ if __name__ == '__main__':
                 FollowThenPark()
                 current_point = closest_point()
                 WAITING_FOR_START = True
+                DETECTED = False
             rate.sleep()
             print("before follow then park")
 
