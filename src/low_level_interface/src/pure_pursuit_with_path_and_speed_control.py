@@ -151,7 +151,7 @@ class ParkingControl(object):
         ranges = data.ranges
         threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
         Estop = 0
-        print("Beta: ",beta)
+        # print("Beta: ",beta)
         for i in range(len(angles)):
             if beta < 0:
                 if angles[i] < -pi + beta + pi / 6 or angles[i] > -pi + beta - pi / 6:
@@ -175,6 +175,7 @@ class ParkingControl(object):
             for pose in data.poses:
                 path.append((pose.position.x, pose.position.y))
             self.path = path
+            print(path[0])
 
  
 
