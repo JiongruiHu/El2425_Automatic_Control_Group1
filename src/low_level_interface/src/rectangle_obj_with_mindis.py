@@ -49,6 +49,7 @@ def generate():
 
 
 def closest_point():
+    global xr,yr,path
   closest=dist((xr,yr),path[0])
   point=0
   for i in range(0,len(path)):
@@ -67,9 +68,10 @@ def updatePos(msg):
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
 
 
-def trace_path():
-    global current_point, path
+def trace_path(p):
+    global  path
     ld = 0.6
+    current_point=p
     if(dist((xr,yr),path[current_point])<0.6):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
@@ -134,8 +136,8 @@ if __name__ == '__main__':
         if( xr != 0 and yr != 0 ):
             if not DETECTED:
                 print("Not yet detected")
-                closest_point()
-                trace_path()
+                current_point=closest_point()
+                trace_path(current_point)
             else:
                 _x,_y = path[current_point]
                 _x1,_y1 = path[(current_point+1)%NPOINTS]
