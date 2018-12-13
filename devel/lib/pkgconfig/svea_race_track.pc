@@ -1,0 +1,8 @@
+prefix=/home/nvidia/El2425_Automatic_Control_Group1/devel
+
+Name: svea_race_track
+Description: Description of svea_race_track
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/nvidia/El2425_Automatic_Control_Group1/devel/lib 
+Requires: 

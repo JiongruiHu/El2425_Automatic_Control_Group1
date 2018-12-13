@@ -1,2 +1,2 @@
-low_level_interface:qualisys:ros_tutorial:rplidar_ros:teleop_tools/joy_teleop:teleop_tools/key_teleop:teleop_tools/mouse_teleop:teleop_tools/teleop_tools:teleop_tools/teleop_tools_msgs
+low_level_interface:qualisys:ros_tutorial:rplidar_ros:svea_race_track:teleop_tools/joy_teleop:teleop_tools/key_teleop:teleop_tools/mouse_teleop:teleop_tools/teleop_tools:teleop_tools/teleop_tools_msgs
 -DCATKIN_DEVEL_PREFIX=/home/nvidia/El2425_Automatic_Control_Group1/devel -DCMAKE_INSTALL_PREFIX=/home/nvidia/El2425_Automatic_Control_Group1/install -G Unix Makefiles
