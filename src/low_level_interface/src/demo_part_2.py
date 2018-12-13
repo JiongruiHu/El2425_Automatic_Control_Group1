@@ -245,12 +245,12 @@ class FollowThenPark(object):
             if abs(phi) < pi/12:
                 speed = -25
             else:
-                speed = -20
+                speed = -21  #19
         else:
             speed = 0
 
         if self.has_parking_spot:
-            speed = -19
+            speed = -21
         # speed = E_stop(speed)
         return speed
 
