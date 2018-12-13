@@ -143,7 +143,7 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown() and LOOP:
         if( xr != 0 and yr != 0 ):
-            if True:# not (DETECTED or WAITING_FOR_START):
+            if not (DETECTED or WAITING_FOR_START):
                 print("Not yet detected")
                 print("closest point", current_point)
                 trace_path()
