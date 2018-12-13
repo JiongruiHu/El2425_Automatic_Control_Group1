@@ -38,6 +38,7 @@ class ParkingControl(object):
     def __pure_pursuit(self):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
+        savetxt("/home/nvidia/El2425project/planned_path.csv", array(self.path), delimiter=",")
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
@@ -49,7 +50,7 @@ class ParkingControl(object):
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
         pose_arr = array([self.xs, self.ys])
-        #savetxt("/home/nvidia/catkin_ws/real_path.csv", pose_arr, delimiter=",")
+        savetxt("/home/nvidia/El2425project/real_path.csv", pose_arr, delimiter=",")
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
@@ -142,14 +143,15 @@ class ParkingControl(object):
         if not hasattr(self, 'car_pose'):
             return
         vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
-        # if vx ** 2 + vy ** 2 < 10 ** (-3):
-        #     return
-        V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
+        if vx ** 2 + vy ** 2 < 10 ** (-3):
+            threshold_dist = 1
+        else:
+            V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
+            threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
         beta = arctan(tan(self.steering_angle) * 0.5)
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         # print(angles)
         ranges = data.ranges
-        threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
         Estop = 0
         # print("Beta: ",beta)
         for i in range(len(angles)):
