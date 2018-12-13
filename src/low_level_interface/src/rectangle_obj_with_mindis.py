@@ -139,11 +139,11 @@ if __name__ == '__main__':
     rospy.Subscriber("/scan", LaserScan, lidar_cb)
     rate = rospy.Rate(10)
     _point=[]
+    current_point = closest_point()
     while not rospy.is_shutdown() and LOOP:
         if( xr != 0 and yr != 0 ):
             if not DETECTED or WAITING_FOR_START:
                 print("Not yet detected")
-                current_point=closest_point()
                 trace_path()
             else:
                 _x,_y = path[current_point]
