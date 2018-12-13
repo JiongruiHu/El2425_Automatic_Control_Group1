@@ -99,7 +99,7 @@ class FollowThenPark(object):
             return self.reversed_controller(goal)
         else:
             return self.forward_controller(goal)
-
+        
     def lidar_cb(self,data):
         if self.reversed:
             pass
