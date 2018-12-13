@@ -28,7 +28,7 @@ class ParkingControl(object):
         # goal = self.path[0]
         self.steering_angle = 0
 
-        self.ld = 0.5
+        self.ld = 0.6
         self.xs = []
         self.ys = []
         while len(self.path) == 0:
