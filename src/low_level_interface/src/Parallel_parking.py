@@ -426,8 +426,8 @@ class FollowThenPark(object):
         second_corner_x, second_corner_y = None, None
         for i in range(len(DeltaRanges)):
             if DeltaRanges[i] > 0.15:
-                print("Angle: ", newAngles[i])
-                print("Next angle: ", newAngles[i+1])
+                #print("Angle: ", newAngles[i])
+                #print("Next angle: ", newAngles[i+1])
                 #print("Range: ",newRanges[i])
                 #print("MinAngle: ",newAngles[0])
                 #print("MinRange: ",newRanges[0])
@@ -467,10 +467,10 @@ class FollowThenPark(object):
                         if l2 < 2.0:
                             test_corner_y = -l2 * sin(newAngles[second_corner_idx])
                             if abs(test_corner_y - first_corner_y) <= 0.1:
-                                print("Angle: ",newAngles[second_corner_idx])
-                                print("Range: ",newRanges[second_corner_idx])
-                                print("MinAngle: ",newAngles[0])
-                                print("MinRange: ",newRanges[0])
+                                #print("Angle: ",newAngles[second_corner_idx])
+                                #print("Range: ",newRanges[second_corner_idx])
+                                #print("MinAngle: ",newAngles[0])
+                                #print("MinRange: ",newRanges[0])
                                 second_corner_x = -l2 * cos(newAngles[second_corner_idx])
                                 second_corner_y = -l2 * sin(newAngles[second_corner_idx])
                                 break
