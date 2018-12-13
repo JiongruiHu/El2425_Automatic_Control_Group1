@@ -8,4 +8,5 @@ def closest_point():
       point=i
   return point
   
+trace_path():
 #current_point=closest_point()
