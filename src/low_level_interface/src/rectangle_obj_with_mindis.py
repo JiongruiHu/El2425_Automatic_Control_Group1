@@ -145,7 +145,7 @@ if __name__ == '__main__':
         if( xr != 0 and yr != 0 ):
             if not (DETECTED or WAITING_FOR_START):
                 print("Not yet detected")
-                print("closest point", current_point)
+                print("closest point", path[current_point])
                 trace_path()
             else:
                 _x,_y = path[current_point]
