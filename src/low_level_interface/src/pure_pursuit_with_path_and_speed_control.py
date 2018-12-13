@@ -93,7 +93,7 @@ class ParkingControl(object):
         if self.Estop == 0:
             speed = self.__choose_speed(phi)
         else:
-            speed = -10
+            speed = -100
         #speed = E_stop(speed)
         return speed
 
