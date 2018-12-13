@@ -114,7 +114,7 @@ def lidar_cb(data):
     obstacle_detected(angles,ranges)
 
 def obstacle_detected(angles,ranges):
-    global DETECTED, Estop
+    global DETECTED, Estop, WAITING_FOR_START
     threshold_dist = 0.5
     none_detected = True
     for i in range(len(angles)):
@@ -127,8 +127,8 @@ def obstacle_detected(angles,ranges):
                     DETECTED=True
                 else:
                     none_detected = False
-        if none_detected:
-            WAITING_FOR_START = False
+    if none_detected:
+         WAITING_FOR_START = False
 
 
 
