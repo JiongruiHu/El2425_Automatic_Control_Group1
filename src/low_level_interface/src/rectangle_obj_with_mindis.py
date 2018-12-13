@@ -139,6 +139,8 @@ if __name__ == '__main__':
     rospy.Subscriber("/scan", LaserScan, lidar_cb)
     rate = rospy.Rate(10)
     _point=[]
+    while(xr == 0 and yr == 0):
+        rate.sleep()
     current_point = closest_point()
 
     while not rospy.is_shutdown() and LOOP:
