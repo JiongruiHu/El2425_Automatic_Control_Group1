@@ -436,6 +436,25 @@ class FollowThenPark(object):
                 first_corner_y = -l1 * sin(newAngles[first_corner_idx])
                 # reverse the DeltaRanges: the first corner should be the first 1st derivative with negative
                 # sign in the reversed DeltaRanges? Is it true
+                if first_corner_x and not self.found_path:
+                    xr, yr, heading = self.__find_current_position()
+                    first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
+                    first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
+                    close_point_x = -newRanges[0] * cos(newAngles[0])
+                    close_point_y = -newRanges[0] * sin(newAngles[0])
+                    close_point_x_real = xr + close_point_x * cos(heading) - close_point_y * sin(heading)
+                    close_point_y_real = yr + close_point_x * sin(heading) + close_point_y * cos(heading)
+                    vehicle_heading = arctan2(first_corner_y_real - close_point_y_real,
+                                              first_corner_x_real - close_point_x_real)
+                    path_length = 2
+                    outward_distance = 0.3
+                    start_point_x = close_point_x_real - outward_distance * sin(vehicle_heading)
+                    start_point_y = close_point_y_real + outward_distance * cos(vehicle_heading)
+                    goal_point_x = start_point_x + path_length * cos(heading)
+                    goal_point_y = start_point_y + path_length * sin(heading)
+                    self.path = adjustable_path_points("linear", (start_point_x, start_point_y),
+                                                       (goal_point_x, goal_point_y))
+                    self.found_path = True
                 DeltaRanges.reverse()
                 for j in range(len(DeltaRanges)):
                     #print("rev DeltaRange",DeltaRanges[j])
@@ -453,23 +472,7 @@ class FollowThenPark(object):
                                 second_corner_y = -l2 * sin(newAngles[second_corner_idx])
                                 break
                 break
-        if first_corner_x and not self.found_path:
-            xr, yr, heading = self.__find_current_position()
-            first_corner_x_real = xr + first_corner_x * cos(heading) - first_corner_y * sin(heading)
-            first_corner_y_real = yr + first_corner_x * sin(heading) + first_corner_y * cos(heading)
-            close_point_x = -newRanges[0]*cos(newAngles[0])
-            close_point_y = -newRanges[0]*sin(newAngles[0])
-            close_point_x_real = xr + close_point_x * cos(heading) - close_point_y * sin(heading)
-            close_point_y_real = yr + close_point_x * sin(heading) + close_point_y * cos(heading)
-            vehicle_heading = arctan2(first_corner_y_real - close_point_y_real, first_corner_x_real - close_point_x_real)
-            path_length = 2
-            outward_distance = 0.3
-            start_point_x = close_point_x_real - outward_distance * sin(vehicle_heading)
-            start_point_y = close_point_y_real + outward_distance * cos(vehicle_heading)
-            goal_point_x = start_point_x + path_length * cos(heading)
-            goal_point_y = start_point_y + path_length * sin(heading)
-            self.path = adjustable_path_points("linear", (start_point_x, start_point_y), (goal_point_x, goal_point_y))
-            self.found_path = True
+
         # calculate the distance between the 1st corner and 2nd corner
         if second_corner_x:
             self.parking_lot_dist = dist((first_corner_x, first_corner_y), (second_corner_x, second_corner_y))
