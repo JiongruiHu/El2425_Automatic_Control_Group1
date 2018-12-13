@@ -168,6 +168,7 @@ if __name__ == '__main__':
                 # LOOP = False
                 move(_point)
                 print("current pose", xr,yr)
+                print("follow point",_point)
                 FollowThenPark()
                 current_point = closest_point()
                 WAITING_FOR_START = True
