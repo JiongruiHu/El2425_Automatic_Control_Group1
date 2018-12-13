@@ -18,6 +18,7 @@ steer =0;
 NPOINTS = 100
 DETECTED = False
 LOOP = True
+WAITING_FOR_START = False
 
 #current_point
 path=[]
@@ -50,14 +51,14 @@ def generate():
 
 def closest_point():
     global xr,yr,path
-  closest=dist((xr,yr),path[0])
-  point=0
-  for i in range(0,len(path)):
-    distance=dist((xr,yr),path[i])
-    if(distance<closest):
-      closest = distance
-      point=i
-  return point
+    closest=dist((xr,yr),path[0])
+    point=0
+    for i in range(0,len(path)):
+        distance=dist((xr,yr),path[i])
+        if(distance<closest):
+            closest = distance
+            point=i
+    return point
   
 
 
@@ -71,7 +72,7 @@ def updatePos(msg):
 def trace_path(p):
     global  path
     ld = 0.6
-    current_point=p
+    # current_point=p
     if(dist((xr,yr),path[current_point])<0.6):
         current_point=(current_point+1)%len(path)
     move(path[current_point])
@@ -115,13 +116,19 @@ def lidar_cb(data):
 def obstacle_detected(angles,ranges):
     global DETECTED, Estop
     threshold_dist = 0.5
+    none_detected = True
     for i in range(len(angles)):
         if abs(angles[i]) < pi/6:
             if ranges[i] < threshold_dist:
                 Estop = 1
         if abs(angles[i] - pi/2) < pi/20:
             if ranges[i] < threshold_dist:
-                DETECTED=True
+                if not WAITING_FOR_START:
+                    DETECTED=True
+                else:
+                    none_detected = False
+        if none_detected:
+            WAITING_FOR_START = False
 
 
 
@@ -134,7 +141,7 @@ if __name__ == '__main__':
     _point=[]
     while not rospy.is_shutdown() and LOOP:
         if( xr != 0 and yr != 0 ):
-            if not DETECTED:
+            if not DETECTED or WAITING_FOR_START:
                 print("Not yet detected")
                 current_point=closest_point()
                 trace_path(current_point)
@@ -156,9 +163,11 @@ if __name__ == '__main__':
                         point=[_x+1,yr]
                         _point = point
 
-                LOOP = False
+                # LOOP = False
                 move(_point)
                 FollowThenPark()
+                current_point = closest_point()
+                WAITING_FOR_START = True
             rate.sleep()
             print("before follow then park")
 
