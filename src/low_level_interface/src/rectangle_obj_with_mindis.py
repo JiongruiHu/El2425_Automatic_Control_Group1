@@ -19,7 +19,7 @@ NPOINTS = 100
 DETECTED = False
 LOOP = True
 
-current_point=0
+#current_point=0
 path=[]
 yr = 0
 xr = 0
