@@ -38,7 +38,7 @@ class ParkingControl(object):
     def __pure_pursuit(self):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
-        savetxt("/home/nvidia/El2425project/planned_path.csv", array(self.path), delimiter=",")
+        savetxt("/home/nvidia/El2425_Automatic_Control_Group1/planned_path.csv", array(self.path), delimiter=",")
         while len(self.path) > 0:
             if hasattr(self, 'car_pose'):
                 while not (rospy.is_shutdown() or len(self.path) == 0):
@@ -50,7 +50,7 @@ class ParkingControl(object):
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
         pose_arr = array([self.xs, self.ys])
-        savetxt("/home/nvidia/El2425project/real_path.csv", pose_arr, delimiter=",")
+        savetxt("/home/nvidia/El2425_Automatic_Control_Group1/real_path.csv", pose_arr, delimiter=",")
 
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
