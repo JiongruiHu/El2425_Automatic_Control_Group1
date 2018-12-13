@@ -41,6 +41,7 @@ class FollowThenPark(object):
         self.scan = None
         self.pp_path = None
         self.found_path = False
+        self.tried = False
 
         rospy.loginfo(self.car_pose_sub)
         # init Publisher
@@ -81,9 +82,11 @@ class FollowThenPark(object):
 
             self.parallell_parking_backwards()
             self.parallell_parking_forwards()
-        rospy.sleep(1.0)
-        print("I am here 2")
-        self.leave_from_parking("backward_parking")
+
+        if not self.tried:
+            rospy.sleep(1.0)
+            print("I am here 2")
+            self.leave_from_parking("backward_parking")
             # print(self.pp_corner)
 
     def __pure_pursuit(self):
@@ -128,7 +131,7 @@ class FollowThenPark(object):
         else:
             pass
             # self.forward_lidar_cb(data)
-        if hasattr(self, "car_pose"):
+        if hasattr(self, "car_pose") and not self.tried:
             self.parking_stop(data)
             self.scan = data
 
@@ -607,6 +610,8 @@ class FollowThenPark(object):
                         # self.parallell_parking_start(angles[i], ranges[i])
                     elif self.parking_lot_dist > 0.03:
                         self.parking_identified = 0
+                    else:
+                        self.tried = True
                 # print("Angle: "+str(angles[i]))
                 # print("Range: "+str(ranges[i]))
 
