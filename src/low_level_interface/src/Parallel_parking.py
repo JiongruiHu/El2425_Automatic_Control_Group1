@@ -484,7 +484,7 @@ class FollowThenPark(object):
             return
         #print("distance of parking spot",self.parking_lot_dist)
         if 0.7 <= self.parking_lot_dist < 1.2:
-            # self.has_parking_spot = True
+            self.has_parking_spot = True
             self.current_start_distance = -second_corner_y       # May need to add minus sign
             self.parking_identified = 0     # find a small parking spot
             print("Preparing parallel parking, the distance <0.7")
