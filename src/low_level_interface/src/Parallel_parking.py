@@ -86,7 +86,8 @@ class FollowThenPark(object):
         if not self.tried:
             rospy.sleep(1.0)
             print("I am here 2")
-            self.leave_from_parking("backward_parking")
+            mode = "forward_parking" if self.parked else "backward_parking"
+            self.leave_from_parking(mode)
             # print(self.pp_corner)
 
     def __pure_pursuit(self):
@@ -333,7 +334,7 @@ class FollowThenPark(object):
         self.ld = 0.35
         self.change_to_reversed()
         self.__pure_pursuit()
-        self.parked = True
+        self.parked = False
 
         # self.steer_from_lists(steerings, times)
 
@@ -541,7 +542,8 @@ class FollowThenPark(object):
         rospy.sleep(1.0)
 
         if howparked == "forward_parking":
-            self.path = adjustable_path_points("parking",(goal_pos_x, goal_pos_y), heading=self.pp_heading + pi)
+            self.path = adjustable_path_points("parking_out",(goal_pos_x, goal_pos_y), heading=self.pp_heading + pi)
+            self.ld = 0.32
 
         if howparked == "backward_parking":
             print("i am here 5")
