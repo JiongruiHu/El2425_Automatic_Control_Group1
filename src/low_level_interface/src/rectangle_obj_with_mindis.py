@@ -144,7 +144,7 @@ if __name__ == '__main__':
             if not DETECTED or WAITING_FOR_START:
                 print("Not yet detected")
                 current_point=closest_point()
-                trace_path(current_point)
+                trace_path()
             else:
                 _x,_y = path[current_point]
                 _x1,_y1 = path[(current_point+1)%NPOINTS]
