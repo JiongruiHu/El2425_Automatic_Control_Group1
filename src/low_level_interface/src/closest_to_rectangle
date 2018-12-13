@@ -1,0 +1,10 @@
+def closest_point():
+  closest=dist((xr,yr),path[0])
+  point=0
+  for i in range(0,len(path)):
+    distance=dist((xr,yr),path[i])
+    if(distance<closest):
+      point=i
+  return point
+  
+#current_point=closest_point()
