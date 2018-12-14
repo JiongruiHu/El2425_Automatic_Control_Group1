@@ -143,10 +143,12 @@ class ParkingControl(object):
         if not hasattr(self, 'car_pose'):
             return
         vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
+
         if vx ** 2 + vy ** 2 < 10 ** (-3):
             threshold_dist = 1
         else:
             V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
+            print("velocity",V)
             threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
         threshold_dist = 0.7
         beta = arctan(tan(self.steering_angle) * 0.5)

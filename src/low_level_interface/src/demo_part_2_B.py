@@ -168,8 +168,8 @@ if __name__ == '__main__':
                         _point = point
 
                 # LOOP = False
+                print("current pose", xr, yr)
                 move(_point)
-                print("current pose", xr,yr)
                 print("follow point",_point)
                 FollowThenPark()
                 current_point = closest_point()
