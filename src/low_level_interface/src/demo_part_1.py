@@ -150,7 +150,7 @@ class ParkingControl(object):
             V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
             print("velocity",V)
             threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
-        threshold_dist = 0.7
+        threshold_dist = 0.8
         beta = arctan(tan(self.steering_angle) * 0.5)
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
         # print(angles)
