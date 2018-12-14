@@ -77,7 +77,7 @@ class FollowThenPark(object):
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
-        print("I am here 1")
+        #print("I am here 1")
         if self.has_parking_spot:
 
             self.parallell_parking_backwards()
@@ -85,7 +85,7 @@ class FollowThenPark(object):
 
         if not self.tried:
             rospy.sleep(1.0)
-            print("I am here 2")
+            #print("I am here 2")
             mode = "forward_parking" if self.parked else "backward_parking"
             self.leave_from_parking(mode)
             # print(self.pp_corner)
@@ -113,8 +113,8 @@ class FollowThenPark(object):
         lli_msg.velocity = 0
         self.car_control_pub.publish(lli_msg)
         pose_arr = array([self.xs, self.ys])
-        print(self.xs[-1])
-        print(self.ys[-1])
+        #print(self.xs[-1])
+        #print(self.ys[-1])
         #savetxt("/home/nvidia/catkin_ws/real_path.csv", transpose(pose_arr), delimiter=",")
 
     # Both following functions choose between reversed and forward depending on self.reversed
@@ -378,7 +378,7 @@ class FollowThenPark(object):
             enough_inwards = (- (self.pp_corner[0] - xr) * sin(self.pp_heading) + (self.pp_corner[1] - yr) * cos(
                 self.pp_heading) > 0.06)
             small_heading = (abs(self.pp_heading - heading) < pi/20)
-            print(abs(self.pp_heading - heading))
+            #print(abs(self.pp_heading - heading))
             if enough_backwards and enough_inwards and small_heading:
                 print("Early stop")
                 self.path = []
@@ -389,7 +389,7 @@ class FollowThenPark(object):
             enough_inwards = (- (self.fp_corner[0] - xr) * sin(self.pp_heading) + (self.fp_corner[1] - yr) * cos(
                 self.pp_heading) > 0.06)
             small_heading = (abs(self.pp_heading - heading) < pi / 20)
-            print(abs(self.pp_heading - heading))
+            #print(abs(self.pp_heading - heading))
             if enough_forwards and enough_inwards and small_heading:
                 print("Early stop")
                 self.path = []
@@ -487,7 +487,7 @@ class FollowThenPark(object):
             self.has_parking_spot = True
             self.current_start_distance = -second_corner_y       # May need to add minus sign
             self.parking_identified = 0     # find a small parking spot
-            print("Preparing parallel parking, the distance <0.7")
+            print("Preparing parallel parking, the distance <1.2")
             xr, yr, heading = self.__find_current_position()
             second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
             second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
