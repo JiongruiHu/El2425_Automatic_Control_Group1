@@ -532,8 +532,9 @@ class FollowThenPark(object):
         idx_minangles = argmin(abs(array(filtered_angles)+(heading - self.pp_heading)))
         backward_dist = filtered_ranges[idx_minangles]
         look_dist = 0.22 if howparked == "backward_parking" else 0.28
-        goal_pos_x = xr - (backward_dist - look_dist) * cos(self.pp_heading)
-        goal_pos_y = yr - (backward_dist - look_dist) * sin(self.pp_heading)
+        in_dist = 0.1
+        goal_pos_x = xr - (backward_dist - look_dist) * cos(self.pp_heading) + in_dist * sin(self.pp_heading)
+        goal_pos_y = yr - (backward_dist - look_dist) * sin(self.pp_heading) - in_dist * cos(self.pp_heading)
         self.path = adjustable_path_points("linear", (xr, yr), goal=(goal_pos_x, goal_pos_y))
         print("I am here 3")
         self.change_to_reversed()
