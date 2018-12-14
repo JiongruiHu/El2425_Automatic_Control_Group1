@@ -456,8 +456,8 @@ class FollowThenPark(object):
                     start_point_y = close_point_y_real + outward_distance * cos(vehicle_heading)
                     goal_point_x = start_point_x + path_length * cos(heading)
                     goal_point_y = start_point_y + path_length * sin(heading)
-                    self.path = adjustable_path_points("linear", (start_point_x, start_point_y),
-                                                       (goal_point_x, goal_point_y))
+                    #self.path = adjustable_path_points("linear", (start_point_x, start_point_y),
+                    #                                   (goal_point_x, goal_point_y))
                     self.found_path = True
                 DeltaRanges.reverse()
                 for j in range(len(DeltaRanges)):
