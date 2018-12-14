@@ -483,18 +483,18 @@ class FollowThenPark(object):
         else:
             return
         #print("distance of parking spot",self.parking_lot_dist)
-        if 0.7 <= self.parking_lot_dist < 1.2:
+        if 0.7 <= self.parking_lot_dist < 1.1:
             self.has_parking_spot = True
             self.current_start_distance = -second_corner_y       # May need to add minus sign
             self.parking_identified = 0     # find a small parking spot
-            print("Preparing parallel parking, the distance <1.2")
+            print("Preparing parallel parking, the distance <1.1")
             xr, yr, heading = self.__find_current_position()
             second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
             second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
             self.pp_corner = (second_corner_x_real, second_corner_y_real)
             print("Second corner :", (second_corner_x_real, second_corner_y_real))
 
-        elif self.parking_lot_dist >= 1.2: # find large parking spot
+        elif self.parking_lot_dist >= 1.1: # find large parking spot
             # self.has_parking_spot = True
             self.parking_identified = 3     # find large parking spot
             xr, yr, heading = self.__find_current_position()
@@ -503,7 +503,7 @@ class FollowThenPark(object):
             second_corner_x_real = xr + second_corner_x * cos(heading) - second_corner_y * sin(heading)
             second_corner_y_real = yr + second_corner_x * sin(heading) + second_corner_y * cos(heading)
             self.fp_corner = (first_corner_x_real, first_corner_y_real)
-            print("Preparing forward parking,dist > 1.2")
+            print("Preparing forward parking,dist > 1.1")
             print("First corner local: ",(first_corner_x, first_corner_y))
             print("First corner :", self.fp_corner)
             print("Distances :", self.parking_lot_dist)
