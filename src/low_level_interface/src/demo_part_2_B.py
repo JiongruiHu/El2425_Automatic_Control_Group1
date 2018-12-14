@@ -5,7 +5,7 @@ from tf.transformations import euler_from_quaternion
 from numpy import *
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
-from demo_part_2_A< import FollowThenPark
+from demo_part_2_A import FollowThenPark
 
 
 ros_out = msg_out()
