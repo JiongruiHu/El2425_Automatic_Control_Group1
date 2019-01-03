@@ -52,6 +52,8 @@ class FollowThenPark(object):
         self.ys = []
         self.__follow_then_park()
 
+    ## Goes forward in a line, whereupon it reverses and follows the same line backwards.
+    ## Used for testing purposes
     def __forward_then_backward(self):
         self.change_to_forward()
         self.path = path_points('linear')
@@ -60,17 +62,21 @@ class FollowThenPark(object):
         self.path = path_points('reversed_linear')
         self.__pure_pursuit()
 
+    ## Same as before, but the other way around
+    ## Used for testing purposes
     def __backward_then_forward(self):
         self.change_to_reversed()
-        self.path = path_points('small_circle')
+        self.path = path_points('reversed_linear')
         self.ld = 0.25
         self.has_parking_spot = True
         self.__pure_pursuit()
-        return
         self.change_to_forward()
         self.path = path_points('linear')
         self.__pure_pursuit()
 
+    ## Main function. Follows a pre-defined path until it finds somewhere to park.
+    ## Upon which, it calls the backward and forwards parallel parking function to parallel park.
+    ## In this version, it also leaves the parking spot by performing a similar maneuver in reverse.
     def __follow_then_park(self):
         self.change_to_forward()
         self.path = path_points('linear')
@@ -85,6 +91,9 @@ class FollowThenPark(object):
         self.leave_from_parking("backward_parking")
             # print(self.pp_corner)
 
+    ## Main path following function
+    ## Uses kinematic bicycle model and pure pursuit algorithm to determine steering, with self.controller
+    ## Calls speed_control to determine speed
     def __pure_pursuit(self):
         #savetxt("/home/nvidia/catkin_ws/planned_path.csv", array(self.path), delimiter = ",")
         rate = rospy.Rate(50)
@@ -130,7 +139,8 @@ class FollowThenPark(object):
         if hasattr(self, "car_pose"):
             self.parking_stop(data)
             self.scan = data
-
+            
+    ## Compensates for eccentricities in hardware. Called whenever the program needs to change velocity from forwards to backwards.
     def change_to_reversed(self):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = - 10
@@ -144,9 +154,11 @@ class FollowThenPark(object):
         rospy.sleep(0.1)
         self.reversed = True
 
+    ## Included for completeness sake along with the above
     def change_to_forward(self):
         self.reversed = False
 
+    ## Like forward_controller, but with angle compensation for a goal that is behind the car and for driving backwards.
     def reversed_controller(self, goal):
         xr, yr, self.current_heading = self.__find_current_position(True)
         self.xs.append(xr)
@@ -180,6 +192,7 @@ class FollowThenPark(object):
         # print('real phi',(phi*180/pi))
         return v, int(100/(pi/4)*phi)      # MAY NEED TO ADD MINUS SIGN
 
+    ##Implements pure pursuit algorithm
     def forward_controller(self, goal):
         xr, yr, self.current_heading = self.__find_current_position()
         # self.car_heading = self.car_pose.twist.twist.angular.z
@@ -213,6 +226,7 @@ class FollowThenPark(object):
         # print('real phi',(phi*180/pi))
         return v, -int(100 / (pi / 4) * phi)
 
+    ## Interprets MOCAP messages and compensates for position offset
     def __find_current_position(self, reversed = False):
         assert hasattr(self, "car_pose")
         dist_diff = 0.05
@@ -225,6 +239,7 @@ class FollowThenPark(object):
             heading = heading - pi if heading > 0 else heading + pi
         return xr, yr, heading
 
+    ## Determines the speed. Mostly an artefact.
     def speed_control(self, phi):
         if self.Estop == 0:
             if abs(phi) < pi / 12:
@@ -240,6 +255,7 @@ class FollowThenPark(object):
         # speed = E_stop(speed)
         return speed
 
+    ## Same, but for going backwards. Mostly an artefact.
     def reversed_speed_control(self, phi):
         if self.Estop == 0:
             if abs(phi) < pi/12:
@@ -254,6 +270,7 @@ class FollowThenPark(object):
         # speed = E_stop(speed)
         return speed
 
+    ## Artefact, should be removed
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         tol = 0.2
@@ -262,10 +279,12 @@ class FollowThenPark(object):
         else:
             return False
 
+    ## Updates the car_pose variable as a callback function from the MOCAP subscriber
     def car_pose_cb(self, car_pose_msg):
         self.car_pose = car_pose_msg
         # print("Pose: ", (self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y))
 
+    ## Implements lookahead distance in pure pursuit algorithm
     def choose_point(self):
         xr, yr,  __= self.__find_current_position()
         while len(self.path) > 1:
@@ -279,6 +298,7 @@ class FollowThenPark(object):
             self.path.remove(goal_point)
         return goal_point
 
+    ## Determines and drives to a starting position based on the measured location of the corner of the car in front.
     def parallell_parking_start(self):
         #Car positioning
         self.pp_heading = self.current_heading
@@ -299,19 +319,6 @@ class FollowThenPark(object):
         self.Atan_start = [Atan_x, Atan_y]
         self.preparing_to_park = True
 
-        
-        
-
-        # head = self.current_heading
-        # parallell_start = xr * cos(head) + yr * sin(head)
-        # parallell_position = parallell_start
-        # lli_msg = lli_ctrl_request()
-        # lli_msg.velocity = 12
-        # while parallell_position < parallell_start + parallell_distance:
-        #     self.car_control_pub.publish(lli_msg)
-        #     rospy.sleep(0.1)
-        #     xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        #     parallell_position = xr * cos(head) + yr * sin(head)
 
 
 
