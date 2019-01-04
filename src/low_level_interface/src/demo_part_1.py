@@ -11,12 +11,13 @@ from geometry_msgs.msg import PoseArray
 
 
 class ParkingControl(object):
+    ## Initializes the node and creates publishers, subscribers, and runs the rest of the program
     def __init__(self):
         # self.path = path_points('figure-8')
         self.path = []
         self.Estop = 0
         self.car_heading = 0
-        # Subscribe to the topics
+        # Subscribe to the MOCAP, lidar and race course topics
         self.car_pose_sub = rospy.Subscriber("SVEA1/odom", Odometry, self.car_pose_cb)
         self.Lidar_sub = rospy.Subscriber("/scan", LaserScan, self.lidar_cb)
         self.race_path_sub = rospy.Subscriber("/race_course", PoseArray, self.race_path_cb)
@@ -35,6 +36,8 @@ class ParkingControl(object):
             self.rate.sleep()
         self.__pure_pursuit()
 
+    ## Runs full pure pursuit algorithm, including finding the next goal point, finding correct control signals,
+    ## publishing and taking care of auxillary functions.
     def __pure_pursuit(self):
         lli_msg = lli_ctrl_request()
         lli_msg.velocity = speed
@@ -52,52 +55,51 @@ class ParkingControl(object):
         pose_arr = array([self.xs, self.ys])
         savetxt("/home/nvidia/El2425_Automatic_Control_Group1/real_path.csv", pose_arr, delimiter=",")
 
+    ## Pure pursuit controller.Takes a point given by choose point and calculates the curvature necessary to reach it.
     def controller(self,goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
-        # self.car_heading = self.car_pose.twist.twist.angular.z
-        self.xs.append(xr)
-        self.ys.append(yr)
+        self.xs.append(xr)      
+        self.ys.append(yr)      # Saves pose in vector
         xo, yo = self.car_pose.pose.pose.orientation.x, self.car_pose.pose.pose.orientation.y
         zo, w = self.car_pose.pose.pose.orientation.z, self.car_pose.pose.pose.orientation.w
 
-        self.current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
-        xg, yg = goal[0],goal[1]  # self.path
-        L = 0.32
-        ld = sqrt((xg - xr)**2 + (yg - yr)**2)
+        self.current_heading = euler_from_quaternion([xo, yo, zo, w])[2]    # Compensates for quaternion format
+        xg, yg = goal[0],goal[1]  # Goal point coordinates
+        L = 0.32            # Distance between wheel axes
+        ld = sqrt((xg - xr)**2 + (yg - yr)**2)  # Distance between car and goal point
         des_heading = arctan2((yg - yr), (xg - xr))
-        print('des_head', des_heading)
-        headErr = des_heading - self.current_heading
-        # print("headErrOriginal", headErr)
+        headErr = des_heading - self.current_heading    
+        
+        # Compensate for potential angle singularity
         if headErr > pi:
             headErr = -2 * pi + headErr
         if headErr < -1 * pi:
             headErr = 2 * pi + headErr
-        print('phi', headErr)
-        # print('difference_phi',phi*180/pi)
+        # Calculate necessary curvature and corresponding steering angle
         curv = 2 * sin(headErr) / ld
         des_phi = arctan(L * curv)
-        print('des_phi', des_phi)
-
-        if headErr > pi/2 or des_phi > pi/4:  # or 100
+        
+        # Compensate for control limit
+        if headErr > pi/2 or des_phi > pi/4:  
             phi = pi/4
-        elif headErr < -pi/2 or des_phi < -pi/4:  # or -100
+        elif headErr < -pi/2 or des_phi < -pi/4: 
             phi = -pi/4
         else:
             phi = des_phi
-        v = self.speed_control(phi)
+        v = self.speed_control(phi)     # Get velocity signal
         self.steering_angle = phi
-        # print('real phi',(phi*180/pi))
-        return v, -int(100/(pi/4)*phi)
+        return v, -int(100/(pi/4)*phi)  # Convert to signal units
 
+    ## Speed control, including emergency stop whenever necessary
     def speed_control(self, phi):
         if self.Estop == 0:
             speed = self.__choose_speed(phi)
         else:
             speed = -100
-        #speed = E_stop(speed)
         return speed
 
-
+    ## Pure speed control. 
+    ## Currently returns constant speed, but can be modified to give velocity as a ReLU function of angle by changing parameters.
     def __choose_speed(self, phi):
         max_speed = 20
         min_speed = 20
@@ -111,6 +113,7 @@ class ParkingControl(object):
             speed = max_speed - (max_ang - min_ang) * (max_speed - min_speed)
         return speed
 
+    ## Returns boolean, saying whether we are close enough to a given goal point.
     def reach_goal(self, goal):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         tol = 0.2
@@ -118,11 +121,8 @@ class ParkingControl(object):
             return True
         else:
             return False
-
-
-    def car_pose_cb(self, car_pose_msg):
-        self.car_pose = car_pose_msg
-
+        
+    ## Look-ahead distance part of pure_pursuit algorithm. Returns a goal point.
     def choose_point(self):
         xr, yr = self.car_pose.pose.pose.position.x, self.car_pose.pose.pose.position.y
         while(len(self.path) > 1):
@@ -136,44 +136,26 @@ class ParkingControl(object):
         self.path.remove(goal_point)
         return goal_point
 
+    ## Updates car_pose based on MOCAP.
+    def car_pose_cb(self, car_pose_msg):
+        self.car_pose = car_pose_msg
 
-    def lidar_cb(self,data):
-        # msg = lli_ctrl_request()
-        # msg.velocity = speed
-        if not hasattr(self, 'car_pose'):
-            return
-        vx, vy = self.car_pose.twist.twist.linear.x, self.car_pose.twist.twist.linear.y
-
-        if vx ** 2 + vy ** 2 < 10 ** (-3):
-            threshold_dist = 1
-        else:
-            V = sqrt(vx ** 2 + vy ** 2)  # speed in km/h
-            print("velocity",V)
-            threshold_dist = (V / 0.1) * 0.06 + 0.5  # dynamic change formula
+    ## Emergency stop. Looks in a cone around the current heading angle, given by bicycle model, 8 dm in front of the lidar.
+    def lidar_cb(self, data):
         threshold_dist = 0.8
-        beta = arctan(tan(self.steering_angle) * 0.5)
+        beta = arctan(tan(self.steering_angle) * 0.5)       # Heading angle
         angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
-        # print(angles)
         ranges = data.ranges
-        Estop = 0
-        # print("Beta: ",beta)
+        Estop = 0               # False
         for i in range(len(angles)):
-            if beta < 0:
-                if angles[i] < -pi + beta + pi / 11 or angles[i] > -pi + beta - pi / 11:
-                    # print("Trying to stop 1")
-                    if ranges[i] < threshold_dist:
-                        Estop = 1
-                        print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
-            elif beta >= 0:
-                if angles[i] < -pi + beta + pi / 11 or angles[i] > pi + beta - pi / 11:
-                    # print("Trying to stop 2")
-                    if ranges[i] < threshold_dist:
-                        Estop = 1
-                        print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
+            if angles[i] < -pi + beta + pi / 11 or angles[i] > -pi + beta - pi / 11:    # Angle within cone
+                if ranges[i] < threshold_dist:      
+                    Estop = 1
+                    print("E-stop at dist:" + str(ranges[i]) + " and angle: " + str(angles[i]))
         self.Estop = Estop
-        # msg.velocity = speed
-        # car_speed.publish(msg)
 
+
+    ## Callback function of the race course topic. Saves the message as an array of 2D vectors if there is none
     def race_path_cb(self, data):
         if len(self.path) == 0:
             path = []
@@ -184,7 +166,7 @@ class ParkingControl(object):
 
  
 
-
+## Euclidian distance
 def dist(p1, p2):
     return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
