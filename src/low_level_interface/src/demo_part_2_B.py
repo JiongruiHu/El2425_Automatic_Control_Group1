@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+## This is a frame script which runs pure pursuit in a rectangle and the runs FollowThenPark from demo_part_2_A.py
 import rospy
 from low_level_interface.msg import lli_ctrl_request as msg_out
 from tf.transformations import euler_from_quaternion
@@ -12,15 +13,15 @@ ros_out = msg_out()
 
 ros_out.velocity = 14
 
-vel = 0;
-steer =0;
+vel = 0
+steer = 0
 
 NPOINTS = 100
 DETECTED = False
 LOOP = True
 WAITING_FOR_START = False
 
-#current_point
+# Initialization
 path=[]
 yr = 0
 xr = 0
@@ -30,15 +31,16 @@ zo = 0
 w = 0
 pub= rospy.Publisher('lli/ctrl_request',msg_out,queue_size=10)
 
+## Generates a square path for use in pure pursuit
 def generate():
     xmin = -1
     xmax = 1.5
     ymin = -1.8
     ymax = 1.5
-    xrange = linspace(xmin,xmax,25)
-    yrange = linspace(ymin,ymax,25)
-    yrange_ = linspace(ymax,ymin,25)
-    xrange_ = linspace(xmax,xmin,25)
+    xrange = linspace(xmin, xmax, 25)
+    yrange = linspace(ymin, ymax, 25)
+    yrange_ = linspace(ymax, ymin, 25)
+    xrange_ = linspace(xmax, xmin, 25)
     for i in arange(25):
         path.append([xrange[i],ymin])
     for i in arange(25):
@@ -48,7 +50,7 @@ def generate():
     for i in arange(25):
         path.append([xmin,yrange_[i]])
 
-
+## Finds the currently closest point to the vehicle and goes to it. Useful for intialization or after coming out of a parking lot.
 def closest_point():
 
   global xr,yr,path
@@ -62,14 +64,14 @@ def closest_point():
   return point
 
 
-
+## Callback function to MOCAP. Updates global variables.
 def updatePos(msg):
     global xr,yr, xo, yo, zo, w
     xr, yr = msg.pose.pose.position.x, msg.pose.pose.position.y
     xo, yo = msg.pose.pose.orientation.x, msg.pose.pose.orientation.y
     zo, w = msg.pose.pose.orientation.z, msg.pose.pose.orientation.w
 
-
+## Finds the next point of the path as per the pure pursuit algorithm. Goes in an infinite loop until interrupted
 def trace_path():
     global current_point,path
     ld = 0.6
@@ -77,6 +79,7 @@ def trace_path():
         current_point=(current_point+1)%len(path)
     move(path[current_point])
 
+## Pure pursuit controller, including publishing. See demo_part_1.py for description
 def move(goal):
     global pub, xo, yo, zo, w, xr, yr, ros_out
     current_heading = euler_from_quaternion([xo, yo, zo, w])[2]
@@ -88,7 +91,6 @@ def move(goal):
         headErr = -2 * pi + headErr
     if headErr < -1 * pi:
         headErr = 2 * pi + headErr
-    #print('difference_phi',phi*180/pi)
     curv = 2 * sin(headErr) / ld
     des_phi = arctan(0.32 * curv)
 
@@ -98,7 +100,6 @@ def move(goal):
         phi = -pi/4
     else:
         phi = des_phi
-    print('real phi',(phi*180/pi))
     steer= -1*int(100/(pi/4)*phi)
     ros_out.steering = steer
     pub.publish(ros_out)
@@ -107,12 +108,13 @@ def move(goal):
 def dist(p1, p2):
     return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
-
+## Callback function to lidar subscriber. Converts data into useful variables and from there looks at obstacles.
 def lidar_cb(data):
     angles = arange(data.angle_min, data.angle_max + data.angle_increment, data.angle_increment)
     ranges = data.ranges
     obstacle_detected(angles,ranges)
 
+## Estops when necessary, and sets DETECTED to true if it is time to park.
 def obstacle_detected(angles,ranges):
     global DETECTED, Estop, WAITING_FOR_START
     threshold_dist = 0.4
@@ -150,6 +152,7 @@ if __name__ == '__main__':
                 print("closest point", path[current_point])
                 trace_path()
             else:
+                # Minor adjustment
                 _x,_y = path[current_point]
                 _x1,_y1 = path[(current_point+1)%NPOINTS]
                 if(_x == _x1):
@@ -168,9 +171,8 @@ if __name__ == '__main__':
                         _point = point
 
                 # LOOP = False
-                print("current pose", xr, yr)
                 move(_point)
-                print("follow point",_point)
+                # Park alongside line
                 FollowThenPark()
                 current_point = closest_point()
                 WAITING_FOR_START = True
