@@ -30,7 +30,6 @@ yo = 0
 zo = 0
 w = 0
 pub= rospy.Publisher('lli/ctrl_request',msg_out,queue_size=10)
-
 ## Generates a square path for use in pure pursuit
 def generate():
     xmin = -1
